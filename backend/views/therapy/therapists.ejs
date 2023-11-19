@@ -1,0 +1,309 @@
+<%layout('./layouts/boilerplate')%>
+
+    <head>
+        <link rel="stylesheet" href="/css/gradient.css">
+        <style>
+            .gradient-custom-2 {
+                background: #fccb90;
+
+                /* Chrome 10-25, Safari 5.1-6 */
+                background: -webkit-linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff);
+
+                /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                background: linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff);
+            }
+
+            .gradient-form {
+                height: 600 !important;
+            }
+
+            @media (min-width: 768px) {
+                .gradient-form {
+                    height: 100vh !important;
+                }
+            }
+
+            @media (min-width: 769px) {
+                .gradient-custom-2 {
+                    border-top-right-radius: .3rem;
+                    border-bottom-right-radius: .3rem;
+                }
+            }
+
+            /* .left-login{
+        background-image: "https://i.imgur.com/Wi9y8os.png";
+} */
+
+            .white {
+                color: white;
+            }
+
+            .white2 {
+                background-color: white;
+            }
+
+            #sign-in {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .logo-div {
+                display: flex;
+                justify-content: center;
+                background-color: white;
+                border-radius: 3rem;
+                margin-bottom: 2rem;
+            }
+
+            .create-account:hover {
+                background: #fccb90;
+                background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+                background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+                color: white !important;
+            }
+
+            .bg-img {
+                /* background: #fccb90;
+        background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+        background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-attachment: fixed; */
+                height: 170vh !important;
+                background-image: url('https://i.imgur.com/TNfdT9w.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+
+            }
+
+            .heading1 {
+                padding-top: 1%;
+                font-family: Montserrat, sans-serif;
+                color: #001e33;
+                line-height: 120%;
+                font-weight: 700;
+                text-align: center;
+            }
+
+            .expert-banner {
+                width: 65%;
+                border-radius: 4rem;
+                margin-top: 1rem;
+
+                font-family: 'Montserrat', sans-serif;
+            }
+
+            .heading2 {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 1.5rem;
+                font-family: 'DM Sans', sans-serif;
+                color: #3B71CA;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <div class="expert-div center">
+        <img src="https://i.imgur.com/ujX2KRl.png" class="expert-banner" alt="expert">
+    </div>
+    <section>
+        <div>
+            <h2 class="center heading1 pt-5">The Future of Healthcare Delivery is Changing, Be A Part of It!</h2>
+            <p class="center heading2" style="color:#000000">Capture the Digital Wave, Begin Your Own Online Tranquil
+                Clinic Today</p>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/3-01.png" alt="First feature">
+            <h4 style="background-color: #fddde4;">Earn More Ethically</h4>
+            <h6>Consult clients on Tranquil, fix your own fees and give an additional 'ethical' boost to your earning.
+            </h6>
+        </div>
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/2-01.png" alt="Second feature">
+            <h4 style="background-color: #cdebbc;">See clients Online</h4>
+            <h6>See clients online who visit for follow ups, discuss lab reports or to get their drug dosage adjusted.
+            </h6>
+        </div>
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/enhance-online-practice100x100.png"
+                alt="Third feature">
+            <h4 style="background-color: #cdd4f8;">Expand Reach</h4>
+            <h6>Bring an end to your one-zone practice and spread your presence beyond your own location.</h6>
+        </div>
+    </section>
+    <section id="features">
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/more-time-more-money.png"
+                alt="Fourth feature">
+            <h4 style="background-color: #fddde4;">Monetize Every Consultation</h4>
+            <h6>Convert all unpaid calls and annoying SMS/chats into paid ones by routing all your clients through
+                Tranquil.</h6>
+        </div>
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/learn-from-top-doctors.png"
+                alt="Fifth feature">
+            <h4 style="background-color: #cdebbc;">Build reputation</h4>
+            <h6>Consult more clients, be known for your specialty and build your reputation on the World Wide Web.</h6>
+        </div>
+        <div class="feature-box white2" data-aos="zoom-in">
+            <img class="d-inline"
+                src="https://doctor.lybrate.com/img/start-your-own-lybrate-clinic/let-smartphone-be-your-clinic.png"
+                alt="Sixth feature">
+            <h4 style="background-color: #cdd4f8;">Ease Burden & Save Time</h4>
+            <h6>Tranquil's Practice Management helps save your time with its patient records, digital prescriptions,
+                appointment schedulers etc.</h6>
+        </div>
+    </section>
+
+
+    <section class="gradient-form bg-img mt-5">
+        <div class="container py-5 h-200">
+            <div class="row d-flex justify-content-center align-items-center h-200">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black mb-6">
+                        <div class="row g-0">
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h4 class="mb-5 white text-center fs-3">Clients are looking for doctors like you👋
+                                    </h4>
+                                    <h4 class="mb-4 white text-center fs-4">Why you'll love Tranquil</h4>
+                                    <p class="large mb-0">
+                                    <ol>
+                                        <li>Simple, beautiful design - you will pick it up in minutes
+                                            Online Private Consultation for Personalized care
+                                            Answer Open Questions by clients and build your online reputation
+                                        </li>
+                                        <li>Answer Open Questions by clients and build your online reputation</li>
+                                        <li>Reduce no shows and increase patient connect with comprehensive set of
+                                            Reminders</li>
+                                        <li>Record treatments and schedule visits in 1/4th the time compared to your
+                                            diary or any other software</li>
+                                        <li>Magical apps that help you do everything else easily on the go</li>
+                                    </ol>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+
+                                    <div class="text-center">
+
+                                        <h4 class="mt-1 mb-3 pb-1" id="sign-in">Apply to Tranquil</h4>
+                                        <p class="teller"></p>
+                                    </div>
+
+                                    <form action="/expert/newtherapists" method="post" novalidate
+                                        class="validated-form docregform">
+                                        <div class="form-group mb-2">
+                                            <label class="form-label" for="form2Example22">Name</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Enter Full Name" name="doctor[Name]" required>
+                                        </div>
+
+                                       
+
+                                        <div class="form-group mb-2">
+                                            <label class="form-label" for="form2Example11">Email</label>
+                                            <input type="email" id="form2Example11" class="form-control"
+                                                placeholder="Enter Email id" name='doctor[email]' required>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="form-label" for="form2Example11">Password</label>
+                                            <input type="password" id="password" class="form-control"
+                                                placeholder="length > 5 & Uppercase, symbol required"  name='doctor[password]' required>
+                                        </div>
+                                        <div class="form-group row d-flex mb-2">
+                                            <label class="form-label" for="form2Example11">Choose Area of Expertise</label>
+                                            <div class="col-6">
+                                                <input type="checkbox" id="vehicle1" name="doctor[rel]" value="1">
+                                                <label for="vehicle1"> Relationship</label><br>
+                                                <input type="checkbox" id="vehicle2" name="doctor[Wor]" value="1">
+                                                <label for="vehicle2"> Work Stress</label><br>
+                                                <input type="checkbox" id="vehicle3" name="doctor[Teen]" value="1">
+                                                <label for="vehicle3"> Teen Problems</label><br>
+                                                <input type="checkbox" id="vehicle3" name="doctor[Sub]" value="1">
+                                                <label for="vehicle3"> Substance Abuse</label><br>
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="checkbox" id="vehicle1" name="doctor[Sex]" value="1">
+                                                <label for="vehicle1"> Sexual Abuse</label><br>
+                                                <input type="checkbox" id="vehicle2" name="doctor[Harr]" value="1">
+                                                <label for="vehicle2"> Harrassment</label><br>
+                                                <input type="checkbox" id="vehicle3" name="doctor[Lon]" value="1">
+                                                <label for="vehicle3"> Loneliness</label><br>
+                                                <input type="checkbox" id="vehicle3" name="doctor[Anxiety]" value="1">
+                                                <label for="vehicle3"> Anxiety</label><br>
+                                            </div>
+
+                                            
+                                        </div>
+                                        <div class="form-group row d-flex mb-2">
+                                            
+                                            <div class="col-6">
+                                                <input type="Number" id="form2Example22" class="form-control"
+                                                placeholder="Experience Years" required name='doctor[yoe]'>
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="Number" id="form2Example33" class="form-control"
+                                                placeholder="Charges/hour" required name='doctor[charge]'>
+                                            </div>
+
+                                            
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="form-label" for="form2Example22">Profile Pic</label>
+                                            <input type="text" class="form-control" id="image"
+                                                 placeholder="Paste the url here" required name="doctor[image]">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="form-label" for="form2Example22">Document to prove Expertise</label>
+                                            <input type="text" class="form-control" id="Document"
+                                                aria-describedby="emailHelp" placeholder="Paste the url here" required name="doctor[document]">
+                                        </div>
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <button class="btn btn-primary btn-block apply " type="submit">Apply</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+var display=document.querySelector('.teller');
+var loginbutton=document.querySelector('.apply');
+var password=document.querySelector('#password');
+var regform=document.querySelector('.docregform');
+check=0;
+regform.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{5,15}$/;
+    if(!(password.value.match(paswd))){
+        display.textContent='Password must be greater than 4 letters containing uppercase lowercase and spl character';
+        return;
+    }
+    if(check===0){
+        regform.submit();
+    }
+    
+})
+    </script>

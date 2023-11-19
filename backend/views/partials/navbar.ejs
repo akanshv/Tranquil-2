@@ -1,0 +1,101 @@
+<header>
+    <a href="home.ejs"><img src="/Images/logo.png" class="logo1" alt="logo"></a>   
+    
+    <div>
+        <ul id="nav">
+            <% if (navactive[0]===1) { %>
+                <li><a class="active" href="/home">Home</a></li>
+            <% } else{%>
+                <li><a class="" href="/home">Home</a></li>
+            <% } %>
+            <% if (navactive[1]===1) { %>
+                <li><a class="active" href="/feed">Inspire</a></li>
+            <% }  else{%>
+                <li><a class="" href="/feed">Inspire</a></li>
+            <% } %>
+            <% if (navactive[2]===1) { %>
+                <li><a class="active" href="/chat">Chats</a></li>
+            <% }  else{%>
+                <li><a class="" href="/chat">Chats</a></li>
+            <% } %>
+            <% if (navactive[3]===1) { %>
+                <li><a class="active" href="/therapy"> Online Therapy</a></li>
+            <% }  else{%>
+                <li><a class="" href="/therapy">Online Therapy</a></li>
+            <% } %>
+            <% if (navactive[4]===1) { %>
+                <li><a class="active" href="/products">Products</a></li>
+            <% }  else{%>
+                <li><a class="" href="/products">Products</a></li>
+            <% } %>
+            <% if (!currentuser) { %>
+                <% if (navactive[5]===1) { %>
+                    <li class="dropdown"><a href="#"><i class="fa-solid fa-user active"></i></a>
+                        <div class="dropdown-content">
+                            <a href="/login">Login</a>
+                            <a href="/register">Register</a>
+                            <a href="/expert/expertlogin">Expert-Login</a>
+                            <a href="/admin/adminlogin">Admin-Login</a>
+                        </div></li>
+                <% }  else{%>
+                    <li class="dropdown"><a href="#"><i class="fa-solid fa-user"></i></a>
+                        <div class="dropdown-content">
+                            <a href="/login">Login</a> 
+                            <a href="/register">Register</a>
+                            <a href="/expert/expertlogin">Expert-Login</a>
+                            <a href="/admin/adminlogin">Admin-Login</a>    
+                        </div></li>
+                <% } %>
+            <% }else{ %>
+                <% if (navactive[5]===1) { %>
+                    <li class="dropdown"><a class="active "href="#"><img class="round" src="<%= currentuser.pfp %>" alt="user" width="40">&nbsp;<%= currentuser.username%></a>
+                        <div class="dropdown-content">
+                            <a href="/userprofile">Profile</a> 
+                            <a href="/logout">Logout</a>   
+                        </div></li>
+                <% } else {%>
+                    <li class="dropdown"><a href="#"><img class="round" src="<%= currentuser.pfp %>" alt="user" width="40">&nbsp;<%= currentuser.username%></a>
+                        <div class="dropdown-content">
+                            <a href="/userprofile">Profile</a> 
+                            <a href="/logout">Logout</a>   
+                        </div></li>
+                <% } %>
+            <% } %> 
+           
+            
+            <!-- <li><a href="/feed">Inspire</a></li>
+            <li><a href="#">Chat Now</a></li>
+            <li><a href="#">Find Therapy</a></li>
+            <li><a href="#">Our Products</a></li>
+            <li class="dropdown"><a href="#"><i class="fa-solid fa-user"></i></a>
+                <div class="dropdown-content">
+                    <a href="#">Login</a>
+                    <a href="#">Signup</a>
+                </div></li> -->
+            <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a> 
+         </ul>
+    </div>
+
+    <div class="hamburger">
+        <i id="ham" class="fa fa-outdent"></i>
+    </div>
+</header>
+
+
+
+        
+        <!-- <div>
+            <ul id="nav">
+                <li><a class="active" href="home.ejs">Home</a></li>
+                <li><a href="#">Inspire</a></li>
+                <li><a href="#">Chats</a></li>
+                <li><a href="#">Find Therapy</a></li>
+                <li><a href="#">Wellness Products</a></li>
+                <li class="dropdown"><a href="#"><i class="fa-solid fa-user fa-lg"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#">Login</a>
+                        <a href="#">Signup</a>
+                    </div></li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a> 
+            </ul>
+        </div> -->

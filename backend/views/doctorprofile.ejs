@@ -1,0 +1,391 @@
+<%layout('./layouts/profile-boilerplate') %>
+<style>
+    body {
+    /* background: rgb(99, 39, 120) */
+    /* background: linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff); */
+    /* background: linear-gradient(to right, #fc10e4, #f24bcb, #cd31bd, #f11dc0); */
+     /* background: linear-gradient( rgba(213, 126, 235, 1));  */
+    background: linear-gradient(to right, rgb(76, 142, 229), rgba(213, 126, 235, 1));
+
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.expert-banner{
+    width: 65%;
+    border-radius: 4rem;
+    margin-top:1rem;
+   
+    font-family: 'Montserrat', sans-serif;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    
+}
+</style>
+<div class="sabkuch">
+    <div class="expert-div center">
+        <img src="https://i.imgur.com/ujX2KRl.png" class="expert-banner" alt="expert">
+    </div>
+
+
+<section id="first" class="d-flex justify-content-center align-items-center">
+    <div class="container py-5" >
+    <div class="row d-flex justify-content-center align-items-center"" >
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h2 class="text-right"><strong>My Profile</strong></h2>
+                </div>
+                <div class="card-body text-center">
+                    <img src="<%= doc.pfp%>" alt="avatar"
+                      class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3"><%= doc.Name %></h5>
+                    <p class="text-muted mb-1"><%= doc.email %></p>
+                  </div>
+              <div class="col-sm-3">
+                <p class="mb-0">Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= doc.Name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= doc.email %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Experts in</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= doc.ExpertsIn %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Experience</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= doc.Experience%> years</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Session no.</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= doc.Sessionno %> Sessions</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Charges</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">₹ <%= doc.Charge %></p>
+                </div>
+              </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+  
+<section id="second">
+    <div class="container " >
+    <div class="row d-flex justify-content-center align-items-center" >
+      <!-- <div class="col-lg-4">
+        <div class="card mb-4" style="height: 94%">
+          <div class="card-body text-center">
+            <img src="<%= doc.pfp%>" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3"><%= doc.Name %></h5>
+            <p class="text-muted mb-1"><%= doc.email %></p>
+          </div>
+        </div>
+      </div> -->
+      
+      <div class="col-lg-8">
+        <div class="card mb-4">
+            
+          <div class="card-body">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <h2 class="text-right"><strong>Update Profile</strong></h2>
+            </div>
+            <form action="/expert/updateprofile" novalidate class='validated-form'method="post" id="updateprofile">
+            <div class="row">
+                <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" placeholder="Enter New Name" name="name" required></div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="row">
+                <div class="col-md-12"><label class="labels">Charges</label><input type="number" min='100'class="form-control" placeholder="Enter New Charges" name="Charge" required></div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="row">
+                <div class="col-md-12"><label class="labels">Profile Picture</label><input type="text" class="form-control" placeholder="Enter New URL" name="pfp"  value="<%= doc.pfp %>"></div>
+            </div>
+            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Update Profile</button></div>
+          </form>
+          </div>
+          
+          
+          </div>
+          
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  </section>
+
+<% if (!(doc.pendingstatus)) { %>
+
+  <section id="third" class="d-flex justify-content-center align-items-center mt-5 mb-5">
+    <div class="container" >
+        <div class="row d-flex justify-content-center align-items-center" >
+          <!-- <div class="col-lg-4">
+            <div class="card mb-4" style="height: 94%">
+              <div class="card-body text-center">
+                <img src="<%= doc.pfp%>" alt="avatar"
+                  class="rounded-circle img-fluid" style="width: 150px;">
+                <h5 class="my-3"><%= doc.Name %></h5>
+                <p class="text-muted mb-1"><%= doc.email %></p>
+              </div>
+            </div>
+          </div> -->
+          
+          <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="d-flex justify-content-center align-items-center pt-4 mb-3">
+                    <h2 class="text-right"><strong>Slot Management</strong></h2>
+                </div>
+                <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                    <h3 class="text-right">Booked Slots</h3>
+                </div>
+                <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">User Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                              </tr>
+                            </thead>
+                            
+                            <tbody>
+                              <% for( let slot of slotter ) { %>
+                                <% if (slot.status ==='accept') { %>
+                                    <tr>
+                                        <th scope="row"><%= slot.Userid.username%></th>
+                                        <td><%= slot.Date%></td>
+                                        <td><%= slot.Time %></td>
+                                      </tr>
+                                <% } %>
+                            <% } %>
+                            </tbody>
+                          </table>
+                    </div>
+
+                
+                    <div class="d-flex justify-content-start align-items-center pt-3 mt-3  mb-2 ps-5">
+                        <h3 class="text-right">Pending   Slots</h3>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% for( let slot of slotter ) { %>
+                                <% if (slot.status ==='pending') { %>
+                                  <tr>
+                                    <th scope="row"><%= slot.Userid.username %></th>
+                                    <td><%= slot.Date %></td>
+                                    <td><%= slot.Time %></td>
+                                    <td>
+                                        <button type="button" class="btn btn-success" onclick="window.location.href='/expert/acceptslot/<%= slot._id %>'"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                        <button type="button" class="ms-2 btn btn-danger" onclick="window.location.href='/expert/rejectslot/<%= slot._id %>'"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </td>
+                                  </tr>
+                                <% } %>
+                              <% } %>
+                              
+                            </tbody>
+                          </table>
+                    </div>
+
+                    <!-- <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                        <h3 class="text-right">Empty Slots</h3>
+                    </div>
+                
+                    <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">DATE</th>
+                                <th scope="col">TIME</th>
+                                <th scope="col">ACTION</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Hello</th>
+                                <td>Mark</td>
+                                <td>
+                                    <button type="button" class="ms-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Hi</th>
+                                <td>Jacob</td>
+                                <td>
+                                    <button type="button" class="ms-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Namaste</th>
+                                <td>Larry</td>
+                                <td>
+                                    <button type="button" class="ms-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                </div> -->
+
+                
+              </div>
+
+              
+              
+            </div>
+           
+          </div>
+        </div>
+
+</section>
+ 
+<% }else{ %>
+  <section id="second">
+    <div class="container " >
+    <div class="row d-flex justify-content-center align-items-center" >
+      <!-- <div class="col-lg-4">
+        <div class="card mb-4" style="height: 94%">
+          <div class="card-body text-center">
+            <img src="<%= doc.pfp%>" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3"><%= doc.Name %></h5>
+            <p class="text-muted mb-1"><%= doc.email %></p>
+          </div>
+        </div>
+      </div> -->
+      
+      <div class="col-lg-8">
+        <div class="card mb-4">
+            
+          <div class="d-flex justify-content-center align-items-center mb-3 p-2">
+            <h4 class="text-right"><strong>Your Expert Request is pending to be authorised by admin...</strong></h4>
+        </div>
+          
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  </section>
+  
+<% } %>
+    
+    
+    </div>
+    </div>
+</div>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+'use strict'
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+const forms = document.querySelectorAll('.validated-form')
+
+// Loop over them and prevent submission
+//Array.prototype.slice.call(forms)
+Array.from(forms)
+.forEach(function (form) {
+form.addEventListener('submit', function (event) {
+  if (!form.checkValidity()) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  form.classList.add('was-validated')
+}, false)
+})
+})()
+</script>

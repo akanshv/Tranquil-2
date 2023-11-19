@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="css/home.css">
+
+<header class="pt-4">
+    <a href="home.ejs"><img src="Images/logo.png" class="logo1" alt="logo"></a>   
+    
+    <div>
+        <ul id="nav">
+            <% if (navactive[0]===1) { %>
+                <li><a class="active" href="/home">Home</a></li>
+            <% } else{%>
+                <li><a class="" href="/home">Home</a></li>
+            <% } %>
+            <% if (navactive[1]===1) { %>
+                <li><a class="active" href="/feed">Inspire</a></li>
+            <% }  else{%>
+                <li><a class="" href="/feed">Inspire</a></li>
+            <% } %>
+            <% if (navactive[2]===1) { %>
+                <li><a class="active" href="/chat">Chats</a></li>
+            <% }  else{%>
+                <li><a class="" href="/chat">Chats</a></li>
+            <% } %>
+            <% if (navactive[3]===1) { %>
+                <li><a class="active" href="/therapy"> Online Therapy</a></li>
+            <% }  else{%>
+                <li><a class="" href="/therapy">Online Therapy</a></li>
+            <% } %>
+            <% if (navactive[4]===1) { %>
+                <li><a class="active" href="/products">Products</a></li>
+            <% }  else{%>
+                <li><a class="" href="/products">Products</a></li>
+            <% } %>
+            <% if (!currentuser) { %>
+                <% if (navactive[5]===1) { %>
+                    <li class="dropdown"><a href="#"><i class="fa-solid fa-user active"></i></a>
+                        <div class="dropdown-content">
+                            <a href="/login">Login</a>
+                            <a href="/register">Register</a>
+                            <a href="/expert/expertlogin">Expert-Login</a>
+                            <a href="/admin/adminlogin">Admin-Login</a>
+
+                        </div></li>
+                <% }  else{%>
+                    <li class="dropdown"><a href="#"><i class="fa-solid fa-user"></i></a>
+                        <div class="dropdown-content">
+                            <a href="/login">Login</a>
+                            <a href="/register">Register</a>
+                            <a href="/expert/expertlogin">Expert-Login</a>
+                            <a href="/admin/adminlogin">Admin-Login</a>
+                        </div></li>
+                <% } %>
+            <% }else{ %>
+                <li class="dropdown"><a href="#"><img class="round" src="<%= currentuser.pfp %>" alt="user" width="40">&nbsp;<%= currentuser.username%></a>
+                    <div class="dropdown-content">
+                        <a href="/userprofile">Profile</a> 
+                        <a href="/logout">Logout</a>   
+                    </div></li>
+            <% } %>            
+           
+            
+            <li class="cart"> 
+    
+                <button class="btn btn-primary" id="cart-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                    <span class="cart-quantity"><span class="total-count"><%= cartdetails.totalcount%></span></span>
+                </button>
+                
+                <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                    <div class="offcanvas-header">
+                      <h3 class="cart-title" id="offcanvasWithBothOptionsLabel">My Cart</h3>
+                      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+    
+                    <div class="offcanvas-body">        <!--offcanvas content starts here-->
+                        <div class="modal-content">
+                        
+                        <div class="modal-body">
+                            <form action="/products/buyproduct" id="fullform" method="get"></form>
+                            <table class="show-cart table">
+                                <% for( let index = 0; index < cartor.length; index++ ) { %>
+                                    <div>
+                                        <div class="mt-5">
+                                            <img style='width: 100%;' src="<%= cartor[index].product.image %>">
+                                        </div >
+                                        <div class='mb-3 text-center fs-5 fw-bolder'>
+                                            <%= cartor[index].product.Name %>&nbsp;&nbsp;(₹ <%=cartor[index].product.Cutprice%>)
+                                        </div>
+                                        <div>
+                                            <form action="products/changecount/<%=cartor[index].product._id%>" id="<%= cartor[index].product._id %>_formcountchange" method="post"></form>
+                                            <input type='number' min="1" form="<%= cartor[index].product._id %>_formcountchange" class='item-count form-control' name="newcount" placeholder="<%=cartor[index].indicount%>">
+                                            
+                                        </div>
+                                        <form action="products/cart/<%= cartor[index].product._id %>?_method=DELETE" method="POST" id="<%= cartor[index].product._id %>_form">
+                                        </form>
+                                        
+                                        <div style='display:inline-block;' class="mt-2">
+                                            <button form="<%= cartor[index].product._id %>_form" style='margin-left: 4rem; background:red !important;' type='submit' class='delete-item btn btn-danger rounded'><i class='fas fa-trash-alt'></i></button></div>
+                                            <button form="<%= cartor[index].product._id %>_formcountchange" style='margin-left: 1rem; background:rgb(8, 0, 255) !important;' type='submit' class='delete-item btn btn-primary rounded'>Update Count</button></div>
+                                        </div>   
+                                    
+                                    </div>        
+                                <% } %>
+                           </table>
+                            <div class="fs-4 text-center fw-bolder mt-5">Total Amount: ₹<span class="total-cart"><%= cartdetails.amount%></span></div>
+                        </div>
+                        <br>
+                        <div class="modal-footer mb-3" style="display: flex; justify-content:center;">
+                            <div class="row">
+                                <div class="col">
+                                    
+                                    <form id="clearcart" action="/products/clearcart" method="get"></form>
+                                    <button form='fullform' type='submit' class="btn btn-success">Place Order</button>
+                                    <button form='clearcart'class="clear-cart btn btn-danger " type="submit">Clear Cart</button>
+                                    
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                    </div>
+                </div>
+                </li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a> 
+            </ul>
+        
+            <div class="hamburger">
+            <i id="ham" class="fa fa-outdent"></i>
+            </div>
+</header>

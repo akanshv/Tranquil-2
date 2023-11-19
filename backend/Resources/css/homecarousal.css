@@ -1,0 +1,106 @@
+.patient-quote.flexslider {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color:#fff;
+    opacity:1;
+  }
+  
+  .pager {
+    display:none;
+  }
+  .patient-quote ul li {
+    background-color: #649e17;
+    color: #fff;
+    padding: 20px 0 40px;
+    margin-bottom: 20px !important;
+  }
+  .patient-quote h2.quote-title {
+    color: #fff;
+    text-align: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 32px;
+    border-bottom: none;
+    margin: 0 auto;
+    padding-bottom:0px;
+    margin-bottom:10px;
+    width:90%;
+    opacity:1;
+    text-transform: none;
+  }
+  .flexslider .slides p {
+    font-size:15px;
+    margin-bottom:5px;
+    display: inline;
+  }
+  .patient-quote .patient-info {
+    font-style: italic;
+    margin-bottom:0px;
+  }
+  .topPager,
+  .bottomPager,
+  .patient-quote.flexslider .flex-direction-nav {
+    display: none;
+  }
+  .patient-quote.flexslider .flex-control-nav {
+    bottom: 36px;
+    z-index: 400;
+  }
+  .patient-quote.flexslider .flex-control-nav li a {
+    background-color: #fff;
+    border: 2px solid #fff;
+    box-shadow: none !important;
+  }
+  .patient-quote.flexslider .flex-control-nav li a.flex-active {
+    background-color: transparent;
+    border: 2px solid #fff;
+  }
+  .mainContent {
+    padding-top: 20px;
+  }
+  @media screen and (max-width: 1200px) {
+    .patient-quote.flexslider li {
+      height: 194px !important;
+    }
+    .patient-quote.flexslider .flex-control-nav {
+      bottom: -143px;
+    }
+  }
+  @media screen and (max-width: 900px) {
+      .patient-quote.flexslider li {
+      height: 214px !important;
+    }
+    .patient-quote.flexslider .flex-control-nav {
+      bottom: -163px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .patient-quote h2.quote-title {
+      font-size: 34px;
+    }
+      .patient-quote.flexslider li {
+      height: 254px !important;
+    }
+      .patient-quote.flexslider .flex-control-nav {
+      bottom: -203px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+      .patient-quote.flexslider li {
+      height: 294px !important;
+    }
+    .patient-quote.flexslider .flex-control-nav {
+      bottom: -234px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .patient-quote.flexslider li {
+      height: 384px !important;
+    }
+    .patient-quote h2.quote-title {
+      font-size: 30px;
+    }
+    .patient-quote.flexslider .flex-control-nav {
+      bottom: -337px;
+    }
+  }

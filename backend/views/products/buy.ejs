@@ -1,0 +1,174 @@
+<%layout('./layouts/boilerplate')%>
+<head>
+    <link rel="stylesheet" href="/css/gradient.css">
+    <style>
+        .gradient-custom-2 {
+            background: #fccb90;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff);
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff);
+        }
+
+        .gradient-form {
+            height: 600 !important;
+        }
+
+        @media (min-width: 768px) {
+            .gradient-form {
+                height: 100vh !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .gradient-custom-2 {
+                border-top-right-radius: .3rem;
+                border-bottom-right-radius: .3rem;
+            }
+        }
+
+        /* .left-login{
+    background-image: "https://i.imgur.com/Wi9y8os.png";
+} */
+
+        .white {
+            color: white;
+        }
+
+        .white2 {
+            background-color: white;
+        }
+
+        #sign-in {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .logo-div {
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            border-radius: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .create-account:hover {
+            background: #fccb90;
+            background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+            background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+            color: white !important;
+        }
+
+        .bg-img {
+            /* background: #fccb90;
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+            height: 170vh !important;
+            background-image: url('https://i.imgur.com/TNfdT9w.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .heading1 {
+            padding-top: 1%;
+            font-family: Montserrat, sans-serif;
+            color: #001e33;
+            line-height: 120%;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .expert-banner {
+            width: 65%;
+            border-radius: 4rem;
+            margin-top: 1rem;
+
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .heading2 {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+            font-family: 'DM Sans', sans-serif;
+            color: #3B71CA;
+            text-align: center;
+        }
+    </style>
+</head>
+<div class="expert-div center">
+    <img src="https://i.imgur.com/uc9EeQL.png" class="expert-banner" alt="expert">
+</div>
+
+<section style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+  <div class="container-sm">
+    <div class="row justify-content-center">
+      <div class="col-md-8 mx-auto">
+        <div class="card card-md">
+          <div class="card-header">
+            <div class="row">
+              <div class="col">
+                Username: <%=  use.username%>
+              </div>
+              <div class="col text-right">
+                Shopping Bill
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for( let index = 0; index < bought.productarr.length; index++ ) { %>
+                    <tr>
+                        <td><%= bought.productarr[index].Name %></td>
+                        <td><%= bought.productarr[index].Cutprice%></td>
+                        <td><%= bought.countarr[index] %></td>
+                    </tr>
+                <% } %>
+                
+
+                <!-- <tr>
+                  <td>Product 2</td>
+                  <td>$29.99</td>
+                  <td>1</td>
+                  <td id="total1">$29.99</td>
+                </tr>
+                <tr>
+                  <td>Product 3</td>
+                  <td>$39.99</td>
+                  <td>1</td>
+                  <td id="total2">$39.99</td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+            <h5>Total: ₹<span id="totalPrice"><%= bought.amount %></span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </section>

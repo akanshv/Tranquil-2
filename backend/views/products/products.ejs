@@ -1,0 +1,189 @@
+<%layout('./layouts/products-boilerplate')%>
+
+<link rel="stylesheet" href="/css/gradient.css">
+<div class="wellness-div">
+  <img src="https://i.imgur.com/uc9EeQL.png" class="wellness-banner" alt="wellness">
+</div>
+
+
+<section class="books section-p1" >
+    <div class="text-center container py-5">
+        <h1 class="mb-5 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Mindfulness Books</strong></h1>
+      </div>
+    <div class="row">
+      <% for( let product of products ) { %>
+     
+        <% if (product.Type==='Mindfulness Books') { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+                <img src="<%= product.image %>"
+                  class="w-100" />
+                <a href="#!">
+                  <div class="hover-overlay">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body">
+                <a href="" class="text-reset">
+                  <h5 class="card-title mb-3"><%= product.Name %></h5>
+                </a>
+                <a href="" class="text-reset">
+                  <p><%= product.author %></p>
+                </a>
+                <h6 class="mb-3">
+                  <s>₹<%= product.Price%></s><strong class="ms-2 text-danger">₹<%= product.Cutprice%></strong>
+                </h6>
+            
+                <form action="/products/addtocart" method="post">
+                  <input type="hidden" name="productid" value="<%=product._id%>">
+                  <button class="btn btn-success"><i class="fa-solid fa-cart-shopping white"></i><b class="white"> Add to Cart </b></button>
+              </form>
+                
+               </div>
+            </div>
+      </div>
+        <% } %>
+      
+      <% } %>
+  
+    </div>
+    </div>
+  </section>   
+
+
+<section class="stress-busters section-p1" >
+    <div class="text-center container py-5">
+        <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Stress Busters</strong></h1>
+    </div>
+    <div class="row">
+      <% for( let product of products ) { %>
+     
+        <% if (product.Type==='Stress Busters') { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+                <img src="<%= product.image %>"
+                  class="w-100" />
+                <a href="#!">
+                  <div class="hover-overlay">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body">
+                <a href="" class="text-reset">
+                  <h5 class="card-title mb-3"><%= product.Name %></h5>
+                </a>
+                <a href="" class="text-reset">
+                  <p><%= product.author %></p>
+                </a>
+                <h6 class="mb-3">
+                  <s>₹<%= product.Price%></s><strong class="ms-2 text-danger">₹<%= product.Cutprice%></strong>
+                </h6>
+            
+                <form action="/products/addtocart" method="post">
+                  <input type="hidden" name="productid" value="<%=product._id%>">
+                  <button class="btn btn-success"><i class="fa-solid fa-cart-shopping white"></i><b class="white"> Add to Cart </b></button>
+              </form>
+                
+               </div>
+            </div>
+      </div>
+        <% } %>
+      
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="herbals section-p1" >
+  <div class="text-center container py-5">
+      <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Herbals</strong></h1>
+  </div>
+  <div class="row">
+    <% for( let product of products ) { %>
+     
+      <% if (product.Type==='Herbals') { %>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+              <img src="<%= product.image %>"
+                class="w-100" />
+              <a href="#!">
+                <div class="hover-overlay">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </div>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="" class="text-reset">
+                <h5 class="card-title mb-3"><%= product.Name %></h5>
+              </a>
+              <a href="" class="text-reset">
+                <p><%= product.author %></p>
+              </a>
+              <h6 class="mb-3">
+                <s>₹<%= product.Price%></s><strong class="ms-2 text-danger">₹<%= product.Cutprice%></strong>
+              </h6>
+          
+              <form action="/products/addtocart" method="post">
+                <input type="hidden" name="productid" value="<%=product._id%>">
+                <button class="btn btn-success"><i class="fa-solid fa-cart-shopping white"></i><b class="white"> Add to Cart </b></button>
+            </form>
+              
+             </div>
+          </div>
+    </div>
+      <% } %>
+    
+    <% } %>
+  </div>
+</section>
+
+<section class="sleepwell section-p1" >
+  <div class="text-center container py-5">
+      <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Sleepwell</strong></h1>
+  </div>
+  <div class="row">
+    <% for( let product of products ) { %>
+     
+      <% if (product.Type==='Sleepwell') { %>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+              <img src="<%= product.image %>"
+                class="w-100" />
+              <a href="#!">
+                <div class="hover-overlay">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </div>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="" class="text-reset">
+                <h5 class="card-title mb-3"><%= product.Name %></h5>
+              </a>
+              <a href="" class="text-reset">
+                <p><%= product.author %></p>
+              </a>
+              <h6 class="mb-3">
+                <s>₹<%= product.Price%></s><strong class="ms-2 text-danger">₹<%= product.Cutprice%></strong>
+              </h6>
+              <form action="/products/addtocart" method="post">
+                   <input type="hidden" name="productid" value="<%=product._id%>">
+                  <button class="btn btn-success"><i class="fa-solid fa-cart-shopping white"></i><b class="white"> Add to Cart </b></button>
+              </form>
+              
+             </div>
+          </div>
+    </div>
+      <% } %>
+    
+    <% } %>
+</div>
+</section>
+
+
+<!-- <script src="/js/products.js"></script> -->

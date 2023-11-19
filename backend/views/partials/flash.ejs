@@ -1,0 +1,62 @@
+<style>
+    .closer {
+      margin-left: 70%;
+      display: inline;
+      color: black;
+      font-size: 1rem;
+  
+    }
+    .closer:hover{
+      color:black;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .flash{
+        display: flex;
+        justify-content: center;
+    }
+    .fade{
+        width:60rem;
+    }
+</style>
+  <% if (success && success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= success %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    </div>
+    
+   
+    <!-- <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+       <span class="closer">&#10005;</span>
+    </div> -->
+    <% } %>
+  <% if (error && error.length) { %>
+   <div class="flash">
+     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+   </div>
+    
+  <% } %>
+      <script>
+        hide = function () {
+          //document.querySelector('.flash').style.color="red";
+          // Get the alert element
+          const myAlert = document.querySelector('#myAlert');
+  
+          // Get the close button element
+          const closeButton = myAlert.querySelector('.closer');
+  
+          // Add a click event listener to the close button
+          closeButton.addEventListener('click', function () {
+            // Hide the alert
+            // myAlert.classList.remove('show');
+            myAlert.remove();
+          });
+  
+        }
+        hide();
+      </script>

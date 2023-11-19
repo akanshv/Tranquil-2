@@ -1,0 +1,125 @@
+<%layout('./layouts/boilerplate')%>
+<head>
+    <style>
+        .gradient-custom {
+    /* fallback for old browsers */
+    background: #fccb90;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1))
+}
+
+.mask-custom {
+    background: rgba(24, 24, 16, .2);
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+
+.gradient {
+    background: #fccb90;
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.chat-div {
+    display: flex;
+    justify-content: center;
+}
+
+
+.chat-banner {
+    width: 65%;
+    border-radius: 4rem;
+    margin-top: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+    </style>
+</head>
+<div class="chat-div gradient">
+    <img src="https://i.imgur.com/7NrYfBD.png" class="chat-banner" alt="chat">
+  </div>
+  
+  <section class="gradient-custom">
+      <div class="listening">
+          <h3 class="text-center pt-5">Vent Out.....Brad Pit is Listening You</h6>
+      </div>
+    <div class="container py-5 d-flex justify-content-center">
+      <div class="col-md-6 col-lg-7 col-xl-7">
+  
+          <ul class="list-unstyled text-white">
+            <li class="d-flex justify-content-between mb-4">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+              <div class="card mask-custom">
+                <div class="card-header d-flex justify-content-between p-3"
+                  style="border-bottom: 1px solid rgba(255,255,255,.3);">
+                  <p class="fw-bold mb-0">Brad Pitt</p>
+                  <p class="text-light small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
+                </div>
+                <div class="card-body">
+                  <p class="mb-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex justify-content-between mb-4">
+              <div class="card mask-custom w-100">
+                <div class="card-header d-flex justify-content-between p-3"
+                  style="border-bottom: 1px solid rgba(255,255,255,.3);">
+                  <p class="fw-bold mb-0">Lara Croft</p>
+                  <p class="text-light small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
+                </div>
+                <div class="card-body">
+                  <p class="mb-0">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                    laudantium.
+                  </p>
+                </div>
+              </div>
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+                class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+            </li>
+            <li class="d-flex justify-content-between mb-4">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+              <div class="card mask-custom">
+                <div class="card-header d-flex justify-content-between p-3"
+                  style="border-bottom: 1px solid rgba(255,255,255,.3);">
+                  <p class="fw-bold mb-0">Brad Pitt</p>
+                  <p class="text-light small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                </div>
+                <div class="card-body">
+                  <p class="mb-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="mb-3">
+              <div class="form-outline form-white">
+                <textarea class="form-control" id="textAreaExample3" rows="4"></textarea>
+                <label class="form-label" for="textAreaExample3">Message</label>
+              </div>
+            </li>
+            <button type="button" class="btn btn-light btn-lg btn-rounded float-end">Send</button>
+          </ul>
+  
+        </div>
+  
+      </div>
+  
+  </section>

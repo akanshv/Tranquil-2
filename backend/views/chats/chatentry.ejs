@@ -1,0 +1,34 @@
+<%layout('./layouts/boilerplate')%>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat-entry.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+</head>
+
+<div class="main w-125 p-3 vh-100">
+    <img src="https://i.imgur.com/7NrYfBD.png" class="chat-banner mt-4" style="margin-left: 16%;" alt="chat">
+    <div class="heading-div"> 
+        <h2 class="center heading1">An Anonymous, Smart, & Interactive community to find Solace</h2>
+    </div>
+
+    <div class="content pt-5 gradient">
+
+
+        <div class="box-inside">
+            <h2 class="pt-4 center blue">De-stress with Solace</h2>
+            <h6 class="center d-inline-block">A heart-to-heart chat with a friend who understands & doesn't judge makes you feel better instantly, we call it <b>Solace!</b></h6>
+        </div>
+
+        <div class="center pt-4 pb-5">
+            <form action="/chat/listner" method="get">
+                <div><button type="submit" class="btn btn-lg btn-success btn-space">Volunteer as Listener</button></div>
+            </form>
+            <form action="/chat/peer" method="get">
+                <div><button type="submit" class="btn btn-lg btn-success btn-space">Get Solace</button></div>
+            </form>
+            
+            
+        </div>
+    </div>
+</div>
+

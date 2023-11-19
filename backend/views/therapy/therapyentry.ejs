@@ -1,0 +1,365 @@
+<%layout('./layouts/boilerplate')%>
+
+  <head>
+    <link rel="stylesheet" href="/css/therapyentry.css">
+    <link rel="icon" type="image/x-icon" href="/Images/favicon.ico">
+    <link rel="stylesheet" href="/css/gradient.css">
+  </head>
+
+  <section>
+
+    <div class="expert-div">
+      <img src="https://i.imgur.com/ujX2KRl.png" class="expert-banner" alt="expert">
+    </div>
+
+    <div class="container py-5 ">
+      <div class="row justify-content-center">
+        <div class="col-md-12 col-xl-10">
+          <div class="dropdown d-flex justify-content-end">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-mdb-toggle="dropdown" aria-expanded="false">
+              Choose problem
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(1)">Relationship</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(2)">Work Stress</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(3)">Teen Problems</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(4)">Substance Abuse</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(5)">Sexual Abuse</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(6)">Harrassment</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(7)">Loneliness</a></li>
+              <li><a class="dropdown-item" href="#" onclick="therapyFilter(8)">Anxiety</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <form action="/expert/newtherapists" method="get">
+        <div class="upper-text">
+          <p class="d-flex justify-content-center align-items-center heading2 "
+            style="color:#1d1d1d; font-size: 1.3rem;">Start Your Online Counseling Journey With Tranquil
+            <button type="submit" style="text-align: center !important; background-color:#53a3e0" class="btn  m-3">Apply
+              Here</button>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <ul id = "expertlist">
+    <% for ( let experty of expertarray ) { %>
+
+      <div class="container py-5 pt-3">
+        <div class="row justify-content-center mb-3">
+          <div class="col-md-12 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <img src="<%= experty.pfp %>" class="w-100" />
+
+                      <a href="#!">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-xl-6">
+                    <h5>
+                      <%= experty.Name %>
+                    </h5>
+                    <div class="d-flex flex-row">
+                      <!-- <div class="text-danger mb-1 me-2">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div> -->
+                      <% if (experty.Happyno) { %>
+                        <span>
+                          <%= experty.Happyno %> Happy Sessions Out of <%= experty.Sessionno %>
+                        </span>
+                      <% } else {%>
+                        <span>
+                          Total Sessions : <%= experty.Sessionno %>
+                        </span>
+                      <% } %>
+                      
+                    </div>
+                    <% for (tag in experty.ExpertsIn){ %>
+                      <div class="mt-1 mb-0 text-muted small">
+                        <span class="text-success"> • </span>
+                        <span>
+                          <%=experty.ExpertsIn[tag]%>
+                        </span>
+                      </div>
+                      <% } %>
+                        <p class="text-truncate mb-4 mb-md-0">
+                          <%= experty.Experience %> yr of experience
+                        </p>
+                  </div>
+                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <!-- <div class="d-flex flex-row align-items-center mb-1">
+                    <h6 class="mb-1 me-1">94 patients feedback(s) </h6>
+                  </div>  -->
+                    <h6 class="text-success">₹ <%= experty.Charge %>/Sessions(1 hour)</h6>
+                    <div class="d-flex flex-column mt-4">
+                      <div class="body">
+                        <form action="/therapy/askslot/<%= experty._id %>" id='formdate' novalidate class="validated-form" method="post">
+                          <label for="date"> <strong>Appointment Date : </strong></label>
+                          <input type="date" id="date" min="2023-04-26" name="date"  class='datePickerId' required>
+                          <br>
+                          <label for="time"> <strong>Appointment Time : </strong></label>
+                          <input type="time" id="time" name="time" class="mt-3 mb-3 timePickerId" required>
+                          
+                          <h6 class="teller"></h6>
+                         </div>
+                         <div class=" mt-3" style="margin-right: 25%;">
+                              <button type="submit" form='formdate'class="btn btn-success ms-6 timebutton">Request Slot</button>
+                         </div>
+                       </form>
+                    </div>
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <% } %>
+  </section>
+
+
+
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+var display=document.querySelector('.teller');
+var loginbutton=document.querySelector('.apply');
+var date=document.querySelector('.datePickerId');
+var time=document.querySelector('.timePickerId');
+var regform=document.querySelector('.timebutton');
+check=0;
+regform.addEventListener('submit',(event)=>{
+event.preventDefault();
+dtime=new Date(`${date.value}T${time.value}`);
+console.log(dtime);
+if(dtime<Date.now()){
+    display.textContent='No past date-time';
+    return;
+}
+if(check===0){
+    regform.submit();
+}
+
+})
+</script>
+
+
+<script>
+  const  therapyFilter=(no)=> {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        expertarray = JSON.parse(xhttp.response);
+        console.log(expertarray);
+        document.getElementById("expertlist").innerHTML ='';
+
+        type=["Relationship","Work Stress","Teen Problems","Substance Abuse","Sexual Abuse","Harrassment","Loneliness","Anxiety"];
+        
+        for(let experty of expertarray){ 
+          if(experty.Happyno){
+            document.getElementById("expertlist").innerHTML =  document.getElementById("expertlist").innerHTML +`
+            <div class="container py-5 pt-3">
+              <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                  <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                          <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                            <img src="${experty.pfp}" class="w-100" />
+      
+                            <a href="#!">
+                              <div class="hover-overlay">
+                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                          <h5>
+                            ${experty.Name}
+                          </h5>
+                          <div class="d-flex flex-row">
+                            <!-- <div class="text-danger mb-1 me-2">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                            </div> -->
+            
+                              <span>
+                                ${experty.Happyno} Happy Sessions Out of ${experty.Sessionno}
+                              </span>
+                            
+                          </div>
+                            <div class="mt-1 mb-0 text-muted small">
+                              <span class="text-success"> • </span>
+                              <span>
+                                ${type[no-1]}
+                              </span>
+                            </div>
+
+                              <p class="text-truncate mb-4 mb-md-0">
+                                ${experty.Experience} yr of experience
+                              </p>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                          <!-- <div class="d-flex flex-row align-items-center mb-1">
+                          <h6 class="mb-1 me-1">94 patients feedback(s) </h6>
+                        </div>  -->
+                          <h6 class="text-success">₹ ${ experty.Charge }/Sessions(1 hour)</h6>
+                          <div class="d-flex flex-column mt-4">
+                            <div class="body">
+                              <form action="/therapy/askslot/${experty._id }" id='formdate' novalidate class="validated-form" method="post">
+                                <label for="date"> <strong>Appointment Date : </strong></label>
+                                <input type="date" id="date" min="2023-04-26" name="date"  class='datePickerId' required>
+                                <br>
+                                <label for="time"> <strong>Appointment Time : </strong></label>
+                                <input type="time" id="time" name="time" class="mt-3 mb-3 timePickerId" required>
+                                
+                                <h6 class="teller"></h6>
+                               </div>
+                               <div class=" mt-3" style="margin-right: 25%;">
+                                    <button type="submit" form='formdate'class="btn btn-success ms-6 timebutton">Request Slot</button>
+                               </div>
+                             </form>
+                          </div>
+                          
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+            }
+            else{
+              document.getElementById("expertlist").innerHTML =  document.getElementById("expertlist").innerHTML +`
+            <div class="container py-5 pt-3">
+              <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                  <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                          <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                            <img src="${experty.pfp}" class="w-100" />
+      
+                            <a href="#!">
+                              <div class="hover-overlay">
+                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                          <h5>
+                            ${experty.Name}
+                          </h5>
+                          <div class="d-flex flex-row">
+                            <!-- <div class="text-danger mb-1 me-2">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                            </div> -->
+                      
+                              <span>
+                                Total Sessions : ${experty.Sessionno}
+                              </span>
+                            
+                          </div>
+            
+                            <div class="mt-1 mb-0 text-muted small">
+                              <span class="text-success"> • </span>
+                              <span>
+                                ${type[no-1]}
+                              </span>
+                            </div>
+                           
+                              <p class="text-truncate mb-4 mb-md-0">
+                                ${experty.Experience} yr of experience
+                              </p>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                          <!-- <div class="d-flex flex-row align-items-center mb-1">
+                          <h6 class="mb-1 me-1">94 patients feedback(s) </h6>
+                        </div>  -->
+                          <h6 class="text-success">₹ ${ experty.Charge }/Sessions(1 hour)</h6>
+                          <div class="d-flex flex-column mt-4">
+                            <div class="body">
+                              <form action="/therapy/askslot/${experty._id }" id='formdate' novalidate class="validated-form" method="post">
+                                <label for="date"> <strong>Appointment Date : </strong></label>
+                                <input type="date" id="date" min="2023-04-26" name="date"  class='datePickerId' required>
+                                <br>
+                                <label for="time"> <strong>Appointment Time : </strong></label>
+                                <input type="time" id="time" name="time" class="mt-3 mb-3 timePickerId" required>
+                                
+                                <h6 class="teller"></h6>
+                               </div>
+                               <div class=" mt-3" style="margin-right: 25%;">
+                                    <button type="submit" form='formdate'class="btn btn-success ms-6 timebutton">Request Slot</button>
+                               </div>
+                             </form>
+                          </div>
+                          
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+            }
+        }    
+      }
+    };
+    xhttp.open("GET", `http://localhost:6969/therapy/${no}`);
+    xhttp.send();
+  }
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+    crossorigin="anonymous"></script>
+
+
+
+
+
+<!-- 
+    const compareDates = (d1, d2) => {
+      let date1 = new Date(d1).getTime();
+      let date2 = new Date(d2).getTime();
+    
+      if (date1 < date2) {
+        console.log(`${d1} is less than ${d2}`);
+      } else if (date1 > date2) {
+        console.log(`${d1} is greater than ${d2}`);
+      } else {
+        console.log(`Both dates are equal`);
+      }
+    };
+    
+    compareDates("06/21/2022", "07/28/2021");
+    compareDates("01/01/2001", "01/01/2001");
+    compareDates("11/01/2021", "02/01/2022"); -->

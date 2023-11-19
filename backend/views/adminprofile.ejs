@@ -1,0 +1,244 @@
+<%layout('./layouts/profile-boilerplate') %>
+<head>
+    <link rel="stylesheet" href="/css/feedindex.css">
+    <link rel="stylesheet" href="/css/gradient.css">
+  </head>
+<style>
+    body {
+    /* background: rgb(99, 39, 120) */
+    /* background: linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff); */
+    /* background: linear-gradient(to right, #fc10e4, #f24bcb, #cd31bd, #f11dc0); */
+     /* background: linear-gradient( rgba(213, 126, 235, 1));  */
+    background: linear-gradient(to right, rgb(76, 142, 229), rgba(213, 126, 235, 1));
+
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.expert-banner{
+    width: 65%;
+    border-radius: 4rem;
+    margin-top:1rem;
+   
+    font-family: 'Montserrat', sans-serif;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    
+}
+</style>
+<div class="sabkuch">
+    <div class="expert-div center">
+        <img src="https://i.imgur.com/ujX2KRl.png" class="expert-banner" alt="expert">
+    </div>
+
+    <section id="first" class="d-flex justify-content-center align-items-center">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+              <div class="col-lg-11 py-6 px-4">
+                <div class="card mb-1">
+                    <div class="card-body" >
+                        <div class="row">
+                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                <h2 class="text-right"><strong>Admin Profile</strong></h2>
+                            </div>
+                            <div class="col-sm-3">
+                                <p class="mb-0">Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><%= admini.name %></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><%= admini.email %></p>
+                            </div>
+                        </div>
+                        <hr>
+                  </div>
+
+                  <!-- Manage Products -->
+                  <div class="mb-4">
+                    <div class="" >
+                        <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                            <h3 class="text-right">Manage Products</h3>
+                        </div>
+                        <div class=" d-flex justify-content-left align-items-center px-5 mt-2">
+                            <button type="button"  onclick="window.location.href='/admin/adminproductsmanage'" class="btn btn-primary btn-lg" >Manage</button>
+                        </div>
+                    </div>
+
+                    <!-- Manage Experts -->
+
+                    <div class="" >
+                        <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                            <h3 class="text-right">Manage Experts Requests</h3>
+                        </div>
+                        <% for( let doctor of docs ) { %>
+                            <div class="container py-5 pt-3">
+                                <div class="row justify-content-center mb-3">
+                                <div class="col-md-12 col-xl-10">
+                                    <div class="card shadow-0 border rounded-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                            <img src="<%= doctor.pfp %>" class="w-100" />
+                        
+                                            <a href="#!">
+                                                <div class="hover-overlay">
+                                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <h5><%= doctor.Name %></h5>
+                                            <div class="d-flex flex-row">
+                                                <a href='<%= doctor.document %>'><button class="btn btn-primary">Document</button></a>
+                                            </div>
+                                            <% for (tag in doctor.ExpertsIn){ %>
+                                            <div class="mt-1 mb-0 text-muted small">
+                                                <span class="text-success"> • </span>
+                                                <span><%=doctor.ExpertsIn[tag]%></span>
+                                            </div>
+                                            <% } %>
+                                            <p class="text-truncate mb-4 mb-md-0"><%= doctor.Experience %> yr of experience</p>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                            <!-- <div class="d-flex flex-row align-items-center mb-1">
+                                            <h6 class="mb-1 me-1">94 patients feedback(s) </h6>
+                                            </div>  -->
+                                            <h5 class="text">Charges</h5>
+                                            <h6 class="text-primary">₹ <%= doctor.Charge %>/Sessions</h6>
+                                            <div class="d-flex flex-column mt-4">
+                                                <h5 class="text">Choose Action</h5>
+                                                <button class="btn btn-outline-success btn-sm "  onclick="window.location.href='/admin/adminexpertaccept/<%= doctor._id %>'" type="button">Accept</button>
+                                                <button class="btn btn-outline-danger btn-sm mt-2"  onclick="window.location.href='/admin/adminexpertdelete/<%= doctor._id %>'" type="button">Reject</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <!-- Manage Feed -->
+                    <div class="" >
+                        <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                            <h3 class="text-right">Manage Reported Posts</h3>
+                        </div>
+                    </div>
+                    <ul>
+                        <% for( let feed of feeds) { %>
+                            <% if (feed.reportarr.length > 0 && !(feed.checked)) { %>
+                                <div class=" carddiv  container p-3">
+                                    <div  class="card mb-2">
+                                    <div class="card-footer">
+                                      <div class="profile">
+                                        <div class=""><span class="round"><img src="<%= feed.author.pfp %>" alt="user"
+                                              width="40"></span>&nbsp;<%= feed.author.username %></div>
+                                      </div>
+                                    </div>
+                                    <a class="cardanchor" href="/feed/<%= feed.id%>">
+                                      
+                                        <% if (feed.image) { %>
+                                          <img class="card-img-top p-3" src="<%= feed.image %>" alt="Card image cap">
+                                          <% } %>
+                      
+                                            <div style="font-size: 1rem; margin-bottom: 0 rem !important;"class="card-body">
+                                              <div class="card-data">
+                                                <h5 class="card-title">
+                                                  <%=feed.title%>
+                                                </h5>
+                                                <p class="card-subtitle">
+                                                  <%= feed.caption %>
+                                                </p>
+                                                <p style="font-size: 1rem;">
+                                                  <%= feed.likes %> Got Inspired</h6>
+                                              </div>
+                      
+                                            </div>
+                                            <div class="card-footer ">
+                                              <small class="text-muted">
+                                                <%= feed.uploaddate %>
+                                              </small>
+                                            </div>
+
+                                            
+                                    </a>
+                                  </div>
+                                  <hr>
+                                            <div>
+                                                <div class="d-flex m-4">
+                                                    <button class="btn btn-outline-success btn-sm mx-3" type="button" onclick="window.location.href='/admin/adminfeedok/<%= feed._id %>'">No Problem</button>
+                                                    <button class="btn btn-outline-danger btn-sm mx-3" type="button" onclick="window.location.href='/admin/adminfeeddelete/<%= feed._id %>'">Delete Post</button>
+                                                </div>
+                                            </div>
+                                  </div>
+                            <% } %>
+                          <% } %>
+                      </ul>
+
+                    
+                </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+
+
+    </section>
+
+</div>
+</div>

@@ -1,0 +1,261 @@
+<%layout('./layouts/profile-boilerplate')%>
+
+<link rel="stylesheet" href="/css/gradient.css">
+<div class="d-flex justify-content-center">
+  <img src="https://i.imgur.com/uc9EeQL.png" style="width: 65%;border-radius: 4rem;margin-top: 1rem;font-family: 'Montserrat', sans-serif;" alt="wellness">
+</div>
+
+
+<section class="books section-p1" >
+    <div class="text-center container py-5">
+        <h1 class="mb-5 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Mindfulness Books</strong></h1>
+      </div>
+    <div class="row">
+      <% for( let product of prod ) { %>
+     
+        <% if (product.Type==='Mindfulness Books') { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+                <img src="<%= product.image %>"
+                  class="w-100" />
+                <a href="#!">
+                  <div class="hover-overlay">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body">
+                <a href="" class="text-reset">
+                  <h5 class="card-title mb-3"><%= product.Name %></h5>
+                </a>
+                <a href="" class="text-reset">
+                  <p><%= product.author %></p>
+                </a>
+                <h6 class="mb-3">MRP : ₹<%= product.Price%></h6>
+                <form action="/admin/adminproductdelete/<%= product._id %>?_method=DELETE" method="post" id="<%= product._id %>_deleter"></form>
+              <form action="/admin/adminproductupdate/<%= product._id %>?_method=PUT" method="post" id="<%= product._id %>_updater"></form>
+                <label for="price">Discounted Price</label><br>
+                <input type="Number" id="price" min="1" max="<%= product.Price %>" form="<%= product._id %>_updater" name="productcutprice" placeholder=" <%= product.Cutprice %>"><br>
+                <label for="price">Stock</label><br>
+                <input type="Number" id="price" min='0' name="productstock" form="<%= product._id %>_updater" placeholder=" <%= product.Stock %>"><br>
+                <button class="btn btn-outline-primary mt-3" type="submit" form="<%= product._id %>_updater">Submit</button>
+                <button class="btn btn-outline-danger mt-3" type="submit" form="<%= product._id %>_deleter">Delete</button>
+             
+                
+               </div>
+            </div>
+      </div>
+        <% } %>
+      
+      <% } %>
+  
+    </div>
+    </div>
+  </section>   
+
+
+<section class="stress-busters section-p1" >
+    <div class="text-center container py-5">
+        <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Stress Busters</strong></h1>
+    </div>
+    <div class="row">
+      <% for( let product of prod ) { %>
+     
+        <% if (product.Type==='Stress Busters') { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+                <img src="<%= product.image %>"
+                  class="w-100" />
+                <a href="#!">
+                  <div class="hover-overlay">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body">
+                <a href="" class="text-reset">
+                  <h5 class="card-title mb-3"><%= product.Name %></h5>
+                </a>
+                <a href="" class="text-reset">
+                  <p><%= product.author %></p>
+                </a>
+                <h6 class="mb-3">
+                  MRP : ₹<%= product.Price%>
+                </h6>
+                <form action="/admin/adminproductdelete/<%= product._id %>?_method=DELETE" method="post" id="<%= product._id %>_deleter"></form>
+                <form action="/admin/adminproductupdate/<%= product._id %>?_method=PUT" method="post" id="<%= product._id %>_updater"></form>
+                  <label for="price">Discounted Price</label><br>
+                  <input type="Number" id="price" min="1" max="<%= product.Price %>" form="<%= product._id %>_updater" name="productcutprice" placeholder=" <%= product.Cutprice %>"><br>
+                  <label for="price">Stock</label><br>
+                  <input type="Number" id="price" min='0' name="productstock" form="<%= product._id %>_updater" placeholder=" <%= product.Stock %>"><br>
+                  <button class="btn btn-outline-primary mt-3" type="submit" form="<%= product._id %>_updater">Submit</button>
+                  <button class="btn btn-outline-danger mt-3" type="submit" form="<%= product._id %>_deleter">Delete</button>
+    
+                
+               </div>
+            </div>
+      </div>
+        <% } %>
+      
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="herbals section-p1" >
+  <div class="text-center container py-5">
+      <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Herbals</strong></h1>
+  </div>
+  <div class="row">
+    <% for( let product of prod ) { %>
+     
+      <% if (product.Type==='Herbals') { %>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+              <img src="<%= product.image %>"
+                class="w-100" />
+              <a href="#!">
+                <div class="hover-overlay">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </div>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="" class="text-reset">
+                <h5 class="card-title mb-3"><%= product.Name %></h5>
+              </a>
+              <a href="" class="text-reset">
+                <p><%= product.author %></p>
+              </a>
+              <h6 class="mb-3">
+                MRP : ₹<%= product.Price%>
+              </h6>
+              <form action="/admin/adminproductdelete/<%= product._id %>?_method=DELETE" method="post" id="<%= product._id %>_deleter"></form>
+              <form action="/admin/adminproductupdate/<%= product._id %>?_method=PUT" method="post" id="<%= product._id %>_updater"></form>
+                <label for="price">Discounted Price</label><br>
+                <input type="Number" id="price" min="1" max="<%= product.Price %>" form="<%= product._id %>_updater" name="productcutprice" placeholder=" <%= product.Cutprice %>"><br>
+                <label for="price">Stock</label><br>
+                <input type="Number" id="price" min='0' name="productstock" form="<%= product._id %>_updater" placeholder=" <%= product.Stock %>"><br>
+                <button class="btn btn-outline-primary mt-3" type="submit" form="<%= product._id %>_updater">Submit</button>
+                <button class="btn btn-outline-danger mt-3" type="submit" form="<%= product._id %>_deleter">Delete</button>
+             </div>
+          </div>
+    </div>
+      <% } %>
+    
+    <% } %>
+  </div>
+</section>
+
+<section class="sleepwell section-p1" >
+  <div class="text-center container py-5">
+      <h1 class="mb-6 green2 product-type"><strong style="font-family: 'Roboto', sans-serif;">Sleepwell</strong></h1>
+  </div>
+  <div class="row">
+    <% for( let product of prod ) { %>
+     
+      <% if (product.Type==='Sleepwell') { %>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <div class="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
+              <img src="<%= product.image %>"
+                class="w-100" />
+              <a href="#!">
+                <div class="hover-overlay">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </div>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="" class="text-reset">
+                <h5 class="card-title mb-3"><%= product.Name %></h5>
+              </a>
+              <a href="" class="text-reset">
+                <p><%= product.author %></p>
+              </a>
+              <h6 class="mb-3">
+                MRP : ₹<%= product.Price%>
+              </h6>
+              <form action="/admin/adminproductdelete/<%= product._id %>?_method=DELETE" method="post" id="<%= product._id %>_deleter"></form>
+              <form action="/admin/adminproductupdate/<%= product._id %>?_method=PUT" method="post" id="<%= product._id %>_updater"></form>
+                <label for="price">Discounted Price</label><br>
+                <input type="Number" id="price" min="1" max="<%= product.Price %>" form="<%= product._id %>_updater" name="productcutprice" placeholder=" <%= product.Cutprice %>"><br>
+                <label for="price">Stock</label><br>
+                <input type="Number" id="price" min='0' name="productstock" form="<%= product._id %>_updater" placeholder=" <%= product.Stock %>"><br>
+                <button class="btn btn-outline-primary mt-3" type="submit" form="<%= product._id %>_updater">Submit</button>
+                <button class="btn btn-outline-danger mt-3" type="submit" form="<%= product._id %>_deleter">Delete</button>
+            
+              
+             </div>
+          </div>
+    </div>
+      <% } %>
+    
+    <% } %>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Product</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">   <!-- Modal Content Starts here-->
+        <form  novalidate class="validated-form" action="/admin/adminproductadd" method="POST" id="create">
+          <div class="form mb-4" >
+            <label for="name" class="form-label"><strong>Name</strong></label>
+            <input type="text" class="form-control" name="Name" placeholder="enter product name">
+            
+            <label for="category" class="form-label mt-3 me-3"><strong>Category</strong></label>
+            <select name="category" name="category">
+              <option value="Mindfulness Books">Mindfulness Books</option>
+              <option value="Stress Busters">Stress Busters</option>
+              <option value="Herbals">Herbals</option>
+              <option value="Sleepwell">Sleepwell</option>
+            </select>
+            <br>
+
+            <label for="company" class="form-label mt-3"><strong>Brand</strong></label>
+            <input type="text" class="form-control" name="company" placeholder="enter product brand">
+            
+            <label for="author" class="form-label mt-3"><strong>Author</strong></label>
+            <input type="text" class="form-control" name="author" placeholder="enter product author">
+            
+            <label for="imgurl" class="form-label mt-3"><strong>Image URL</strong></label>
+            <input type="text" class="form-control" name="imgurl" placeholder="enter product image-url">
+            
+            <label for="price" class="form-label mt-3"><strong>Price</strong></label>
+            <input type="number" class="form-control" name="price" placeholder="enter product price">
+            
+            <label for="cutprice" class="form-label mt-3"><strong>Discounted Price</strong></label>
+            <input type="number" class="form-control" name="cutprice" placeholder="enter discounted product price">
+
+            <label for="stock" class="form-label mt-3"><strong>Stock</strong></label>
+            <input type="number" class="form-control" name="stock" placeholder="enter discounted product price">
+    
+            </div>
+        </form>
+      </div>
+        
+    
+      <div class="modal-footer" style="margin-right: 25%;">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="submit" form="create" class="btn btn-primary ms-6">Create Product</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class=" d-flex justify-content-center align-items-center px-5 mt-6">
+    <div class="mt-4 text-center mb-4"><button class="btn btn-primary btn-lg profile-button" type="button" data-mdb-toggle="modal" data-mdb-target="#exampleModal">New Product</button></div>
+    <button type="button"  onclick="window.location.href='/admin/adminprofile'" class="btn btn-primary btn-lg ms-4" >Back</button>
+</div>
+</section>
+
+
+<!-- <script src="/js/products.js"></script> -->

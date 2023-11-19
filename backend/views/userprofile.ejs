@@ -1,0 +1,367 @@
+<%layout('./layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/feedindex.css">
+<link rel="stylesheet" href="/css/gradient.css">
+<style>
+    body {
+    /* background: rgb(99, 39, 120) */
+    /* background: linear-gradient(to right, #63f1ee, #63d5ff, #63a3ff, #6397ff); */
+    /* background: linear-gradient(to right, #fc10e4, #f24bcb, #cd31bd, #f11dc0); */
+     /* background: linear-gradient( rgba(213, 126, 235, 1));  */
+    background: linear-gradient(to right, rgb(76, 142, 229), rgba(213, 126, 235, 1));
+
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.expert-banner{
+    width: 65%;
+    border-radius: 4rem;
+    margin-top:1rem;
+   
+    font-family: 'Montserrat', sans-serif;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    
+}
+</style>
+<div class="sabkuch">
+    <div class="expert-div center">
+        <img src="https://i.imgur.com/ujX2KRl.png" class="expert-banner" alt="expert">
+    </div>
+
+<section id="first" class="d-flex justify-content-center align-items-center">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-lg-11 py-6 px-4">
+            <div class="card mb-1">
+                <div class="card-body" >
+                    <div class="row">
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <h2 class="text-right"><strong>My Profile</strong></h2>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="<%= use.pfp%>" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 15rem;">
+                            <h5 class="my-3"><%= use.username %></h5>
+                            <p class="text-muted mb-1"><%= use.email %></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p class="mb-0">Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><%= use.username %></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><%= use.email %></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Smile Count</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><%= use.SmileCount %></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Profile Photo</p>
+                        </div>
+                        <div class="dropdown col-sm-4">
+                            <p class="text-muted mb-0">Choose Picture</p>
+                            <div class="dropdown-content">
+                                <img  src="https://i.imgur.com/6M3LwSn.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/T2Aoapu.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/nfXx1EM.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/fL6kdlp.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/IvdYu4j.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/syLBBrb.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/SZoE8mI.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/klyyNyU.jpg" class="round" width="80" height="80">
+                                <img  src="https://i.imgur.com/IhiM3OA.jpg" class="round" width="80" height="80">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+            
+            <!-- Booking -->
+            <div class="d-flex justify-content-center align-items-center mb-2 mt-2">
+                <h2 class="text-right"><strong>Therapy Sessions</strong></h2>
+            </div>
+
+            <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                <h3 class="text-right">Booked Sessions</h3>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Expert Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% for( let slot of slotter ) { %>
+                                <% if (slot.status === 'accept') { %>
+                                    <tr>
+                                        <th scope="row"><%= slot.doctorid.Name%></th>
+                                        <td><%= slot.Date%></td>
+                                        <td><%= slot.Time %></td>
+                                      </tr>
+                                <% } %>
+                            <% } %>
+                        </tbody>
+                      </table>
+                </div>
+
+               
+
+                <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                    <h3 class="text-right">Pending Sessions</h3>
+                </div>
+                <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Expert Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <% for( let slot of slotter ) { %>
+                                    <% if (slot.status ==='pending') { %>
+                                        <tr>
+                                            <th scope="row"><%= slot.doctorid.Name%></th>
+                                            <td><%= slot.Date%></td>
+                                            <td><%= slot.Time %></td>
+                                          </tr>
+                                    <% } %>
+                                <% } %>
+                            </tbody>
+                          </table>
+                    </div>
+
+
+
+
+                    <div class="d-flex justify-content-start align-items-center pt-3 mt-3 ps-5">
+                        <h3 class="text-right">Previous Sessions</h3>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center px-5 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Expert Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Review Session</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <% for( let slot of slotter ) { %>
+                                    <% if (slot.status === 'happened' || slot.status === 'reviewed') { %>
+                                        <tr>
+                                            <th scope="row"><%= slot.doctorid.Name%></th>
+                                            <td><%= slot.Date%></td>
+                                            <td><%= slot.Time %></td>
+                                            <% if (slot.status==="happened") { %>
+                                                <td>
+                                                    <button type="button" class="btn btn-success" onclick="window.location.href='/happy/<%= slot._id %>'">Felt Happy ?</button>
+                                                </td>
+                                            <% } else {%>
+                                                <td>Thanks for Reviewing</td>
+                                            <% } %>
+                                            
+                                          </tr>
+                                    <% } %>
+                                <% } %>
+                            </tbody>
+                          </table>
+                    </div>
+
+
+
+                   
+            <!-- Post -->
+
+            <div class="d-flex justify-content-center align-items-center mb-2 mt-2">
+                <h2 class="text-right"><strong>Posts</strong></h2>
+            </div>
+            <ul>
+                <% for( let feed of posts) { %>
+                <div class="p-3">
+
+                    <div  class="card mb-2">
+                        <div class="card-footer">
+                            <div class="profile">
+                                <div class=""><span class="round"><img src="<%= feed.author.pfp %>" alt="user"
+                                    width="40"></span>&nbsp;<%= feed.author.username %>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="cardanchor" href="/feed/<%= feed.id%>">
+                            <% if (feed.image) { %>
+                            <img class="card-img-top p-3" src="<%= feed.image %>" alt="Card image cap">
+                            <% } %>
+        
+                                <div style="font-size: 1rem; margin-bottom: 0 rem !important;"class="card-body">
+                                    <div class="card-data">
+                                        <h5 class="card-title">
+                                        <%=feed.title%>
+                                        </h5>
+                                        <p class="card-subtitle">
+                                        <%= feed.caption %>
+                                        </p>
+                                        <p style="font-size: 1rem;">
+                                        <%= feed.likes %> Got Inspired</h6>
+                                    </div>
+        
+                                </div>
+                                <div class="card-footer ">
+                                    <small class="text-muted">
+                                        <%= feed.uploaddate %>
+                                    </small>
+                                </div>
+                        </a>
+                    </div>
+                </div>
+                <% } %>
+            </ul>
+
+            <!-- Sold -->
+
+            <div class="d-flex justify-content-center align-items-center mb-2 mt-2">
+                <h2 class="text-right"><strong>Your Orders</strong></h2>
+            </div>
+
+            <div class="mt-1 mb-1">
+                <% for( let sell of sold) { %>
+                    <div class="container-sm mb-4 mt-4">
+                        <div class="row justify-content-center">
+                        <div class="col-md-8 mx-auto">
+                            <div class="card card-md">
+                            <div class="card-header">
+                                <div class="row">
+                                <div class="col">
+                                    Username: <%=  use.username%>
+                                </div>
+                                <div class="col text-right">
+                                    Order Details
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for( let index = 0; index < sell.productarr.length; index++ ) { %>
+                                        <tr>
+                                            <td><%= sell.productarr[index].Name %></td>
+                                            <td><%= sell.productarr[index].Cutprice%></td>
+                                            <td><%= sell.countarr[index] %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5>Total: ₹<span id="totalPrice"><%= sell.amount %></span></h5>
+                    </div>
+                <% } %>
+            </div>
+
+            
+
+
+            </div>
+           
+          </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>
+<script type="text/javascript">
+    function custom_template(obj){
+            var data = $(obj.element).data();
+            var text = $(obj.element).text();
+            if(data && data['img_src']){
+                img_src = data['img_src'];
+                template = $("<div><img src=\"" + img_src + "\" style=\"width:100%;height:150px;\"/><p style=\"font-weight: 700;font-size:14pt;text-align:center;\">" + text + "</p></div>");
+                return template;
+            }
+        }
+    var options = {
+        'templateSelection': custom_template,
+        'templateResult': custom_template,
+    }
+    $('#id_select2_example').select2(options);
+    $('.select2-container--default .select2-selection--single').css({'height': '220px'});
+
+</script>

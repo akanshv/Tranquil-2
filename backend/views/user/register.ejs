@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tranquil - Talk & Feel Better</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="icon" type="image/x-icon" href="/Images/favicon.ico">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+</head>
+<style>
+  .animated-text {
+    animation: bounceX 1s infinite alternate, bounceY 1s infinite;
+}
+
+@keyframes bounceX {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(20px);
+    }
+}
+
+@keyframes bounceY {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+</style>
+<body>
+
+<section class="h-300 gradient-form gradient ">
+  <%- include('../partials/flash')%>
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+               
+                <div class="card rounded-3 signupcard text-black  animate_animated animate_backInLeft" data-aos="flip-left">
+                    <div class="row g-0">
+                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                            <div class="text-white px-3 py-4 p-md-5 mx-md-4" >
+                                <div class="logo-div"><img src="/Images/logo.png" style="width: 185px; margin-left:2rem" alt="logo"></div>
+                                <h4 class="mb-4 white text-center animated-text">Hey there👋</h4>
+                                <h4 class="mb-4 white text-center">Welcome to your journey towards mental health!</h4>
+                                <p class="large mb-0 white">Tranquil is an Anonymous, Safe, and Effortless Go-To Feel Better platform that smartly connects you to the right peers and counselors to talk to & feel better.</p>
+                                <br>
+                                <p class="large mb-0 white">Our mission is to spread over a million smile and make the world happier and healthier.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" style="background-image: url('https://i.imgur.com/4mHI7ZP.png');">
+                            <div class="card-body p-md-5 mx-md-4">
+
+                                <div class="text-center">
+                                    
+                                    <h4 class="mt-1 mb-5 pb-1" id="sign-in">Sign up</h4>
+                                </div>
+
+                                <form action="/register" method="post" class="regform">
+                                  <p class='information' style="text-align:center; margin-bottom: 1rem;">Lets make your account</p>
+                                  <div class="form-group mb-4">
+                                      <input type="text" class="form-control"  name="register[username]" id="username" aria-describedby="emailHelp" placeholder="Username" required>
+                                  </div>
+
+                                  
+                                
+
+                                  <div class="form-group mb-4">
+                                    <input type="email" class="form-control" name="register[email]" id="email" placeholder="Write your email" required>
+                                  </div>
+
+                                  
+                                
+
+
+                                  <div class="form-group mb-4">
+                                      <input type="password" class="form-control" name="register[password]" id="password" placeholder="Password more than 5 character" required>
+                                  </div>
+
+                                  
+                                
+                                  <div class="form-group mb-4">
+                                    <input type="text" class="form-control"  name="register[pfp]" id="pfp" aria-describedby="emailHelp" placeholder="pfp" required>
+                                  </div>
+
+                                  <div class="text-center pt-1 mb-5 pb-1">
+                                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Register</button>
+                                  </div>
+
+                              </form>
+                                  <form action="/login" method="get">
+                                  <div class="d-flex align-items-center justify-content-center pb-4">
+                                      <p class="mb-0 me-2"> Existing User?</p>
+                                      <button type="submit"  class="btn btn-outline-danger loginbutton">Login</button>
+                                  </div>
+                              </form>
+
+                         
+
+                          </div>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script>
+
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+
+
+
+var display=document.querySelector('.information');
+var loginbutton=document.querySelector('.apply');
+var password=document.querySelector('#password');
+var regform=document.querySelector('.regform');
+check=0;
+regform.addEventListener('submit',(event)=>{
+event.preventDefault();
+var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{5,15}$/;
+if(!(password.value.match(paswd))){
+display.textContent='Password must be greater than 4 letters containing uppercase lowercase and spl character and no.';
+return;
+}
+if(check===0){
+regform.submit();
+}
+
+})
+
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,191 @@
+<%layout('./layouts/boilerplate')%>
+
+  <head>
+    <link rel="stylesheet" href="/css/feedindex.css">
+    <link rel="stylesheet" href="/css/gradient.css">
+  </head>
+  <div class="feedpage container">
+    <div class="row ">
+      <div class="mb-5 headimg mt-4">
+        <img  class='img-fluid rounded-pill' src="https://i.imgur.com/Binzr0Z.png" alt="">
+    </div>
+
+    <div class="dropdown d-flex justify-content-end">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+        Filter
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <!-- <li><a class="dropdown-item" href="/feed/filterfeed/<%=1%>" onclick="">Newest</a></li>
+        <li><a class="dropdown-item" href="/feed/filterfeed/<%=2%>" onclick="">Oldest</a></li>
+        <li><a class="dropdown-item" href="/feed/filterfeed/<%=3%>" onclick="">Most Inspiring</a></li> -->
+        <li><Most class="dropdown-item" href="#" onclick="mostEngaging(1)">Newest</a></li>
+        <li><Most class="dropdown-item" href="#" onclick="mostEngaging(2)">Oldest</a></li>
+        <li><Most class="dropdown-item" href="#" onclick="mostEngaging(3)">Most Inspiring</a></li>
+
+      </ul>
+    </div>
+
+
+    <div> 
+      <form action="/feed/newfeed" method="get">
+        <div class="upper-text">
+          <p class="d-flex justify-content-center align-items-center heading2 " style="color:#1d1d1d; font-size: 2rem;">Create Your Own Inspiring Post
+            <button type="submit" style="text-align: center !important; background-color:#3B71CA; color: white;" class="btn  m-3">Create Post</button></p>
+        </div>
+      </form>
+    </div>
+      <div class=" col-10 offset-1"  >  
+        <!-- <h1 class="fheading mb-5" style="
+        text-align:center;
+        font-size: 5rem;
+        font-family: 'italiana';
+        color:rgb(84, 11, 11);
+        font-weight: 500;
+      
+        ">Inspire</h1> -->
+
+        <ul id="cardlist">
+          <% for( let feed of feeds) { %>
+
+            <div class=" carddiv  container p-3">
+              <div  class="card mb-2">
+              <div class="card-footer">
+                <div class="profile">
+                  <div class="" id="authorusername"><span class="round"><img src="<%= feed.author.pfp %>" id="authorpfp" alt="user" width="40"></span>&nbsp;<%= feed.author.username %></div>  <!-- here -->
+                </div>
+              </div>
+              <a class="cardanchor" id="feedid" href="/feed/<%= feed.id%>" >  <!-- here -->
+
+                
+                  <% if (feed.image) { %>
+                    <img class="card-img-top p-3" src="<%= feed.image %>" id="feedimage" alt="Card image cap">  <!-- here -->
+                    <% } %>
+
+                      <div style="font-size: 1rem; margin-bottom: 0 rem !important;"class="card-body">
+                        <div class="card-data">
+                          <h5 class="card-title" id="feedtitle">
+                            <%=feed.title%>  <!-- here -->
+                          </h5>
+                          <p class="card-subtitle" id="feedcaption">
+                            <%= feed.caption %>  <!-- here -->
+                          </p>
+                          <p style="font-size: 1rem;">
+                            <%= feed.likes %> Got Inspired</h6>  <!-- here -->
+                        </div>
+
+                      </div>
+                      <div class="card-footer " id="feeddate">
+                        <small class="text-muted">
+                          <%= feed.uploaddate %>  <!-- here -->
+                        </small>
+                      </div>
+              </a>
+            </div>
+            </div>
+            <% } %>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- <iconify-icon icon="ri:mental-health-fill" style="color:rgb(81, 223, 233);font-size:2rem;"></iconify-icon> -->
+  <!-- <a href="https://google.co</div>m" class="card card3">
+    <div class="inner">
+      <h2 class="title">Mit 117 Sachen durch Klugheimschen Basaltgebirge</h2>
+      <time class="subtitle">03. März 2021<time>
+    </div>
+</a> -->
+
+
+<!-- 
+  index page ki routes banani hai
+ -->
+
+<script>
+  function mostEngaging(no) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        feeds = JSON.parse(xhttp.response);
+        console.log(feeds)
+        document.getElementById("cardlist").innerHTML ='';
+        for( let feed of feeds){ 
+          
+          if (feed.image) {
+            document.getElementById("cardlist").innerHTML =  document.getElementById("cardlist").innerHTML+ `
+            <div class=" carddiv  container p-3">
+              <div  class="card mb-2">
+              <div class="card-footer">
+                <div class="profile">
+                  <div class="" id="authorusername"><span class="round"><img src="${feed.author.pfp}" id="authorpfp" alt="user" width="40"></span>&nbsp;${feed.author.username}</div> 
+                </div>
+              </div>
+              <a class="cardanchor" id="feedid" href="/feed/${feed._id}" >
+
+                    <img class="card-img-top p-3" src="${feed.image}" id="feedimage" alt="Card image cap">
+
+                      <div style="font-size: 1rem; margin-bottom: 0 rem !important;"class="card-body">
+                        <div class="card-data">
+                          <h5 class="card-title" id="feedtitle">
+                            ${feed.title}
+                          </h5>
+                          <p class="card-subtitle" id="feedcaption">
+                            ${feed.caption}
+                          </p>
+                          <p style="font-size: 1rem;">
+                            ${feed.likes} Got Inspired</h6>
+                        </div>
+
+                      </div>
+                      <div class="card-footer " id="feeddate">
+                        <small class="text-muted">
+                          ${feed.uploaddate}
+                        </small>
+                      </div>
+              </a>
+            </div>
+            </div>`
+          }
+          else {
+            document.getElementById("cardlist").innerHTML =  document.getElementById("cardlist").innerHTML + `
+            <div class=" carddiv  container p-3">
+              <div  class="card mb-2">
+              <div class="card-footer">
+                <div class="profile">
+                  <div class="" id="authorusername"><span class="round"><img src="${feed.author.pfp}" id="authorpfp" alt="user" width="40"></span>&nbsp;${feed.author.username}</div> 
+                </div>
+              </div>
+              <a class="cardanchor" id="feedid" href="/feed/${feed._id}" >
+
+                    <img class="card-img-top p-3" src="${feed.image}" id="feedimage" alt="Card image cap">
+
+                      <div style="font-size: 1rem; margin-bottom: 0 rem !important;"class="card-body">
+                        <div class="card-data">
+                          <h5 class="card-title" id="feedtitle">
+                            ${feed.title}
+                          </h5>
+                          <p class="card-subtitle" id="feedcaption">
+                            ${feed.caption}
+                          </p>
+                          <p style="font-size: 1rem;">
+                            ${feed.likes} Got Inspired</h6>
+                        </div>
+
+                      </div>
+                      <div class="card-footer " id="feeddate">
+                        <small class="text-muted">
+                          ${feed.uploaddate}
+                        </small>
+                      </div>
+              </a>
+            </div>
+            </div>`
+          }
+        }    
+      }
+    };
+    xhttp.open("GET", `http://localhost:6969/feed/filterfeed/${no}`);
+    xhttp.send();
+  }
+</script>

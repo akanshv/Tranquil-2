@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
+
+/* GLOBAL STYLING */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.gradient{
+    background: #fccb90;
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background-size: cover;
+	background-repeat: no-repeat;
+}
+
+h1 {
+    font-size: 50px;
+    line-height: 64px;
+    color: #222;
+}
+
+h2 {
+    font-size: 46px;
+    line-height: 54px;
+    color: #222;
+}
+
+h4 {
+    font-size: 20px;
+    color: #222;
+}
+
+h6 {
+    font-weight: 700;
+    font-size: 12px;
+}
+
+p {
+    font-size: 16px;
+    color: #465b52;
+    margin: 15px 0 20px 0;
+}
+
+.section-p1 {
+    padding: 40px 80px;
+}
+
+.section-m1 {
+    margin: 40px 0;
+}
+
+button.normal {
+    font-size: 14px;
+    font-weight: 600px;
+    padding: 15px 30px;
+    color: #000;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+}
+
+button.white {
+    font-size: 13px;
+    font-weight: 600px;
+    padding: 11px 18px;
+    color: #fff;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid #fff;
+    outline: none;
+    transition: 0.2s;
+}
+
+body {
+    width: 100%;
+}
+
+/* Home Page */
+
+/*Header*/
+
+
+.logo {
+    position: relative;
+    right: 100px;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    background-color: #E3E6F3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    position: sticky; 
+    top: 0;
+    left: 0;
+}
+
+#nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav li {
+    list-style: none;
+    padding: 0 20px;
+    position: relative;
+}
+
+#nav li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: 0.3s ease;
+}
+
+#nav li a:hover,
+#nav li a.active {
+    color: #088178;
+}
+
+#cart li a:hover,
+#nav li a.active {
+    color: #088178;
+}
+
+
+#nav li a.active::after,
+#nav li a:hover::after {
+    /*Pseudoclass*/
+    content: "";
+    width: 40%;
+    height: 2px;
+    background-color: #088178;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+}
+
+.hamburger {
+    display: none;
+}
+
+#close {
+    display: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+/* MEDIA-QUERIES */
+
+@media (max-width:799px) {
+
+    .body{
+        width: 100% !important;
+    }
+    
+    .section-p1 {
+        padding: 40px 40px;
+    }
+
+    #nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        position: fixed;
+        top: 0;
+        right: -500px;
+        height: 100vh;
+        width: 300px;
+        background-color: #E3E6F3;
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.2);
+        padding: 80px 0 0 40px;
+        transition: 0.3s;
+    }
+
+    .logo{
+        position: relative;
+        right: 0px
+    }
+
+    #nav li {
+        margin-bottom: 25px;
+    }
+
+    .hamburger {
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger i {
+        color: #1a1a1a;
+        font-size: 24px;
+        padding-left: 20px;
+    }
+
+    #close {
+        display: initial;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        color: #222;
+        font-size: 24px;
+    }
+
+    .hide {
+        display: none;
+    }
+}
+
+@media (max-width:477px) { 
+
+    .body{
+        width: 100% !important;
+    }
+    
+    .section-p1{
+        padding: 20px;
+    }
+
+    header{
+        padding: 10px 30px;
+    }
+
+    h2{
+        font-size: 38px;
+    }
+
+    h2{
+        font-size: 32px;
+    }
+}
+

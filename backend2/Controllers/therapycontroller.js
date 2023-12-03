@@ -11,14 +11,20 @@ navactive=[0,0,0,1,0,0];
 
 
 module.exports.gettherapy=async (req, res, next) => {
-    navactive=[0,0,0,1,0,0];
-    expertarray= await experts.find({pendingstatus:false});
-  //   console.log(expertarray);
-    res.render('therapy/therapyentry',{expertarray:expertarray,navactive:navactive})
+  try {
+        // navactive=[0,0,0,1,0,0];
+        expertarray= await experts.find({pendingstatus:false});
+        //   console.log(expertarray);
+        res.status(200).json({expertarray:expertarray})
+          // res.render('therapy/therapyentry',{,navactive:navactive})      
+  } catch (error) {
+    res.status(500).json({message:"Error",error:error})
+  }
 
 }
 
 module.exports.askslot=async (req, res, next) => {
+  try {
     console.log(req.body);
     const date = req.body.date;
     const time = req.body.time;
@@ -39,10 +45,15 @@ module.exports.askslot=async (req, res, next) => {
    else{
      res.redirect('/therapy');
    }
+  } catch (error) {
+    res.status(500).json({message:"Error",error:error})
+  }
+  
  
  }
 
 module.exports.filter =  async(req,res)=>{
+  try {
     navactive=[0,0,0,1,0,0]
     type=req.params.no;
     console.log(typeof(type));
@@ -114,9 +125,13 @@ module.exports.filter =  async(req,res)=>{
       res.status(200).json(expertarray) //For Ajax  
     }
     else{
-        return res.redirect('/therapy');
+      res.status(500).json({message:"Error",error:error})
     }
   
     // res.render('therapy/therapyentry', {expertarray:expertarray,navactive:navactive});
   
+  } catch (error) {
+    res.status(500).json({message:"Error",error:error})
+  }
+
   }

@@ -47,53 +47,52 @@ router.get('/', catchAsync(async (req, res, next) => {
 
 }))
 
-router.get('/newfeed',isLoggedIn,(req, res, next) => {
-    navactive=[0,1,0,0,0,0]
+// router.get('/newfeed',isLoggedIn,(req, res, next) => {
+//     navactive=[0,1,0,0,0,0]
     
-    //res.send("Hello from Yelpcamp");
-    res.render('feed/newblog',{navactive:navactive});
-})
+//     //res.send("Hello from Yelpcamp");
+//     res.render('feed/newblog',{navactive:navactive});
+// })
 
 router.post('/newfeed',isLoggedIn,uploads.single('image'),catchAsync(async(req,res)=>{
-    console.log(req.file);
-    if(!req.file){
-        req.flash('error','Upload Image Again');
-        res.redirect(`/feed/newfeed`);
-    }
-    multerpath=req.file.path;
-    base64=fs.readFileSync(`${req.file.path}`,'base64');
-    const buffer=Buffer.from(base64,'base64');
-    fs.writeFileSync(`routes/uploadpng/${req.file.filename}.jpg`,buffer);
-    
-    imgurUploader(fs.readFileSync(`routes/uploadpng/${req.file.filename}.jpg`), {title: 'Hello!'}).then(async data => {
-        console.log(data);
-        fs.unlinkSync(`routes/uploadpng/${req.file.filename}.jpg`);
-        fs.unlinkSync(multerpath);
-         
-        post={
-            topic:req.body.topic,
-            title:req.body.title,
-            image:data.link,
-            caption:req.body.caption,
-            descriptions:req.body.description
+    try {
+        console.log(req.file);
+        if(!req.file){
+            req.flash('error','Upload Image Again');
+            res.redirect(`/feed/newfeed`);
         }
-
-
-        const newpost = new feed(post);
-        console.log(newpost); 
-        newpost.author=req.user._id;
-        await newpost.save();
-        req.status(200).json(newpost._id);
-        // req.flash('success','Successfully your post is created');
-        // res.redirect(`/feed/${newpost._id}`);
-
-
-    });
+        multerpath=req.file.path;
+        base64=fs.readFileSync(`${req.file.path}`,'base64');
+        const buffer=Buffer.from(base64,'base64');
+        fs.writeFileSync(`routes/uploadpng/${req.file.filename}.jpg`,buffer);
+        
+        imgurUploader(fs.readFileSync(`routes/uploadpng/${req.file.filename}.jpg`), {title: 'Hello!'}).then(async data => {
+            console.log(data);
+            fs.unlinkSync(`routes/uploadpng/${req.file.filename}.jpg`);
+            fs.unlinkSync(multerpath);
+             
+            post={
+                topic:req.body.topic,
+                title:req.body.title,
+                image:data.link,
+                caption:req.body.caption,
+                descriptions:req.body.description
+            }
     
-
-
+    
+            const newpost = new feed(post);
+            console.log(newpost); 
+            newpost.author=req.user._id;
+            await newpost.save();
+            req.status(200).json(newpost._id);
+            // req.flash('success','Successfully your post is created');
+            // res.redirect(`/feed/${newpost._id}`);
     
     
+        });
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+    }
 }))
 
 
@@ -121,79 +120,96 @@ req.status(200).json(post);
 
 // console.log(post.comments.author+" "+" yes yaha ")
 
-res.render('feed/show',{post,navactive:navactive});
-})
-
-)
+// res.render('feed/show',{post,navactive:navactive});
+}))
 //
 //
  
 
 router.post('/comment/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    const post =await feed.findById(req.params.id);
-    console.log(req.body.comment.body);
-    const comment=new Comment(req.body.comment);
-   // console.log('ANMOLLLLLLL')
-    console.log(req.user);
-    comment.author=req.user._id;
-    comment.authorname=req.user.username;
-    comment.authorpfp=req.user.pfp;
-    console.log(comment);
-    post.comments.push(comment);
-    await comment.save();
-     await post.save();
-    // req.flash('Success','Thanks for Review');
-    // res.redirect(`/feed/${post._id}`);
-    res.status(200);
-}
- 
-))
+
+    try {
+        const post =await feed.findById(req.params.id);
+        console.log(req.body.comment.body);
+        const comment=new Comment(req.body.comment);
+       // console.log('ANMOLLLLLLL')
+        console.log(req.user);
+        comment.author=req.user._id;
+        comment.authorname=req.user.username;
+        comment.authorpfp=req.user.pfp;
+        console.log(comment);
+        post.comments.push(comment);
+        await comment.save();
+         await post.save();
+        // req.flash('Success','Thanks for Review');
+        // res.redirect(`/feed/${post._id}`);
+        res.status(200);
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+    }
+
+}))
 
 
 router.get('/like/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    console.log('anmol');
-    const post =await feed.findById(req.params.id);
-    id=req.user._id; 
-    post.reallikes.push(id);
-    post.likes=post.likes+1;
-    await post.save();
-
-    const changedpost =await feed.findById(req.params.id);
-    console.log(changedpost);
- 
-    res.status(200).json(changedpost);
-    //req.flash('Success','Thanks for liking');
-    // res.redirect(`/feed/${post._id}`);
+    try {
+        console.log('anmol');
+        const post =await feed.findById(req.params.id);
+        id=req.user._id; 
+        post.reallikes.push(id);
+        post.likes=post.likes+1;
+        await post.save();
+    
+        const changedpost =await feed.findById(req.params.id);
+        console.log(changedpost);
+     
+        res.status(200).json(changedpost);
+        //req.flash('Success','Thanks for liking');
+        // res.redirect(`/feed/${post._id}`);
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+    }
 
 }))
 
 
 router.get('/report/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    const post =await feed.findById(req.params.id);
-    id=req.user._id;
-    if (!(post.reportarr.includes(id))) {
-        post.reportarr.push(id);
-    } 
-    await post.save();
-    //req.flash('Success','Thanks for Reporting, we will look into this');
-    const changedpost =await feed.findById(req.params.id);
-    console.log(changedpost);
- 
-    res.status(200).json(changedpost);
+
+    try {
+        const post =await feed.findById(req.params.id);
+        id=req.user._id;
+        if (!(post.reportarr.includes(id))) {
+            post.reportarr.push(id);
+        } 
+        await post.save();
+        //req.flash('Success','Thanks for Reporting, we will look into this');
+        const changedpost =await feed.findById(req.params.id);
+        console.log(changedpost);
+     
+        res.status(200).json(changedpost);
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+    }
+   
     
 }))
 
 router.get('/unlike/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    const post =await feed.findById(req.params.id);
-    id=req.user._id; 
-    post.reallikes.pop(id);
-    post.likes=post.likes-1;
-    await post.save();
-    const changedpost =await feed.findById(req.params.id);
-    console.log(changedpost);
-    res.status(200).json(changedpost);
-    //req.flash('Success','This post is uninspired');
-    
+    try {
+        const post =await feed.findById(req.params.id);
+        id=req.user._id; 
+        post.reallikes.pop(id);
+        post.likes=post.likes-1;
+        await post.save();
+        const changedpost =await feed.findById(req.params.id);
+        console.log(changedpost);
+        res.status(200).json(changedpost);
+        //req.flash('Success','This post is uninspired');    
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+
+    }
+  
 
 }))
 
@@ -201,26 +217,32 @@ router.get('/unlike/:id',isLoggedIn,catchAsync(async(req,res)=>{
 
 
 router.get('/filterfeed/:no',catchAsync(async(req,res)=>{
-    navactive=[0,1,0,0,0,0]
-    type=req.params.no;
-    console.log(typeof(type));
-    feeder = await feed.find({}).populate('author');
-    let feeds=[];
-    if(type==='3'){
-         feeds = feeder.sort((a,b) => -a.likes + b.likes);
-         res.status(200).json(feeds) //For Ajax
+    try {
+        navactive=[0,1,0,0,0,0]
+        type=req.params.no;
+        console.log(typeof(type));
+        feeder = await feed.find({}).populate('author');
+        let feeds=[];
+        if(type==='3'){
+             feeds = feeder.sort((a,b) => -a.likes + b.likes);
+             res.status(200).json(feeds) //For Ajax
+        }
+        else if(type==='1'){
+            feeds=feeder.sort((a,b) => (a.uploaddate < b.uploaddate) ? 1 : ((b.uploaddate < a.uploaddate) ? -1 : 0));
+            res.status(200).json(feeds) //For Ajax
+        }
+        else if(type==='2'){
+            feeds=feeder.sort((a,b) => (a.uploaddate > b.uploaddate) ? 1 : ((b.uploaddate > a.uploaddate) ? -1 : 0));
+            res.status(200).json(feeds)  //For Ajax
+        }
+        else{
+            res.status(500).json({message:"Error",error:error})
+        }
+    } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+
     }
-    else if(type==='1'){
-        feeds=feeder.sort((a,b) => (a.uploaddate < b.uploaddate) ? 1 : ((b.uploaddate < a.uploaddate) ? -1 : 0));
-        res.status(200).json(feeds) //For Ajax
-    }
-    else if(type==='2'){
-        feeds=feeder.sort((a,b) => (a.uploaddate > b.uploaddate) ? 1 : ((b.uploaddate > a.uploaddate) ? -1 : 0));
-        res.status(200).json(feeds)  //For Ajax
-    }
-    else{
-        return res.redirect('/feed');
-    }
+
 
 
     // res.render('feed/index', {feeds:feeds,navactive:navactive});

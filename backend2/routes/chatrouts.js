@@ -20,50 +20,46 @@ navactive=[0,0,1,0,0,0]
 
 
 
-router.get('/',isLoggedIn, catchAsync(async (req, res, next) => {
-     console.log(navactive)
-    //res.send("Hello from Yelpcamp");
-    //yahan pe dbms se aa rha feed
-     //const feeds = await feed.find({});
-     //console.log(feeds);
+// router.get('/',isLoggedIn, catchAsync(async (req, res, next) => {
+//      console.log(navactive)
+//     //res.send("Hello from Yelpcamp");
+//     //yahan pe dbms se aa rha feed
+//      //const feeds = await feed.find({});
+//      //console.log(feeds);
    
-        res.render('chats/chatentry',{navactive,navactive:navactive});
+//         res.render('chats/chatentry',{navactive,navactive:navactive});
    
-        // res.redirect('/login');
-}))
+//         // res.redirect('/login');
+// }))
 
-router.get('/peer',isLoggedIn, catchAsync(async (req, res, next) => {
-    console.log(navactive)
-   //res.send("Hello from Yelpcamp");
-   //yahan pe dbms se aa rha feed
-    //const feeds = await feed.find({});
-    //console.log(feeds);
+// router.get('/peer',isLoggedIn, catchAsync(async (req, res, next) => {
+//     console.log(navactive)
+//    //res.send("Hello from Yelpcamp");
+//    //yahan pe dbms se aa rha feed
+//     //const feeds = await feed.find({});
+//     //console.log(feeds);
     
-   //console.log(isloggedin)
+//    //console.log(isloggedin)
 
-       res.render('chats/chatpeer',{navactive,navactive:navactive,isloggedin:isloggedin});
+//        res.render('chats/chatpeer',{navactive,navactive:navactive,isloggedin:isloggedin});
 
-        // res.redirect('login');
+//         // res.redirect('login');
 
-    
-
-}))
+// }))
 
 
-router.get('/listner', catchAsync(async (req, res, next) => {
-    console.log(navactive)
-   //res.send("Hello from Yelpcamp");
-   //yahan pe dbms se aa rha feed
-    //const feeds = await feed.find({});
-    //console.log(feeds);
+// router.get('/listner', catchAsync(async (req, res, next) => {
+//     console.log(navactive)
+//    //res.send("Hello from Yelpcamp");
+//    //yahan pe dbms se aa rha feed
+//     //const feeds = await feed.find({});
+//     //console.log(feeds);
    
-       res.render('chats/chatlisten',{navactive,navactive:navactive,isloggedin:isloggedin});
+//        res.render('chats/chatlisten',{navactive,navactive:navactive,isloggedin:isloggedin});
    
-        // res.redirect('/login');
+//         // res.redirect('/login');
    
-    
-
-}))
+// }))
 
 
 

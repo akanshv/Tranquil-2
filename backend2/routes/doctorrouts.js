@@ -39,14 +39,14 @@ const control=require('../Controllers/doctorcontroller');
 
 
 
-router.get('/expertlogin',control.getlogin);
+// router.get('/expertlogin',control.getlogin);
 
 router.post('/expertlogin',catchAsync(control.postlogin));
 
 //yahan image lagani hai
 
 
-router.get('/newtherapists', catchAsync(control.getnewtherapist));
+// router.get('/newtherapists', catchAsync(control.getnewtherapist));
 
 router.post('/newtherapists', catchAsync(control.postnewtherapist));
 

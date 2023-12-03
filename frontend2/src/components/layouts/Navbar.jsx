@@ -167,7 +167,7 @@ const Navbar = () => {
                   type="button"
                 >
                   <img
-                    className="w-10 h-10 rounded-full mr-2"
+                    className="w-11 h-11 rounded-full mr-2"
                     src="https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
                     alt="Jese Leos"
                   />

@@ -9,7 +9,8 @@ const ExpressError=require('../utils/ExpressError')
 // wrapper err function
 const catchAsync = require('../utils/catchAsync');
 
-var {navactive}=require('../navactive')
+
+
 
 //model
 const feed=require('../Models/feed');
@@ -18,7 +19,8 @@ const Comment=require('../Models/comments');
 //const { navactive } = require('../navactive');
 
 //middleware
-const {isLoggedIn}=require('../Middlewares/authomiddleware')
+// const {isLoggedIn}=require('../Middlewares/authomiddleware')
+const { protect } = require("../Middlewares/authMiddleware")
 
 
 //multer for file uploading
@@ -54,7 +56,7 @@ router.get('/', catchAsync(async (req, res, next) => {
 //     res.render('feed/newblog',{navactive:navactive});
 // })
 
-router.post('/newfeed',isLoggedIn,uploads.single('image'),catchAsync(async(req,res)=>{
+router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)=>{
     try {
         console.log(req.file);
         if(!req.file){
@@ -98,7 +100,7 @@ router.post('/newfeed',isLoggedIn,uploads.single('image'),catchAsync(async(req,r
 
 
 
-router.get('/:id',isLoggedIn,catchAsync(async (req, res, next) => {
+router.get('/:id',protect,catchAsync(async (req, res, next) => {
 //res.send("Hello from Yelpcamp");
 
 const id = req.params.id
@@ -126,7 +128,7 @@ req.status(200).json(post);
 //
  
 
-router.post('/comment/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.post('/comment/:id',protect,catchAsync(async(req,res)=>{
 
     try {
         const post =await feed.findById(req.params.id);
@@ -151,7 +153,7 @@ router.post('/comment/:id',isLoggedIn,catchAsync(async(req,res)=>{
 }))
 
 
-router.get('/like/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.get('/like/:id',protect,catchAsync(async(req,res)=>{
     try {
         console.log('anmol');
         const post =await feed.findById(req.params.id);
@@ -173,7 +175,7 @@ router.get('/like/:id',isLoggedIn,catchAsync(async(req,res)=>{
 }))
 
 
-router.get('/report/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.get('/report/:id',protect,catchAsync(async(req,res)=>{
 
     try {
         const post =await feed.findById(req.params.id);
@@ -194,7 +196,7 @@ router.get('/report/:id',isLoggedIn,catchAsync(async(req,res)=>{
     
 }))
 
-router.get('/unlike/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.get('/unlike/:id',protect,catchAsync(async(req,res)=>{
     try {
         const post =await feed.findById(req.params.id);
         id=req.user._id; 

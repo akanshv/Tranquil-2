@@ -6,14 +6,8 @@ router=express.Router();
 const ExpressError=require('../utils/ExpressError')
 // wrapper err function
 const catchAsync = require('../utils/catchAsync');
-
-
-var {navactive}=require('../navactive')
-
-navactive=[0,0,0,0,1,0]
-
 //middleware
-const {isLoggedIn}=require('../Middlewares/authomiddleware')
+
 
 //model
 const Product = require('../Models/products');
@@ -24,7 +18,9 @@ const sold=require('../Models/solddetails');
 const control = require('../Controllers/productcontroller');
 
 
-router.get('/',isLoggedIn,catchAsync(control.isloggedin));
+const { protect } = require("../Middlewares/authMiddleware");
+
+router.get('/',protect,catchAsync(control.isloggedin));
 
 router.delete('/cart/:pid',catchAsync(control.deleteproductsingle));
 

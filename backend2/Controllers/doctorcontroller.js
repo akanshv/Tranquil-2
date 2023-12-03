@@ -8,11 +8,9 @@ const imgurUploader = require('imgur-uploader');
 
 
 
-var { navactive } = require('../navactive')
-navactive = [0, 0, 0, 0, 1, 0]
 
-//middleware
-const { isLoggedIn,isDoctorloggedin} = require('../Middlewares/authomiddleware')
+
+
 
 //model
 const experts = require('../Models/doctors');

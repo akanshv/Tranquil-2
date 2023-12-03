@@ -8,12 +8,11 @@ const ExpressError=require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync');
 
 
-var {navactive}=require('../navactive')
+
 
 //middleware
-const {isLoggedIn}=require('../Middlewares/authomiddleware')
+const {protect}=require('../Middlewares/authMiddleware')
 
-navactive=[0,0,1,0,0,0]
 
 
 //model

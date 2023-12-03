@@ -74,7 +74,7 @@ app.use(express.json())  //to parse the info in json type...both are the middlew
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-mongoose.connect(url,{
+mongoose.connect(process.env.url,{
     useNewUrlParser: true,//you have to specify the portno...mongoose changed this so by making false user can go to previous version where port no. is not required
     //useCreateIndex:true,//avoid depracation warnings(warnings that notify us that a specific feature (e.g. a method) will be removed soon (usually in the next minor or major version) and should be replaced with something else.)
     useUnifiedTopology: true// to use new connnection manager of mongoose
@@ -112,7 +112,9 @@ db.once("open", () => {
 // const {carousaltext}=require('./Seeds/carousalhome');
 
 //middleware
-const {isLoggedIn}=require('./Middlewares/authomiddleware')
+const { notFound, errorHandler } = require('./Middlewares/errorMiddleware')
+
+
 
 
 
@@ -151,26 +153,10 @@ app.use("/",userroutes);
 app.use('/therapy',therapyroutes);
 
 
-// app.get('/logoutprofile',(req, res) => {
-//      req.session.destroy();
-//      res.redirect('/home');
-//  })
 
-// app.get('/home',(req, res) => {
-//     navactive=[1,0,0,0,0,0];
-//     res.render('home',{navactive:navactive})
-// })
+app.use(notFound);
+app.use(errorHandler);
 
-
- 
- app.use((err, req, res, next) => {
-    const {statusCode=500}=err;
-    if(!err.message){
-        err.message="Something went Wrong";
-    }
-    console.log(err);
-    res.status(statusCode);
-})
 const PORT=process.env.PORT|| 3000
 app.listen(PORT, () => {
     console.log('Listening the port 6969 from Tranquil...');

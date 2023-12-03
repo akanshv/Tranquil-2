@@ -1,9 +1,6 @@
-var {navactive}=require('../navactive')
 
-navactive=[0,0,0,0,1,0]
 
-//middleware
-const {isLoggedIn}=require('../Middlewares/authomiddleware')
+
 
 //model
 const Product = require('../Models/products');

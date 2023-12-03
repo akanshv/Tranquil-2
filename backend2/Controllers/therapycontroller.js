@@ -5,10 +5,6 @@ const experts = require('../Models/doctors');
 const Slot=require('../Models/expertschedule');
 const User = require('../Models/user');
 
-var {navactive}=require('../navactive')
-
-navactive=[0,0,0,1,0,0];
-
 
 module.exports.gettherapy=async (req, res, next) => {
   try {

@@ -15,8 +15,9 @@ const sold=require('../Models/solddetails');
 // Functions :
 
 module.exports.isloggedin=async (req, res, next) => {
-    navactive=[0,0,0,0,1,0];
-    const products =  await Product.find({});
+    try {
+
+        const products =  await Product.find({});
     const carter=await cart.find({userid:req.user._id}).populate('product');
     //console.log(carter);
     totalcount=0;
@@ -47,37 +48,58 @@ module.exports.isloggedin=async (req, res, next) => {
         cartor:cartor
     }
     res.status(200).json(data);
+        
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
+    
     // res.render('products/products',{navactive:navactive,products:products,cartdetails:cartdetails,cartor:cartor});
 
 }
 
 
 module.exports.deleteproductsingle=async (req,res)=>{
-    pid=req.params.pid;
-    //console.log(pid);
-    await cart.deleteOne({productid:pid});
-    res.status(200);
-    // res.redirect('/products');
+    try {
+        pid=req.params.pid;
+        //console.log(pid);
+        await cart.deleteOne({productid:pid});
+        res.status(200);
+        // res.redirect('/products');
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
+   
 }
 
 module.exports.deleteproductmanay=async (req,res)=>{
-    await cart.deleteMany({userid:req.user._id});
-    res.status(200);
+    try {
+        await cart.deleteMany({userid:req.user._id});
+        res.status(200);
     // res.redirect('/products');
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
+    
 }
 
 module.exports.changecount=async (req,res)=>{
-    pid=req.params.pid;
+    try {
+        pid=req.params.pid;
     newcount=req.body.newcount;
     //console.log(pid);
     
     await cart.updateOne({productid:pid},{count:newcount});
     res.status(200);
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
+
+    
     // res.redirect('/products');
 }
 
 module.exports.buyproduct=async(req,res)=>{
-    navactive=[0,0,0,0,1,0];
+    try {
     buycart=await cart.find({userid:req.user._id});
     if(!(buycart.length)){
         res.redirect('/products');
@@ -110,28 +132,31 @@ module.exports.buyproduct=async(req,res)=>{
     console.log(bought);
     console.log(use);
     res.status(200);
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
+    
 }
 
 
 module.exports.addtocart=async(req,res,next)=>{
-    navactive=[0,0,0,0,1,0];
-    //console.log(req.body);
-
-    search=await cart.find({userid:req.user._id,productid:req.body.productid});
-   // console.log(search);
-    if(search.length){
-          x=search[0].count
-          await cart.findOneAndUpdate({userid:req.user._id,productid:req.body.productid},{count:x+1})
-    }else{
-        newadd= new cart({
-            productid:req.body.productid,
-            userid:req.user._id,
-        })
-        await newadd.save()
-    //     console.log(await cart.find({userid:req.user._id}));
-     }
-
-     res.status(200);
-
-    // res.redirect('/products');
+    try {
+        search=await cart.find({userid:req.user._id,productid:req.body.productid});
+        // console.log(search);
+         if(search.length){
+               x=search[0].count
+               await cart.findOneAndUpdate({userid:req.user._id,productid:req.body.productid},{count:x+1})
+         }else{
+             newadd= new cart({
+                 productid:req.body.productid,
+                 userid:req.user._id,
+             })
+             await newadd.save()
+         //     console.log(await cart.find({userid:req.user._id}));
+          }
+     
+          res.status(200);
+    } catch (error) {
+        res.status(500).json({ message: "Error",error:error});
+    }
 }

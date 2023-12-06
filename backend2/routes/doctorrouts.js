@@ -19,7 +19,7 @@ const imgurUploader = require('imgur-uploader');
 
 
 //middleware
-const { isLoggedIn,isDoctorloggedin} = require('../Middlewares/authomiddleware')
+// const { isLoggedIn,isDoctorloggedin} = require('../Middlewares/authomiddleware')
 
 //model
 const experts = require('../Models/doctors');

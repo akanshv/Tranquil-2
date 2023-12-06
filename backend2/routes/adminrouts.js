@@ -9,7 +9,7 @@ const catchAsync = require('../utils/catchAsync');
 const bcrypt=require('bcrypt');
 
 //middleware
-const {isLoggedIn}=require('../Middlewares/authomiddleware')
+// const {isLoggedIn}=require('../Middlewares/authomiddleware')
 
 //model
 

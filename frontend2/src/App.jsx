@@ -16,9 +16,18 @@ const App = () => {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/feed' element={<Inspire />} />
+        <Route path='/feed/newfeed' element={<Products />} />
+        <Route path='/feed/:id' element={<Products />} />
         <Route path='/chat' element={<Chat />} />
-        <Route path='/therapy' element={<Therapy />} />
+        <Route path='/chat/peer' element={<Chat />}/>
+        <Route path='/chat/listner' element={<Chat />}/>
+        <Route path='/therapy' element={<Therapy />}/>
+        <Route path='/therapy/newtherapist' element={<Chat />}/>
+        <Route path='/therapistside' element={<Products />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/adminside' element={<Products />} />
+        <Route path='/adminside/products' element={<Products />} />
+        
       </Routes>
       <Footer />
     </div>

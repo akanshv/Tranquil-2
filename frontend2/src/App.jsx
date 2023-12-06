@@ -7,6 +7,7 @@ import Inspire from './pages/inspire/Inspire';
 import Chat from './pages/chat/Chat';
 import Therapy from './pages/therapy/Therapy';
 import Products from './pages/products/Products';
+import Inspirepost from './pages/inspire/inspirepost';
 
 
 const App = () => {
@@ -17,7 +18,7 @@ const App = () => {
         <Route exact path='/' element={<Home />} />
         <Route path='/feed' element={<Inspire />} />
         <Route path='/feed/newfeed' element={<Products />} />
-        <Route path='/feed/:id' element={<Products />} />
+        <Route path='/feed/:id' element={<Inspirepost/>} />
         <Route path='/chat' element={<Chat />} />
         <Route path='/chat/peer' element={<Chat />}/>
         <Route path='/chat/listner' element={<Chat />}/>
@@ -27,7 +28,6 @@ const App = () => {
         <Route path='/products' element={<Products />} />
         <Route path='/adminside' element={<Products />} />
         <Route path='/adminside/products' element={<Products />} />
-        
       </Routes>
       <Footer />
     </div>

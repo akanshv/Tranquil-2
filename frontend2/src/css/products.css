@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@500;700&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
+.white{
+    color: white;
+}
+
+#green{
+    background-color: #088178;
+}
+
+.green2{
+    color: #088178;
+}
+
+#cart-button{
+    background-color: #088178;
+}
+
+.cart-quantity {
+    color: white;
+    background-color: #088178;
+    padding: 0.2em 0.3em;
+    position: absolute;
+    margin: -2.0em 2.5em 0 0;
+    right: 0;
+    border: solid 1px white;
+    border-radius: 15px;
+    font-weight: bolder;
+}
+
+.offcanvas-header{
+    background-image: linear-gradient(to left,#6D6DF2, #F05ECB);
+}
+
+.cart-title{
+   margin-left: 32%;
+   color: white;
+   font-weight: bolder;
+}
+
+.gradient{
+    background: #fccb90;
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.wellness-div{
+    display: flex;
+    justify-content: center;
+}
+
+
+.wellness-banner{
+    width: 65%;
+    border-radius: 4rem;
+    margin-top: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.product-type{
+    background: white;
+    width: 40%;
+    margin-left: 30%;
+    border-radius: 2rem;
+}
+
+
+@media (max-width:799px){
+    .product-type{
+        background: white;
+        width: 100%;
+        margin-left: 0%;
+        border-radius: 2rem;
+        margin-top: -15%;
+        font-size: 2.5rem;
+    }
+    .wellness-banner{
+        width: 90%;
+        border-radius: 4rem;
+        margin-top: 1rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+}
+
+@media (max-width:477px){
+    .product-type{
+        background: white;
+        width: 100%;
+        margin-left: 0%;
+        border-radius: 2rem;
+        margin-top: -15%;
+    }
+    .wellness-banner{
+        width: 90%;
+        border-radius: 4rem;
+        margin-top: 1rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+}

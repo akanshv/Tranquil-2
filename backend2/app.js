@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors=require('cors');
+
+app.use(cors());
 //method overide for patch and put into post
 const methodOveride = require('method-override');
 
@@ -15,6 +18,8 @@ app.use(methodOveride('_method'));
 const flash=require("connect-flash");
 const cookie=require('cookie-parser');
 const User = require('./Models/user');
+
+
 
 // const session=require("express-session");
 // sessionconfig={
@@ -159,5 +164,5 @@ app.use(errorHandler);
 
 const PORT=process.env.PORT|| 3000
 app.listen(PORT, () => {
-    console.log('Listening the port 6969 from Tranquil...');
+    console.log('Listening the port 3000 from Tranquil...');
 });

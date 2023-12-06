@@ -34,7 +34,8 @@ module.exports.postlogin = async (req, res) => {
 module.exports.getadminprofile = async (req, res) => {
   try {
     if (req.params.id) {
-      const admini = await administer.findById(req.session.adminid);
+      console.log('anmol');
+      const admini = await administer.findById(req.params.id);
       const docs = await doc.find({ pendingstatus: true });
       const feeds = await feed.find({}).populate("author");
       res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
@@ -44,7 +45,7 @@ module.exports.getadminprofile = async (req, res) => {
       return;
     }
   } catch (error) {
-    res.status(500).json({ message: "Error", error:error });
+    res.status(500).json({ message: "Error hii", error:error });
   }
 };
 

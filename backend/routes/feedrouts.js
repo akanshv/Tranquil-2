@@ -99,7 +99,7 @@ router.post('/newfeed',isLoggedIn,uploads.single('image'),catchAsync(async(req,r
 
 
 
-router.get('/:id',isLoggedIn,catchAsync(async (req, res, next) => {
+router.get('/:id',catchAsync(async (req, res, next) => {
 //res.send("Hello from Yelpcamp");
 
 const id = req.params.id

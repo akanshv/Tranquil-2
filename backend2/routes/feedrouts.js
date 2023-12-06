@@ -39,8 +39,10 @@ const imgurUploader = require('imgur-uploader');
 
 router.get('/', catchAsync(async (req, res, next) => {
     navactive=[0,1,0,0,0,0]
+
     //  const user=await User.find({});
     //  console.log(user);
+    console.log('anmol')
      const feeds = await feed.find({}).populate('author');
      res.status(200).json(feeds);
     // console.log(feeds);
@@ -100,9 +102,9 @@ router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)
 
 
 
-router.get('/:id',protect,catchAsync(async (req, res, next) => {
+router.get('/:id',catchAsync(async (req, res, next) => {
 //res.send("Hello from Yelpcamp");
-
+console.log('anmol')
 const id = req.params.id
 //console.log(id);
 navactive=[0,1,0,0,0,0]
@@ -117,7 +119,7 @@ const post= await feed.findById(id).populate('author').populate('comments').popu
 
 
 console.log(post);
-req.status(200).json(post);
+res.status(200).json(post);
 
 
 // console.log(post.comments.author+" "+" yes yaha ")

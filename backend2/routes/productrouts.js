@@ -20,7 +20,7 @@ const control = require('../Controllers/productcontroller');
 
 const { protect } = require("../Middlewares/authMiddleware");
 
-router.get('/',protect,catchAsync(control.isloggedin));
+router.get('/',catchAsync(control.isloggedin));
 
 router.delete('/cart/:pid',catchAsync(control.deleteproductsingle));
 

@@ -1,0 +1,170 @@
+export default [
+    {   
+        id: 1,
+        name: 'Be Calm',
+        by: 'Jill P. Weber',
+        price: 499,
+        cutprice: 349,
+        stock: 68,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/tcEYQwm.png",
+        quantity: 1
+    },
+    {   
+        id: 2,
+        name: 'Detox Your Thoughts',
+        by: 'Andrea Bonior',
+        price: 699,
+        cutprice: 599,
+        stock: 45,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/IomeH3B.png",
+        quantity: 1
+    },
+    {   
+        id: 3,
+        name: 'Happiness Becomes You',
+        by: 'Tina Turner',
+        price: 299,
+        cutprice: 249,
+        stock: 63,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/ibXmnNL.png",
+        quantity: 1
+    },
+    {
+        id: 4,
+        name: 'Be Think Straight',
+        by: 'Darius Foroux',
+        price: 489,
+        cutprice: 449,
+        stock: 90,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/okl92l9.png",
+        quantity: 1
+    },
+    {   
+        id: 5,
+        name: 'The Social Anxiety Cure',
+        by: 'Frank Steven',
+        price: 559,
+        cutprice: 449,
+        stock: 68,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/vm0ULoi.png",
+        quantity: 1
+    },
+    {   
+        id: 6,
+        name: 'Declutter Your Mind',
+        by: 'S. J. Scott',
+        price: 349,
+        cutprice: 319,
+        stock: 23,
+        type: "Mindfulness Books",
+        image: "https://i.imgur.com/0H9LeIG.png",
+        quantity: 1
+    },
+
+    {   
+        id: 7,
+        name: 'Fidget Spinner',
+        by: 'Pulsbery Toys',
+        price: 699,
+        cutprice: 499,
+        stock: 145,
+        type: "Stress Busters",
+        image: "https://i.imgur.com/lvlUuix.png",
+        quantity: 1,
+    },
+    {   
+        id: 8,
+        name: 'Fidget Cube',
+        by: 'Pulsbery Toys',
+        price: 899,
+        cutprice: 569,
+        stock: 69,
+        type: "Stress Busters",
+        image: "https://i.imgur.com/L0TF9Zz.png",
+        quantity: 1
+    },
+    {   
+        id: 9,
+        name: 'Squeeze Balls (Pack of 3)',
+        by: 'Mind Panda Toys',
+        price: 499,
+        cutprice: 299,
+        stock: 13,
+        type: "Stress Busters",
+        image: "https://i.imgur.com/QvkBTp4.png",
+        quantity: 1
+    },
+
+    {   
+        id: 10,
+        name: 'Tulsi Green Tea',
+        by: 'Organic India',
+        price: 195,
+        cutprice: 165,
+        stock: 236,
+        type: "Herbals",
+        image: "https://i.imgur.com/0bIky1b.png",
+        quantity: 1
+    },
+    {   
+        id: 11,
+        name: 'Anti-Stress Hair Oil',
+        by: 'Nirvana',
+        price: 549,
+        cutprice: 489,
+        stock: 168,
+        type: "Herbals",
+        image: "https://i.imgur.com/CG8R888.png",
+        quantity: 1
+    },
+    {   
+        id: 12,
+        name: 'Herbal Water (Pack of 5)',
+        by: 'Avimee',
+        price: 299,
+        cutprice: 225,
+        stock: 78,
+        type: "Herbals",
+        image: "https://i.imgur.com/0bIky1b.png",
+        quantity: 1
+    },
+    {
+        id: 13,
+        name: 'Spring Mattress',
+        by: 'Wakefit',
+        price: 4999,
+        cutprice: 3499,
+        stock: 86,
+        type: "Sleepwell",
+        image: "https://i.imgur.com/CIircwR.png",
+        quantity: 1
+    },
+    {
+        id: 14,
+        name: 'Gravity Blanket',
+        by: 'Wakefit',
+        price: 2499,
+        cutprice: 1799,
+        stock: 86,
+        type: "Sleepwell",
+        image: "https://i.imgur.com/ML12eiL.png",
+        quantity: 1,
+    },
+    {   
+        id: 15,
+        name: 'Aroma Diffuser',
+        by: 'Spefez',
+        price: 999,
+        cutprice: 499,
+        stock: 86,
+        type: "Sleepwell",
+        image: "https://i.imgur.com/LUtRdSj.png",
+        quantity: 1
+    },
+
+];

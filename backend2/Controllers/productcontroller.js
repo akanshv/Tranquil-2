@@ -14,36 +14,37 @@ const sold=require('../Models/solddetails');
 module.exports.isloggedin=async (req, res, next) => {
     try {
 
-        const products =  await Product.find({});
-    const carter=await cart.find({userid:req.user._id}).populate('product');
-    //console.log(carter);
-    totalcount=0;
-    amount=0;
-    var cartor=[];
-    for (let index in carter) {
-        var product=await Product.findById(carter[index].productid);
-        obj={
-            product:product,
-            indicount:carter[index].count
-        }
-        cartor.push(obj);
-        //console.log(product);
-        amount=amount+carter[index].count*product.Cutprice;
-        totalcount=totalcount+carter[index].count
+    const products =  await Product.find({});
+    // const carter=await cart.find({userid:req.user._id}).populate('product');
+    // //console.log(carter);
+    // totalcount=0;
+    // amount=0;
+    // var cartor=[];
+    // for (let index in carter) {
+    //     var product=await Product.findById(carter[index].productid);
+    //     obj={
+    //         product:product,
+    //         indicount:carter[index].count
+    //     }
+    //     cartor.push(obj);
+    //     //console.log(product);
+    //     amount=amount+carter[index].count*product.Cutprice;
+    //     totalcount=totalcount+carter[index].count
         
-    }
-    //console.log(cartor); 
-    cartdetails={
-         amount:amount,
-         totalcount    
-    }
+    // }
+    // //console.log(cartor); 
+    // cartdetails={
+    //      amount:amount,
+    //      totalcount    
+    // }
 
     //console.log(cartdetails);
     data={
         products:products,
-        cartdetails:cartdetails,
-        cartor:cartor
+        // cartdetails:cartdetails,
+        // cartor:cartor
     }
+    console.log(data);
     res.status(200).json(data);
         
     } catch (error) {

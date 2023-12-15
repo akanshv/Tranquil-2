@@ -22,9 +22,9 @@ const control=require('../Controllers/admincontroller');
 
 router.post('/adminlogin',catchAsync(control.postlogin));
 
-router.get('/adminprofile/:id',catchAsync(control.getadminprofile));
+router.get('/adminprofile/',catchAsync(control.getadminprofile));
 
-router.get('/adminproductsmanage/:id',catchAsync(control.getadminproductmanage));
+router.get('/adminproductsmanage/',catchAsync(control.getadminproductmanage));
 
 router.put('/adminproductupdate/:id/:pid',catchAsync(control.productupdate));
 

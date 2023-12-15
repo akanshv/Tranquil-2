@@ -34,10 +34,10 @@ module.exports.postlogin = async (req, res) => {
 module.exports.getadminprofile = async (req, res) => {
   try {
     if (req.params.id) {
-      console.log('anmol');
-      const admini = await administer.findById(req.params.id);
+      const admini = await administer.findById(req.session.adminid);
       const docs = await doc.find({ pendingstatus: true });
-      const feeds = await feed.find({}).populate("author");
+      const feeds = await feed.find({checked:false}).populate("author");
+      console.log(feeds)
       res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
       return;
     } else {
@@ -51,8 +51,10 @@ module.exports.getadminprofile = async (req, res) => {
 
 module.exports.getadminproductmanage = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
+      console.log("Hi")
       const prod = await Product.find({});
+      console.log(prod);
       res.status(200).json({ prod: prod });
       // res.render('adminproductsmanage',{navactive:navactive, prod:prod})
     } else {

@@ -13,7 +13,6 @@ const methodOveride = require('method-override');
 const {config}=require('dotenv');
 config();
 
-const cors=require('cors');
 app.use(cors());
 
 const Joi=require('joi');

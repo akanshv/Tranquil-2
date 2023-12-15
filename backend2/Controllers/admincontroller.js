@@ -34,10 +34,11 @@ module.exports.postlogin = async (req, res) => {
 module.exports.getadminprofile = async (req, res) => {
   try {
     if (req.params.id) {
-      const admini = await administer.findById(req.session.adminid);
+      console.log('anmol');
+      const admini = await administer.findById(req.params.id);
       const docs = await doc.find({ pendingstatus: true });
-      const feeds = await feed.find({checked:false}).populate("author");
-      console.log(feeds)
+      const feeds = await feed.find({}).populate("author");
+      console.log(admini)
       res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
       return;
     } else {

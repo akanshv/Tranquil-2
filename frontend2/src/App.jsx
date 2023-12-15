@@ -9,6 +9,9 @@ import Therapy from './pages/therapy/Therapy';
 import Products from './pages/products/Products';
 import Inspirepost from './pages/inspire/inspirepost';
 import Cart from './pages/products/Cart';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminProductsManage from './pages/admin/AdminProductsManage';
+import AdminProfile from './pages/admin/AdminProfile';
 
 
 const App = () => {
@@ -28,8 +31,9 @@ const App = () => {
         <Route path='/therapy/newtherapist' element={<Chat />}/>
         <Route path='/therapistside' element={<Products />} />
         <Route path='/products' element={<Products />} />
-        <Route path='/adminside' element={<Products />} />
-        <Route path='/adminside/products' element={<Products />} />
+        <Route path='/adminside' element={<AdminProfile />} />
+        <Route path='/adminside/login' element={<AdminLogin />} />
+        <Route path='/adminside/products' element={<AdminProductsManage />} />
         
       </Routes>
       <Footer />

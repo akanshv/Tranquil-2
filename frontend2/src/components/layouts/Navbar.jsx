@@ -136,6 +136,7 @@ const Navbar = () => {
                       <a
                         href="#"
                         className="block px-4 py-2 hover:text-blue-500"
+                        onClick={() => window.location.href = `/adminside/login`}
                       >
                         Admin Login
                       </a>

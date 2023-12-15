@@ -12,12 +12,12 @@ const sold=require('../Models/solddetails');
 // Functions :
 
 module.exports.isloggedin=async (req, res, next) => {
-    try {
+    try {{
     const products =  await Product.find({});
     // const carter=await cart.find({userid:req.user._id}).populate('product');
     //console.log(carter);
-    totalcount=0;
-    amount=0;
+    // totalcount=0;
+    // amount=0;
     // var cartor=[];
     // for (let index in carter) {
     //     var product=await Product.findById(carter[index].productid);

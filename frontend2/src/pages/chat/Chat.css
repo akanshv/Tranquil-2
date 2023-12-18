@@ -1,0 +1,100 @@
+.main{
+    background-image: url('https://i.imgur.com/TNfdT9w.jpg');
+    height: 50rem;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;  
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    width: 65%;
+    margin: auto;
+    font-size: 1.5rem;
+}
+
+.heading1{
+    padding-top: 2rem;
+    font-family: Montserrat,sans-serif;
+    color: #001e33;
+    line-height: 95%;
+    height: 10%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.heading2{
+   
+    font-family: Montserrat,sans-serif;
+    padding-bottom: 10px;
+    font-size: 19px;
+    font-family: 'DM Sans',sans-serif;
+    color: #ffffff;
+}
+
+.content{
+    box-shadow: 0 4px 20px rgba(0,0,0,.5);
+    border-radius: 1rem;
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+
+.gradient{
+    background: #fccb90;
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.welcome2{
+    color: #637581;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: Montserrat,sans-serif;
+}
+
+.blue{
+    color: #088178;
+    font-family: Montserrat,sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.btn-space {
+    margin-right: 2rem;
+    width: 90%;
+}
+
+.chat-banner{
+    width: 65%;
+    border-radius: 4rem;
+    margin-top: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.box-inside{
+    text-align: center;
+    font-size: 1rem;
+}
+
+@media (max-width: 800px){
+    .content{
+        width: 85%;
+        margin: 3rem auto 3rem auto;
+    }
+}
+
+@media (max-width: 500px){
+    .center{
+        font-size: 1.3rem;
+    }
+}

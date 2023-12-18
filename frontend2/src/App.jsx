@@ -12,7 +12,8 @@ import Cart from './pages/products/Cart';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminProductsManage from './pages/admin/AdminProductsManage';
 import AdminProfile from './pages/admin/AdminProfile';
-
+import Listner from './pages/chat/Listner';
+import Peer from './pages/chat/peer';
 
 const App = () => {
   return (
@@ -25,8 +26,8 @@ const App = () => {
         <Route path='/feed/:id' element={<Products />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/chat' element={<Chat />} />
-        <Route path='/chat/peer' element={<Chat />}/>
-        <Route path='/chat/listner' element={<Chat />}/>
+        <Route path='/chat/peer' element={<Peer />}/>
+        <Route path='/chat/listner' element={<Listner />}/>
         <Route path='/therapy' element={<Therapy />}/>
         <Route path='/therapy/newtherapist' element={<Chat />}/>
         <Route path='/therapistside' element={<Products />} />

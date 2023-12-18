@@ -153,6 +153,7 @@ const Navbar = () => {
                       <a
                         href="#"
                         className="block px-4 py-3 hover:text-blue-500"
+                        onClick={() => window.location.href = `/`}
                       >
                         Logout
                       </a>

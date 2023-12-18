@@ -82,7 +82,7 @@ const AdminProfile = () => {
                                                         <div className="flex justify-left items-center px-5 mt-2">
                                                             <button
                                                                 type="button"
-                                                                onClick={() => (window.location.href = 'http://localhost:6969/admin/adminproductsmanage')}
+                                                                onClick={() => (window.location.href = '/adminside/products')}
                                                                 className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                                                             >
                                                                 Manage

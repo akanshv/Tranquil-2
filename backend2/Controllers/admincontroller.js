@@ -13,7 +13,7 @@ module.exports.postlogin = async (req, res) => {
     console.log(email);
     console.log(password);
     if (!(password && email)) {
-      res.status(400).json({ message: "Give THe password and email" });
+      res.status(400).json({ message: "Give The password and email" });
       return;
     }
 

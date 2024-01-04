@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 import './AdminLogin.css';
-import './Adminprofile.css'
+import './AdminProfile.css';
 
 const AdminProductsManage = () => {
   const [data, setData] = useState({});

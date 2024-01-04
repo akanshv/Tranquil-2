@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 import './AdminLogin.css';
-import './Adminprofile.css'
+import './AdminProfile.css'
+import logo from '../../assets/images/logo copy.png';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const AdminLogin = () => {
             <div className="col-lg-6 flex items-center justify-center gradient-custom-2">
               <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                 <div className="logo-div">
-                  <img src="/Images/logo.png" style={{ width: '185px', marginLeft: '2rem' }} alt="logo" />
+                  <img src={logo} style={{ width: '185px', marginLeft: '2rem' }} alt="logo" />
                 </div>
                 <h4 className="mb-4 white text-center">Hey there👋</h4>
                 <h4 className="mb-4 white text-center">Welcome to Tranquil !</h4>

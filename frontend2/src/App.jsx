@@ -13,7 +13,7 @@ import AdminLogin from './pages/admin/AdminLogin';
 import AdminProductsManage from './pages/admin/AdminProductsManage';
 import AdminProfile from './pages/admin/AdminProfile';
 import Listner from './pages/chat/Listner';
-import Peer from './pages/chat/peer';
+import Peer from './pages/chat/Peer';
 import ExpertLogin from './pages/therapy/doctorlogin';
 
 
@@ -25,7 +25,7 @@ const App = () => {
         <Route exact path='/' element={<Home />} />
         <Route path='/feed' element={<Inspire />} />
         <Route path='/feed/newfeed' element={<Products />} />
-        <Route path='/feed/:id' element={<Products />} />
+        <Route path='/feed/:id' element={<Inspirepost/>} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/chat' element={<Chat />} />
         <Route path='/chat/peer' element={<Peer />}/>

@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
+import "./feedindex.css";
+import "./gradient.css";
+import "./home.css";
 
-const Blog = () => {
-  
-};
-const Inspirepost=(props) => {
-  const [postdata, setPost] = useState({});
-  
+const Blog = () => {};
+const Inspirepost = (props) => {
+  const [post, setPost] = useState({});
+
   const [loading, setLoading] = useState(true);
-  const [currentuser, setCurrentUser] = useState({ /* Add your user data structure here */ });
+  const [currentuser, setCurrentUser] = useState({
+    /* Add your user data structure here */
+  });
   const routeParams = useParams();
   useEffect(() => {
     // Function to fetch post details based on the post ID in the URL params
     const fetchPostDetails = async () => {
       try {
-         // Assuming you are using React Router for routing
-        const response = await axios.get(`http://localhost:3000/feed/${routeParams.id}`);
-        console.log(response);
+        // Assuming you are using React Router for routing
+        const response = await axios.get(
+          `http://localhost:3000/feed/${routeParams.id}`
+        );
+
         // const postData = await response.json();
-        // setPost(postData);
-        // setLoading(false);
+        setPost(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching post details:', error);
+        console.error("Error fetching post details:", error);
         // Handle error, show error message, or redirect to an error page
         setLoading(false);
       }
@@ -48,24 +53,38 @@ const Inspirepost=(props) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="row">
+            <div className="row grid place-items-center ">
           {/* Rest of your JSX code, replace <%= %> with { } for dynamic data */}
-          <div className="headimg mb-5 col-12 mt-4">
-            <img className='img-fluid rounded-pill' src="https://i.imgur.com/Binzr0Z.png" alt="" />
+          <div className="row ">
+            <div className="mt-[6rem] headimg ">
+              <img
+                className="rounded-full flex justify-center"
+                src="https://i.imgur.com/Binzr0Z.png"
+                alt=""
+              />
+            </div>
           </div>
-          <div className="col-10 offset-1 mt-4">
+          <div className="">
             {/* Rest of your JSX code */}
-            <div className="card mb-4">
+            <div className="m-8 p-4 border-solid border-2 rounded-3xl bg-gradient-to-r from-slate-200 to-slate-300">
               {/* Rest of your card JSX code */}
               <div className="card-footer">
                 {/* Add your profile JSX code */}
               </div>
-              {post.image && <img className="card-img-top mt-2" src={post.image} alt="Card image cap" />}
+              {post.image && (
+                <img
+                  className="card-img-top mt-2"
+                  src={post.image}
+                  alt="Card image cap"
+                />
+              )}
               <div className="card-body">
                 <h5 className="card-title">{post.title}</h5>
                 <p className="card-text">{post.caption}</p>
-                <p className="card-text" id="checkerabhi">{post.descriptions}</p>
-                <p id="likeinspire" style={{ fontSize: '1rem' }}>
+                <p className="card-text" id="checkerabhi">
+                  {post.descriptions}
+                </p>
+                <p id="likeinspire" style={{ fontSize: "1rem" }}>
                   <strong>{post.likes}</strong> got Inspired
                 </p>
               </div>
@@ -83,3 +102,103 @@ const Inspirepost=(props) => {
 };
 
 export default Inspirepost;
+
+// import React from 'react';
+
+// const PostDetail = ({ post, currentuser }) => {
+//   const id = post._id;
+//   const cid = currentuser._id;
+
+//   const liker = () => {
+//     // Your XMLHttpRequest logic for liking the post
+//   };
+
+//   const reporter = () => {
+//     // Your XMLHttpRequest logic for reporting the post
+//   };
+
+//   const unliker = () => {
+//     // Your XMLHttpRequest logic for unliking the post
+//   };
+
+//   return (
+//     <div className="feedpage container">
+//       <div className="row">
+//         <div className="headimg mb-5 col-12 mt-4">
+//           <img className="img-fluid rounded-pill" src="https://i.imgur.com/Binzr0Z.png" alt="" />
+//         </div>
+//         <div className="col-10 offset-1 mt-4">
+//           <div className="row mb-4">
+//             <div className="card mb-4">
+//               <div className="card-footer">
+//                 <div className="profile">
+//                   <div>
+//                     <span className="round">
+//                       <img src={post.author.pfp} alt="user" width="40" />
+//                     </span>
+//                     &nbsp;{post.author.username}
+//                   </div>
+//                 </div>
+//               </div>
+//               {post.image && (
+//                 <img className="card-img-top mt-2" src={post.image} alt="Card image cap" />
+//               )}
+//               <div className="card-body ">
+//                 <h5 className="card-title">{post.title}</h5>
+//                 <p className="card-text">{post.caption}</p>
+//                 <p className="card-text" id="checkerabhi">
+//                   {post.descriptions}
+//                 </p>
+//                 <p id="likeinspire" style={{ fontSize: '1rem' }}>
+//                   <strong>{post.likes}</strong> got Inspired
+//                 </p>
+//               </div>
+//               <div className="card-footer">
+//                 <div className="like" id="likeder">
+//                   {!post.reportarr.includes(currentuser._id) ? (
+//                     !post.reallikes.includes(currentuser._id) ? (
+//                       <div style={{ display: 'inline-block' }}>
+//                         <button form="like" onClick={liker} className="btn btn-success">
+//                           <i className="mdi mdi-account-heart" style={{ fontSize: '2rem' }}></i>
+//                           <br />
+//                           Got Inspired
+//                         </button>
+//                         <button form="report" onClick={reporter} className="btn btn-danger">
+//                           <i className="mdi mdi-alert" style={{ fontSize: '2rem' }}></i>
+//                           <br />
+//                           Report
+//                         </button>
+//                       </div>
+//                     ) : (
+//                       <div>
+//                         <h6>
+//                           You got inspired from this post. <strong>Happy getting Tranquiled</strong>{' '}
+//                         </h6>
+//                         <button onClick={unliker} className="btn btn-success">
+//                           <i className="mdi mdi-account-heart" style={{ fontSize: '2rem' }}></i>
+//                           <br />
+//                           Not Inspiring
+//                         </button>
+//                       </div>
+//                     )
+//                   ) : (
+//                     <h6>
+//                       You reported this post.{' '}
+//                       <strong>Thanks for making the community better and Tranquiled</strong>
+//                     </h6>
+//                   )}
+//                 </div>
+//                 <small className="text-muted">{post.uploaddate}</small>
+//               </div>
+//             </div>
+//             <div className="card">
+//               {/* ... (Comments section) ... */}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PostDetail;

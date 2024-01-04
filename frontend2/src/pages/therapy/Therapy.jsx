@@ -26,7 +26,7 @@ const Therapy = () => {
     <section>
        <div className="row">
         <div className="mt-[8rem] headimg flex justify-center">
-          <img className='rounded-full  ' src="https://i.imgur.com/ujX2KRl.png " alt="" />
+          <img className='rounded-full' src="https://i.imgur.com/ujX2KRl.png " alt="" />
         </div>
       </div>
     

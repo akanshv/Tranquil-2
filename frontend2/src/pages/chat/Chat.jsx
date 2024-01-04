@@ -5,13 +5,10 @@ import './Style.css';
 const Chat = () => {
   return (
     <>
-    <div className="main w-125 p-3 vh-100">
-        <img
-          src="https://i.imgur.com/7NrYfBD.png"
-          className="chat-banner mt-4"
-          style={{ marginLeft: '16%' }}
-          alt="chat"
-        />
+    <div className=" w-125 p-3 vh-100">
+        <div className="mt-[8rem] headimg flex justify-center">
+          <img className='rounded-full  ' src="https://i.imgur.com/7NrYfBD.png0" alt="" />
+        </div>
         <div className="heading-div">
           <h2 className="center heading1">
             An Anonymous, Smart, & Interactive community to find Solace

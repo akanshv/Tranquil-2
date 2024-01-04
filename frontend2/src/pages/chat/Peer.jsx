@@ -7,15 +7,18 @@ import './Peer.css';
 const Peer = () => {
     return (
         <>
-            <div className="flex justify-center chat-div gradient">
+            {/* <div className="flex justify-center chat-div gradient">
                 <img
                     src="https://i.imgur.com/7NrYfBD.png"
                     className="w-65 border-rounded-4rem mt-1 chat-banner"
                     alt="chat"
                 />
-            </div>
+            </div> */}
 
             <section className="gradient-custom">
+            <div className="pt-[8rem] headimg flex justify-center">
+          <img className='rounded-full  ' src="https://i.imgur.com/7NrYfBD.png0" alt="" />
+            </div>
                 <div className="mx-auto">
                     <div className="listening">
                         <h3 className="text-center pt-5">

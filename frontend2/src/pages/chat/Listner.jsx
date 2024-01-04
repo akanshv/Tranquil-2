@@ -7,15 +7,12 @@ import './Listner.css';
 const Listner = () => {
     return (
         <>
-            <div className="chat-div gradient">
-                <img
-                    src="https://i.imgur.com/7NrYfBD.png"
-                    className="chat-banner"
-                    alt="chat"
-                />
+         <section className="gradient-custom">
+            <div className="pt-[8rem] headimg flex justify-center">
+          <img className='rounded-full  ' src="https://i.imgur.com/7NrYfBD.png0" alt="" />
             </div>
 
-            <section className="gradient-custom">
+           
                 <div class="flex justify-center items-center h-90">
 
                     <div class="card w-100 m-0 p-0">

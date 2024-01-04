@@ -143,7 +143,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="/expertlogin"
                         className="block px-4 py-2 hover:text-blue-500"
                       >
                         Doctor Login

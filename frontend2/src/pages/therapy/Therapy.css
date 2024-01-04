@@ -1,0 +1,41 @@
+.conatiner{
+  padding: 5px solid red ;
+}
+.RR{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.CC{
+
+}
+
+.dropdown{
+    display: flex;
+    justify-content: end;
+}
+
+.dropdown-menu {
+    display: none; /* Hide the menu by default */
+    position: absolute;
+    background-color: #fff; /* Set your desired background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-radius: 4px; /* Add rounded corners */
+  }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+.dropdown-menu li {
+    padding: 8px 12px; /* Adjust padding as needed */
+    cursor: pointer;
+}
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333; /* Link color */
+    display: block;
+}

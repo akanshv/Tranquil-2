@@ -14,6 +14,8 @@ import AdminProductsManage from './pages/admin/AdminProductsManage';
 import AdminProfile from './pages/admin/AdminProfile';
 import Listner from './pages/chat/Listner';
 import Peer from './pages/chat/peer';
+import ExpertLogin from './pages/therapy/doctorlogin';
+
 
 const App = () => {
   return (
@@ -36,6 +38,7 @@ const App = () => {
         <Route path='/adminside/login' element={<AdminLogin />} />
         <Route path='/adminside/products' element={<AdminProductsManage />} />
         
+        <Route path='/expertlogin' element={<ExpertLogin/>} />
       </Routes>
       <Footer />
     </div>

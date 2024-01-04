@@ -2,13 +2,12 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const cors=require('cors');
-
-app.use(cors());
 //method overide for patch and put into post
 const methodOveride = require('method-override');
 
+const cors=require('cors');
 
+app.use(cors());
 //env
 const {config}=require('dotenv');
 config();

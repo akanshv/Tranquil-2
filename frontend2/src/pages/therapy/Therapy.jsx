@@ -31,7 +31,7 @@ const Therapy = () => {
       </div>
     
     <div>
-        <form action="/expert/newtherapists" method="get" >
+        <form action="/therapy/newtherapist" method="get" >
           <div className="upper-text">
             <p className="flex justify-center items-center heading2 text-gray-800 text-2xl">
               Start your own journey as therapist in Tranquil

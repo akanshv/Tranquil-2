@@ -16,6 +16,8 @@ import Listner from './pages/chat/Listner';
 import Peer from './pages/chat/Peer';
 import ExpertLogin from './pages/therapy/doctorlogin';
 import PostForm from './pages/inspire/CreatePost';
+import DoctorRegister from './pages/therapy/DoctorRegister';
+import DoctorDetail from './pages/therapy/doctorDetail';
 
 
 const App = () => {
@@ -32,14 +34,16 @@ const App = () => {
         <Route path='/chat/peer' element={<Peer />}/>
         <Route path='/chat/listner' element={<Listner />}/>
         <Route path='/therapy' element={<Therapy />}/>
-        <Route path='/therapy/newtherapist' element={<Chat />}/>
-        <Route path='/therapistside' element={<Products />} />
+
+        <Route path='/therapy/newtherapist' element={<DoctorRegister/>}/>
+
+        {/* <Route path='/therapistside' element={<Products />} /> */}
         <Route path='/products' element={<Products />} />
         <Route path='/adminside' element={<AdminProfile />} />
         <Route path='/adminside/login' element={<AdminLogin />} />
         <Route path='/adminside/products' element={<AdminProductsManage />} />
-        
         <Route path='/expertlogin' element={<ExpertLogin/>} />
+        <Route path='/expertprofile' element={<DoctorDetail/>}/>
       </Routes>
       <Footer />
     </div>

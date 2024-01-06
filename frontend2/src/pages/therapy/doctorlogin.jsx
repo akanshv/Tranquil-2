@@ -119,7 +119,7 @@ const ExpertLogin = () => {
                                     <input type='checkbox' name='remember' className='mr-1'>Remember</input>
                                     <a href='#' className='text-xs'>Forgot Password</a>
                                 </label> */}
-                                <a href="#" className="border-2 border-green rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-500 hover:text-white mt-4">Sigh In</a>
+                                <a href="/expertprofile" className="border-2 border-green rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-500 hover:text-white mt-4">Sigh In</a>
                             </div>
                         </div>
                     </div>

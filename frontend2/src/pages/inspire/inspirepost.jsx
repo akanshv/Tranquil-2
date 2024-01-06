@@ -4,12 +4,15 @@ import axios from "axios";
 import "./feedindex.css";
 import "./gradient.css";
 import "./home.css";
+import { Icon } from '@iconify/react';
+
 
 const Blog = () => {};
 const Inspirepost = (props) => {
   const [post, setPost] = useState({});
 
   const [loading, setLoading] = useState(true);
+
   const [currentuser, setCurrentUser] = useState({
     /* Add your user data structure here */
   });
@@ -49,54 +52,77 @@ const Inspirepost = (props) => {
   };
 
   return (
-    <div className="feedpage container">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-            <div className="row grid place-items-center ">
-          {/* Rest of your JSX code, replace <%= %> with { } for dynamic data */}
-          <div className="row ">
-            <div className="mt-[6rem] headimg ">
-              <img
-                className="rounded-full flex justify-center"
-                src="https://i.imgur.com/Binzr0Z.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className="">
-            {/* Rest of your JSX code */}
-            <div className="m-8 p-4 border-solid border-2 rounded-3xl bg-gradient-to-r from-slate-200 to-slate-300">
-              {/* Rest of your card JSX code */}
-              <div className="card-footer">
-                {/* Add your profile JSX code */}
-              </div>
-              {post.image && (
+    <div className="flex justify-center">
+      <div className="feedpage container ">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="row grid ">
+            {/* Rest of your JSX code, replace <%= %> with { } for dynamic data */}
+            <div className="row ">
+              <div className="mt-[6rem] headimg flex justify-around ">
                 <img
-                  className="card-img-top mt-2"
-                  src={post.image}
-                  alt="Card image cap"
+                  className="rounded-full mt-6"
+                  src="https://i.imgur.com/Binzr0Z.png"
+                  alt=""
                 />
-              )}
-              <div className="card-body">
-                <h5 className="card-title">{post.title}</h5>
-                <p className="card-text">{post.caption}</p>
-                <p className="card-text" id="checkerabhi">
-                  {post.descriptions}
-                </p>
-                <p id="likeinspire" style={{ fontSize: "1rem" }}>
-                  <strong>{post.likes}</strong> got Inspired
-                </p>
-              </div>
-              <div className="card-footer">
-                {/* Add your like, report, unlike buttons JSX code */}
-                <small className="text-muted">{post.uploaddate}</small>
               </div>
             </div>
-            {/* Rest of your JSX code */}
+            <div className="">
+              {/* Rest of your JSX code */}
+              <div className="m-8 p-4 w-[100%] border-solid border-2 rounded-3xl bg-gradient-to-r from-slate-200 to-slate-300">
+                {/* Rest of your card JSX code */}
+                <div className="card-footer">
+                  {/* Add your profile JSX code */}
+                </div>
+                {post.image && (
+                  <img
+                    className="card-img-top mt-2"
+                    src={post.image}
+                    alt="Card image cap"
+                  />
+                )}
+                <div className="card-body">
+                  <h5 className="card-title">{post.title}</h5>
+                  <p className="card-text">{post.caption}</p>
+                  <p className="card-text" id="checkerabhi">
+                    {post.descriptions}
+                  </p>
+                  <p id="likeinspire" style={{ fontSize: "1rem" }}>
+                    <strong>{post.likes}</strong> got Inspired
+                  </p>
+                </div>
+                <div className="card-footer">
+                  <div className="like" id="likeder">
+                    <div className="inline-block space-x-2">
+                      <button  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md">
+                        <Icon
+                          className="text-4xl "
+                          icon="mdi-light:like"
+                        />
+                    
+                        Got Inspired
+                      </button>
+                      <button  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
+                      >
+
+                        <iconify-icon
+                          className="text-2xl"
+                          icon="mdi:alert"
+                        ></iconify-icon>
+                        Report
+                      </button>
+                  </div>
+                  </div>
+                  {/* Add your like, report, unlike buttons JSX code */}
+                  <small className="text-muted">{post.uploaddate}</small>
+                </div>
+              </div>
+              {/* Rest of your JSX code */}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -58,12 +58,13 @@ router.get('/', catchAsync(async (req, res, next) => {
 //     res.render('feed/newblog',{navactive:navactive});
 // })
 
-router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)=>{
+router.post('/newfeed',uploads.single('image'),catchAsync(async(req,res)=>{
     try {
+        console.log(req.body);
         console.log(req.file);
         if(!req.file){
-            req.flash('error','Upload Image Again');
-            res.redirect(`/feed/newfeed`);
+            req.status(500).json({error:"Send Good image"});
+            
         }
         multerpath=req.file.path;
         base64=fs.readFileSync(`${req.file.path}`,'base64');
@@ -86,8 +87,9 @@ router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)
     
             const newpost = new feed(post);
             console.log(newpost); 
-            newpost.author=req.user._id;
-            await newpost.save();
+           newpost.author=req.user._id;///putting anmol id
+          //newpost.author='643411d41cf578087f24def5';
+            //await newpost.save();
             req.status(200).json(newpost._id);
             // req.flash('success','Successfully your post is created');
             // res.redirect(`/feed/${newpost._id}`);
@@ -95,6 +97,40 @@ router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)
     
         });
     } catch (error) {
+        res.status(500).json({message:"Error",error:error})
+    }
+}))
+
+
+router.post('/newfeedreact',catchAsync(async(req,res)=>{
+    try {
+        console.log(req.body);
+        console.log(req.file);
+        post={
+                topic:req.body.topic,
+                title:req.body.title,
+                image:req.body.image,
+                caption:req.body.caption,
+                descriptions:req.body.description
+            }
+    
+    
+          const newpost = new feed(post);
+           
+          //  newpost.author=req.user._id;///putting anmol id
+          const auth=await User.findOne({_id:'643411d41cf578087f24def5'});
+          console.log(auth);
+          newpost.author=auth._id;
+          console.log(newpost);
+          await newpost.save();
+          res.status(200).json(newpost._id);
+            // req.flash('success','Successfully your post is created');
+            // res.redirect(`/feed/${newpost._id}`);
+    
+    
+        ;
+    } catch (error) {
+        console.log(error);
         res.status(500).json({message:"Error",error:error})
     }
 }))

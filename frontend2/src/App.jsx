@@ -15,6 +15,7 @@ import AdminProfile from './pages/admin/AdminProfile';
 import Listner from './pages/chat/Listner';
 import Peer from './pages/chat/Peer';
 import ExpertLogin from './pages/therapy/doctorlogin';
+import PostForm from './pages/inspire/CreatePost';
 
 
 const App = () => {
@@ -24,7 +25,7 @@ const App = () => {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/feed' element={<Inspire />} />
-        <Route path='/feed/newfeed' element={<Products />} />
+        <Route path='/feed/newfeed' element={<PostForm/>} />
         <Route path='/feed/:id' element={<Inspirepost/>} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/chat' element={<Chat />} />

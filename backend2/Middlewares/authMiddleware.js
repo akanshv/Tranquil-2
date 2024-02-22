@@ -5,24 +5,18 @@ const asyncHandler = require("express-async-handler");
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
     try {
-      token = req.headers.authorization.split(" ")[1];
-
-      //decodes token id
+      token = req.headers.authorization;
+     //decodes token id
+      console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      req.user = await User.findById(decoded.id).select("-password");
-
+      req.user = await User.findById(decoded.id).select("-hash");
+      console.log(req.user)
       next();
     } catch (error) {
       res.status(401);
       throw new Error("Not authorized, token failed");
     }
-  }
 
   if (!token) {
     res.status(401);
@@ -57,10 +51,10 @@ module.exports = { protect };
 
 // const authorising=(req, res, next) => {
 //   let token = req.cookies && req.cookies.TranquilCookie;
+//   jwt.verify(token, process.env.TOKEN_KEY, async (err, decoded) => {
 //   if (token) {
-//     jwt.verify(token, process.env.TOKEN_KEY, async (err, decoded) => {
-//       if (err) {
-//         req.flash('error','You need to login First')
+//     if (err) {
+//          req.flash('error','You need to login First')
 //         res.redirect("/login");
 //       }
 //       const user = await User.findOne({

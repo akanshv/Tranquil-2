@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.forminput{
+    @apply block w-full my-4 rounded-lg;
+    @apply  border p-2 border-gray-300 bg-gray-200;
+}
+
+.disabledinput{
+    @apply cursor-not-allowed block w-full my-4 rounded-lg;
+    @apply  border p-2 border-gray-300 bg-gray-500;
+    /* @apply block w-full my-4 rounded-lg;
+    @apply  border p-2 border-gray-300 bg-gray-700; */
+}
+
+/* .mainbuttons{
+    @apply bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white
+} */
+
+.authbuttons{
+    @apply block w-full text-gray-700;
+    @apply font-semibold border border-gray-300;@apply rounded-xl px-6 py-2;
+}
+.disabledbuttton{
+    @apply cursor-not-allowed border-0 bg-gradient-to-r from-gray-300 to-blue-800  text-white; 
+   
+}
+.submit{
+    @apply bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white 
+}

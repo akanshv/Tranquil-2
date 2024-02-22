@@ -73,8 +73,8 @@ router.post('/newfeed',uploads.single('image'),catchAsync(async(req,res)=>{
         
         imgurUploader(fs.readFileSync(`routes/uploadpng/${req.file.filename}.jpg`), {title: 'Hello!'}).then(async data => {
             console.log(data);
-            fs.unlinkSync(`routes/uploadpng/${req.file.filename}.jpg`);
-            fs.unlinkSync(multerpath);
+          fs.unlinkSync(`routes/uploadpng/${req.file.filename}.jpg`);
+          fs.unlinkSync(multerpath);
              
             post={
                 topic:req.body.topic,
@@ -138,9 +138,10 @@ router.post('/newfeedreact',catchAsync(async(req,res)=>{
 
 
 
-router.get('/:id',catchAsync(async (req, res, next) => {
+router.get('/:id',protect,catchAsync(async (req, res, next) => {
 //res.send("Hello from Yelpcamp");
 console.log('anmol')
+console.log(req.user);
 const id = req.params.id
 //console.log(id);
 navactive=[0,1,0,0,0,0]

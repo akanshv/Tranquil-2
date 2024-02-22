@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./feedindex.css";
 import "./gradient.css";
 import "./home.css";
 import { Icon } from '@iconify/react';
-
+import { useSelector,useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const Blog = () => {};
 const Inspirepost = (props) => {
   const [post, setPost] = useState({});
-
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
   const [loading, setLoading] = useState(true);
-
+  const Navigate=useNavigate();
   const [currentuser, setCurrentUser] = useState({
     /* Add your user data structure here */
   });
@@ -21,14 +23,32 @@ const Inspirepost = (props) => {
     // Function to fetch post details based on the post ID in the URL params
     const fetchPostDetails = async () => {
       try {
+        //console.log(user);
+        if(user){
+
         // Assuming you are using React Router for routing
         const response = await axios.get(
           `http://localhost:3000/feed/${routeParams.id}`
+          ,{
+            headers: {
+                Authorization: user.token
+            }
+        }
         );
 
         // const postData = await response.json();
         setPost(response.data);
         setLoading(false);
+
+        }
+        else{
+          toast.error('First Login or Signup to access',{
+            duration: 4000,
+            position: 'top-right',
+          });
+          Navigate('/user/login')
+        }
+        // Assuming you are using React Router for routing
       } catch (error) {
         console.error("Error fetching post details:", error);
         // Handle error, show error message, or redirect to an error page

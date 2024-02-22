@@ -12,3 +12,14 @@ const CartSchema=new Schema({
     count:{type:Number,default:1}
 });
 module.exports=mongoose.model('Cart',CartSchema);
+
+
+// const CartSchema=new Schema({
+//     products:[{
+//         productId : {type: Schema.Types.ObjectId, ref: 'Product'},
+//         count : {type:Number}
+//     }],
+//     userid:String
+// });
+
+// module.exports=mongoose.model('Cart',CartSchema);

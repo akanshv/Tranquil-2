@@ -147,7 +147,7 @@ const PostForm = () => {
 
             <button
               type="submit"
-              className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
+              className="m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
             >
               Create Your Post
             </button>

@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../redux-store/products/cartSlice";
 import logo from "../../assets/images/logo.png";
 import "./navbar.css";
+import { setLogout } from "../../redux-store/auth/authSlice";
 
 const Navbar = () => {
-
   const location = useLocation();
-  
+
   const { cart, totalQuantity } = useSelector((state) => state.allCart);
+  const doctor = useSelector((state) => state.auth.doctor);
+  const admin = useSelector((state) => state.auth.admin);
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
   const dispatch = useDispatch();
+  const Navigate=useNavigate();
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
@@ -19,6 +24,12 @@ const Navbar = () => {
     const path = location.pathname;
     return path === "/products" || path === "/cart";
   };
+
+  const handlelogout = () => {
+    dispatch(setLogout());
+    window.location.replace('/');
+  };
+
 
   return (
     <>
@@ -100,23 +111,24 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <button
-                  id="dropdownDefaultButton"
-                  data-dropdown-toggle="dropdown"
-                  className="text-white    focus:outline-none font-medium rounded-lg text-sm   text-center inline-flex items-centerdark:hover:bg-blue-700"
-                  type="button"
-                >
-                  <img
-                    className="w-8 h-8 rounded-full mr-2"
-                    src="https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
-                    alt="Jese Leos"
-                  />
-                  <span className="text-1xl  md:dark:hover:text-blue-500">
-                    Login
-                  </span>
-                </button>
-
-                <div
+                {!(user || doctor || admin) ? (
+                  <>
+                  <button
+                    id="dropdownDefaultButton"
+                    data-dropdown-toggle="dropdown"
+                    className="text-white focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center dark:hover:bg-blue-700"
+                    type="button"
+                  >
+                    <img
+                      className="w-8 h-8 rounded-full mr-2"
+                      src="https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
+                      alt="Jese Leos"
+                    />
+                    <span className="text-1xl md:dark:hover:text-blue-500">
+                      Login
+                    </span>
+                  </button>
+                  <div
                   id="dropdown"
                   className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-900"
                 >
@@ -125,52 +137,137 @@ const Navbar = () => {
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="user/login"
                         className="block px-4 py-2 hover:text-blue-500"
                       >
-                        User SignUp/Login
-                      </a>
+                        User Login
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="user/register"
                         className="block px-4 py-2 hover:text-blue-500"
-                        onClick={() => window.location.href = `/adminside/login`}
+                        //onClick={() => window.location.href = `/adminside/login`}
                       >
-                        Admin Login
-                      </a>
+                        User Register
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="/expertlogin"
+                      <Link
+                        to="expert/login"
                         className="block px-4 py-2 hover:text-blue-500"
                       >
                         Doctor Login
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="admin/login"
                         className="block px-4 py-3 hover:text-blue-500"
-                        onClick={() => window.location.href = `/`}
                       >
-                        Logout
-                      </a>
+                        Admin Login
+                      </Link>
                     </li>
                   </ul>
-                </div>
+                </div></>
+                ) : (
+                  user && (
+                    <div className="flex justify-between items-start">
+                      <Link
+                        className="text-white focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center dark:hover:bg-blue-700"
+                        to="user/profile"
+                      >
+                        <img
+                          className="w-8 h-8  rounded-full mr-2"
+                          src={
+                            user.pic ||
+                            "https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
+                          }
+                          alt="Jese Leos"
+                        />
+                      <span className="text-[1rem]  md:dark:hover:text-blue-500">
+                          User Profile
+                      </span>
+                      </Link>
+                      <span
+                        onClick={handlelogout}
+                        className="text-[1rem]  text-white px-4 py-1 hover:text-blue-500"
+                      >
+                        Logout
+                      </span>
+                    </div>
+                  )
+                )}
+
+                {doctor && (
+                 <div className="flex justify-between items-start">
+                    <Link
+                      className="text-white focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center dark:hover:bg-blue-700"
+                      to="doctor/profile"
+                    >
+                      <img
+                        className="w-8 h-8 rounded-full mr-2"
+                        src={
+                          doctor.pic ||
+                          "https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
+                        }
+                        alt="Jese Leos"
+                        
+                      />
+                      <span className="text-1xl md:dark:hover:text-blue-500">
+                          Doctor Profile
+                      </span>
+                    </Link>
+                    <button
+                      onClick={handlelogout}
+                      className="block px-4 py-2 hover:text-blue-500"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+
+                {admin && (
+                 <div className="flex justify-between items-start">
+                    <Link
+                      className="text-white focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center dark:hover:bg-blue-700"
+                      to="/admin/profile"
+                    >
+                      <img
+                        className="w-8 h-8 rounded-full mr-2"
+                        src={
+                          admin.pic ||
+                          "https://i.pinimg.com/550x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
+                        }
+                        alt="Jese Leos"
+                      />
+                      <span className="text-1xl md:dark:hover:text-blue-500">
+                          Admin Profile
+                      </span>
+                    </Link>
+
+                    <button
+                      onClick={handlelogout}
+                      className="block px-4 py-2 hover:text-blue-500"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+
+                
               </li>
               <li>
                 {isProductsOrCartPage() && (
                   <Link
                     to="/cart"
-                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >                  
-                  <span className="text-1xl ">
-                    <i className="fa-solid fa-cart-shopping white mr-2 "></i>
-                    Cart({totalQuantity})
-                  </span>
+                    className="block py-2 px-3  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    <span className="text-1xl ">
+                      <i className="fa-solid fa-cart-shopping white mr-2 "></i>
+                      Cart({totalQuantity})
+                    </span>
                   </Link>
                 )}
               </li>

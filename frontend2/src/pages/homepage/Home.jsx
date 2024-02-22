@@ -156,8 +156,8 @@ const Home = () => {
     </section>
 
 
-    <section id="banner" style={{ marginBottom: '5%' }}>
-      <div className="banner1" data-aos="fade-up" data-aos-duration="3000">
+    <section className="mb-8"id="banner">
+      <div className="banner1 mx-auto" data-aos="fade-up" data-aos-duration="3000">
         <div className="content1">
           <p className="line1">Inspire the World</p>
           <p className="line3 mt-4">
@@ -175,7 +175,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="banner2" data-aos="fade-up" data-aos-duration="3000">
+      <div className="banner2 mx-auto" data-aos="fade-up" data-aos-duration="3000">
         <div className="content3">
           <p className="line1">Meet people who understand</p>
           <p className="line3 mt-4">
@@ -194,7 +194,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="banner3" data-aos="fade-up" data-aos-duration="3000">
+      <div className="banner3 mx-auto" data-aos="fade-up" data-aos-duration="3000">
         <div className="content1">
           <p className="line1">Our Online Therapy</p>
           <p className="line3 mt-4">
@@ -209,7 +209,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="banner4" data-aos="fade-up" data-aos-duration="3000">
+      <div className="banner4 mx-auto" data-aos="fade-up" data-aos-duration="3000">
         <div className="content3">
           <p className="line1">Nurture your mental health, try our Wellness Products</p>
           <p className="line3 mt-4">

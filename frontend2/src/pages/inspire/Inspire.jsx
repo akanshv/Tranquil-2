@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./feedindex.css";
 import "./gradient.css";
-import "./home.css";
+// import "./home.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Inspire = () => {
   const [feeds, setFeeds] = useState([]);
   const [loading, setLoading] = useState(true);
   const Navigate=useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchFeeds = async () => {
+     // console.log("inspire",user);
       try {
         const response = await axios.get("http://localhost:3000/feed");
         console.log(response);
@@ -43,7 +46,7 @@ const Inspire = () => {
       <div className="row">
         <div className="mt-[6rem] headimg">
           <img
-            className="rounded-full "
+            className="rounded-full"
             src="https://i.imgur.com/Binzr0Z.png"
             alt=""
           />
@@ -52,15 +55,17 @@ const Inspire = () => {
 
       <div>
         <form>
-          <div className="upper-text">
-            <p className="flex justify-center items-center heading2 text-gray-800 text-2xl">
+          <div className="upper-text mt-5">
+            <p className=" heading2 text-center  text-gray-800 text-2xl">
               Create Your Own Inspiring Post
-              
-                <button onClick={()=>(Navigate('/feed/newfeed'))}
-                  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
+                
+              <Link 
+                className='mt-3 ml-3 hover:bg-blue-700 bg-gradient-to-r from-blue-500 to-blue-700 px-6 py-3 rounded-full shadow-md text-white' to={'/feed/newfeed'} >Create Post</Link>
+                {/* <button onClick={()=>(Navigate('/feed/newfeed'))}
+                  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white   rounded-full shadow-md"
                 >
                   Create Post
-                </button>
+                </button> */}
         
             </p>
           </div>
@@ -86,10 +91,10 @@ const Inspire = () => {
                 key={feed._id}
               >
                 {/* ... Other JSX code ... */}
-                <a
+                <Link
                   className="cardanchor"
                   id="feedid"
-                  href={`/feed/${feed._id}`}
+                  to={`/feed/${feed._id}`}
                 >
                   {feed.image && (
                     <img
@@ -122,7 +127,7 @@ const Inspire = () => {
                   <div className="card-footer" id="feeddate">
                     <small className="text-muted">{feed.uploaddate}</small>
                   </div>
-                </a>
+                </Link>
               </div>
             ))
           )}

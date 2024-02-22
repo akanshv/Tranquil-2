@@ -16,6 +16,8 @@ import Listner from './pages/chat/Listner';
 import Peer from './pages/chat/Peer';
 import ExpertLogin from './pages/therapy/doctorlogin';
 import PostForm from './pages/inspire/CreatePost';
+import Register from './pages/userlogin/register';
+import Login from './pages/userlogin/login';
 import DoctorRegister from './pages/therapy/DoctorRegister';
 import DoctorDetail from './pages/therapy/doctorDetail';
 
@@ -26,6 +28,8 @@ const App = () => {
       <Navbar navactive={'home'} currentuser={'Anmol'}/>
       <Routes>
         <Route exact path='/' element={<Home />} />
+        <Route exact path='user/register' element={<Register/>} />
+        <Route exact path='user/login' element={<Login/>} />
         <Route path='/feed' element={<Inspire />} />
         <Route path='/feed/newfeed' element={<PostForm/>} />
         <Route path='/feed/:id' element={<Inspirepost/>} />

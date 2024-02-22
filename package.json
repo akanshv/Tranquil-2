@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cloudinary": "^2.0.1",
+    "http-parser-js": "^0.5.8"
+  }
+}

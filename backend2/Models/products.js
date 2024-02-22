@@ -1,7 +1,5 @@
 const mongoose=require('mongoose');
-const comments=require('./comments');
 const Schema=mongoose.Schema;
-const { object } = require('joi');
 
 const ProductSchema=new Schema({
     Name:String,

@@ -16,9 +16,9 @@ const Navbar = () => {
   console.log(user);
   const dispatch = useDispatch();
   const Navigate=useNavigate();
-  useEffect(() => {
-    dispatch(getCartTotal());
-  }, [cart]);
+  // useEffect(() => {
+  //   dispatch(getCartTotal());
+  // }, [cart]);
 
   const isProductsOrCartPage = () => {
     const path = location.pathname;

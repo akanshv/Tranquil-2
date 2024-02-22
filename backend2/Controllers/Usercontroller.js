@@ -116,3 +116,5 @@ module.exports.happy = asyncHandler(async (req, res) => {
   res.redirect("/userprofile");
   //console.log(slotter);
 });
+
+// module.exports.addtocart = asyncHandler(async (req,res))

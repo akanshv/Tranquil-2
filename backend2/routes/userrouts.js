@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 router = express.Router();
-process.binding('http_parser').HTTPParser = require('http-parser-js').HTTPParser;
+
 session = require('express-session')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -187,6 +187,7 @@ router.get('/userprofile',protect,catchAsync(control.userprofile));
 router.get("/logout",protect, catchAsync(control.logut));
 
 router.get('/happy/:sid',protect,catchAsync(control.happy));
+
 
 
 module.exports = router;

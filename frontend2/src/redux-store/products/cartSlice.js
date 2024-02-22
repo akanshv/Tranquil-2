@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Axios from 'axios';
-import productData from "./productData";
+import axios from "axios";
 
 const initialState = {
   cart: [],
@@ -12,18 +12,34 @@ const initialState = {
 export const fetchProductData = () => async (dispatch) => {
     try {
       const response = await Axios.get(
-        "https://gist.githubusercontent.com/divyanshu29jha/a01ceee780e9a7872028f578bc6972e2/raw"
+        "http://localhost:3000/products/getproducts"
       );
-      dispatch(setProductData(response.data));
+      console.log(response.data);
+      dispatch(setProductData(response.data.products));
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
 };
 
+export const fetchCartData = () => async (dispatch) => {
+  try { 
+    const response = await axios.post("http://localhost:3000/products/getcart",{userId:"643411ee1cf578087f24df0e"})
+    console.log(response.data.products)
+    dispatch(setCartDataAction(response.data.products))
+  } catch(e){
+    console.log(e);
+  }
+}
+
 // Define a regular action to set product data
 const setProductData = (data) => ({
     type: "cart/setProductData",
     payload: data,
+});
+
+const setCartDataAction = (data) => ({
+  type: "cart/setCartData",
+  payload: data,
 });
 
 const cartSlice = createSlice({
@@ -57,13 +73,16 @@ const cartSlice = createSlice({
       state.totalQuantity = totalQuantity;
     },
 
-    removeItem: (state, action) => {
-      state.cart = state.cart.filter((item) => item.id !== action.payload);
+    // removeItem: (state, action) => {
+    //   state.cart = state.cart.filter((item) => item.id !== action.payload);
+    // },
+    removeFromCart: (state, action) => {
+      state.cart = state.cart.filter((item) => item.id !== action.payload.productId);
     },
     
     increaseItemQuantity: (state, action) => {
       state.cart = state.cart.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           return { ...item, quantity: item.quantity + 1 };
         }
         return item;
@@ -82,15 +101,27 @@ const cartSlice = createSlice({
     setProductData: (state, action) => {
         state.items = action.payload;
     },
+    
+    setCartData: (state, action) => {
+      state.cart = action.payload
+      state.totalQuantity = 0;
+      state.totalPrice = 0;
+      for(let i = 0; i<action.payload.length; i++){
+        state.totalQuantity += action.payload[i].count;
+        state.totalPrice += (action.payload[i].count) * (action.payload[i].productId.Cutprice);
+      }
+      state.totalPrice = parseInt(state.totalPrice.toFixed(2));
+    }
   },
 });
 
 export const {
   addToCart,
   getCartTotal,
-  removeItem,
+  removeFromCart,
   increaseItemQuantity,
   decreaseItemQuantity,
+  setCartData
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

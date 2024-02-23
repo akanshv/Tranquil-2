@@ -1,7 +1,8 @@
-
 const express = require('express');
 const app = express();
 const path = require('path');
+const morgan = require('morgan');
+
 
 //method overide for patch and put into post
 const methodOveride = require('method-override');
@@ -14,6 +15,16 @@ const {config}=require('dotenv');
 config();
 
 app.use(cors());
+
+const rfs =require('rotating-file-stream');
+const accessLogStream=rfs.createStream("ctime.log",
+    {interval:"1d",
+    path:path.join(__dirname,'log')});
+
+// Morgan-middleware
+app.use(morgan(':method,:url'));
+morgan.token("mine","This request is :method from :url and it took :total-time[2] ms to process");
+app.use(morgan('mine',{stream:accessLogStream}));
 
 const Joi=require('joi');
 app.use(methodOveride('_method'));

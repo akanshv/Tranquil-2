@@ -179,7 +179,7 @@ module.exports.addtocart = async (req, res, next) => {
     const { userId, productId } = req.body;
     try {
         let search = await cart.findOne({ userid: userId });
-        console.log(cart)
+        // console.log(cart)
 
         if (search) {
             let flag = false;
@@ -220,7 +220,7 @@ module.exports.getCart = async (req, res, next) => {
         let userCart = await cart.findOne({ userid: userId }).populate('products.productId');
         if (userCart) {
 
-            console.log(userCart)
+            // console.log(userCart)
             return res.send(userCart)
         }
         return res.send("Empty")
@@ -270,7 +270,7 @@ module.exports.decreasequantity = async (req, res, next) => {
 
     try {
         let search = await cart.findOne({ userid: userId });
-        console.log(search)
+        // console.log(search)
         if (!search) {
             return res.status(404).json({ message: "Cart not found" });
         }

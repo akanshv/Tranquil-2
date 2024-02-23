@@ -14,7 +14,7 @@ app.use(cors());
 const {config}=require('dotenv');
 config();
 
-app.use(cors());
+
 
 const rfs =require('rotating-file-stream');
 const accessLogStream=rfs.createStream("ctime.log",

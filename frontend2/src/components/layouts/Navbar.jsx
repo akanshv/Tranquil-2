@@ -86,14 +86,14 @@ const Navbar = () => {
                   <span className="text-1xl">Inspire</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/chat"
                   className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   <span className="text-1xl">Chat</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/therapy"
@@ -155,7 +155,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        to="expert/login"
+                        to="/expertlogin"
                         className="block px-4 py-2 hover:text-blue-500"
                       >
                         Doctor Login

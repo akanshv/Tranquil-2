@@ -175,9 +175,9 @@ const AdminProductsManage = () => {
   };
 
   return (
-    <div className="sabkuch">
+    <div className="sabkuch mt-[5rem]">
       <div className="expert-div flex justify-center">
-        <img src="https://i.imgur.com/ujX2KRl.png" className="expert-banner" alt="expert" />
+        <img src="https://i.imgur.com/KxzTAC6.png" className="expert-banner" alt="expert" />
       </div>
       {
         loading ?

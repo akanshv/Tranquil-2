@@ -16,6 +16,7 @@ import axios from "axios";
 const Cart = () => {
   const { items, cart, totalQuantity, totalPrice } = useSelector((state) => state.allCart);
   const user = useSelector((state) => state.auth.user);
+  console.log(cart);
   const dispatch = useDispatch();
   useEffect(() => {
     async function getCartData1() {

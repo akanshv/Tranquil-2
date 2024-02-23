@@ -9,3 +9,17 @@ This request is GET from /therapy and it took 273.39 ms to process
 This request is GET from /feed and it took 562.28 ms to process
 This request is POST from /login and it took 362.26 ms to process
 This request is GET from /userprofile and it took 2915.39 ms to process
+This request is POST from /login and it took 434.66 ms to process
+This request is GET from /userprofile and it took 2771.07 ms to process
+This request is POST from /login and it took 355.33 ms to process
+This request is POST from /login and it took 314.55 ms to process
+This request is GET from /userprofile and it took 2434.82 ms to process
+This request is POST from /admin/adminlogin and it took 315.11 ms to process
+This request is GET from /admin/adminprofile/644528c526df9c16c244b1fd and it took 1210.13 ms to process
+This request is GET from /admin/adminproductsmanage/ and it took 273.16 ms to process
+This request is GET from /admin/adminprofile/644528c526df9c16c244b1fd and it took 1233.28 ms to process
+This request is GET from /admin/adminprofile/644528c526df9c16c244b1fd and it took 1063.41 ms to process
+This request is GET from /admin/adminprofile/644528c526df9c16c244b1fd and it took 1215.58 ms to process
+This request is GET from /admin/adminprofile/644528c526df9c16c244b1fd and it took 1034.22 ms to process
+This request is GET from /feed and it took 664.53 ms to process
+This request is GET from /feed and it took 652.26 ms to process

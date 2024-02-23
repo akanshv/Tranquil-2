@@ -20,7 +20,7 @@ import Register from './pages/userlogin/register';
 import Login from './pages/userlogin/login';
 import DoctorRegister from './pages/therapy/DoctorRegister';
 import DoctorDetail from './pages/therapy/doctorDetail';
-
+import UserProfile from './pages/userlogin/Userprofile';
 
 const App = () => {
   return (
@@ -48,6 +48,7 @@ const App = () => {
         <Route path='/adminside/products' element={<AdminProductsManage />} />
         <Route path='/expertlogin' element={<ExpertLogin/>} />
         <Route path='/expertprofile' element={<DoctorDetail/>}/>
+        <Route path='/user/profile' element={<UserProfile/>}/>
       </Routes>
       <Footer />
     </div>

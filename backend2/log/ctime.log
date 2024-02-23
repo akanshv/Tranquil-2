@@ -1,3 +1,11 @@
 This request is GET from /products/getproducts and it took 257.76 ms to process
 This request is POST from /products/addtocart and it took 574.83 ms to process
 This request is POST from /products/getcart and it took 577.32 ms to process
+This request is GET from /feed and it took 658.37 ms to process
+This request is POST from /login and it took 395.31 ms to process
+This request is GET from /products/getproducts and it took 262.35 ms to process
+This request is GET from /userprofile and it took 2603.84 ms to process
+This request is GET from /therapy and it took 273.39 ms to process
+This request is GET from /feed and it took 562.28 ms to process
+This request is POST from /login and it took 362.26 ms to process
+This request is GET from /userprofile and it took 2915.39 ms to process

@@ -9,26 +9,38 @@ import {
 } from "../../redux-store/products/cartSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Products = () => {
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const items = useSelector((state) => state.allCart.items);
-
+  const Navigate=useNavigate();
   const [loading, setLoading] = useState(true);
-
+   
   useEffect(() => {
-    async function getProductData() {
-      await dispatch(fetchProductData());
-      setLoading(false);
+    if(user){
+      async function getProductData() {
+        await dispatch(fetchProductData());
+        setLoading(false);
+      }
+      getProductData();
     }
-    getProductData();
+    else{
+      toast.error('First Login or Signup to access',{
+        duration: 4000,
+        position: 'top-right',
+      });
+      Navigate('/user/login')
+    }
+    
   }, []);
 
   async function addToCartHandler(id) {
     try {
       const response = await axios.post(
         "http://localhost:3000/products/addtocart",
-        { userId: "643411ee1cf578087f24df0e", productId: id }
+        { userId:user._id , productId: id }
       );
       if (response.status == 200) {
         console.log(response.data);
@@ -73,7 +85,7 @@ const Products = () => {
                   {type}
                 </strong>
               </div>
-              {itemsOfType.map((item) => (
+              {itemsOfType?.map((item) => (
                 <div
                   key={item._id}
                   className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"

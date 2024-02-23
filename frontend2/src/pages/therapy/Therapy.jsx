@@ -2,18 +2,32 @@
 import React, { useState, useEffect } from 'react';
 // import './Therapy.css';
 import axios from 'axios';
-
+import { useSelector,useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 const Therapy = () => {
   const [expertArray, setExpertArray] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
-
+  const user = useSelector((state) => state.auth.user);
+  const Navigate=useNavigate();
   useEffect(() => {
     const fetchExperts = async () => {
       try {
+        if(user){
         const response = await axios.get(`http://localhost:3000/therapy`);
         console.log(response.data.expertarray);
         setExpertArray(response.data.expertarray);
+        setLoading(false);
+  
+        }
+        else{
+          toast.error('First Login or Signup to access',{
+            duration: 4000,
+            position: 'top-right',
+          });
+          Navigate('/user/login')
+        }
       } catch (error) {
         console.error('Error fetching experts:', error);
         setLoading(false);

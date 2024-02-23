@@ -1,8 +1,22 @@
 import React from 'react';
 import './Chat.css';
 import './Style.css';
-
+import { useSelector,useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
 const Chat = () => {
+  const user = useSelector((state) => state.auth.user);
+  const Navigate=useNavigate();
+  useEffect(() => {
+      if(!user){
+        toast.error('First Login or Signup to access',{
+          duration: 4000,
+          position: 'top-right',
+        });
+        Navigate('/user/login')
+      }
+  }, []);
   return (
     <>
     <div className=" w-125 p-3 vh-100">

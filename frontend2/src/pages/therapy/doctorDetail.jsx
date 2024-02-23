@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Doctordetails.css'
-
+import { useSelector,useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 const DoctorDetail = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/doctor/adminprofile/644528c526df9c16c244b1fd');
-        setData(response.data);
-        setLoading(false);
+        if(true){
+          const response = await axios.get('http://localhost:3000/doctor/adminprofile/644528c526df9c16c244b1fd');
+          setData(response.data);
+          setLoading(false);
+        }
+        else{
+          toast.error('First Login or Signup to access',{
+            duration: 4000,
+            position: 'top-right',
+          });
+          Navigate('/user/login')
+        }
       } catch (error) {
         console.error(error);
         setLoading(false);

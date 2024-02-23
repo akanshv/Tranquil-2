@@ -74,8 +74,9 @@ module.exports.postlogin = asyncHandler(async (req, res) => {
 });
 
 module.exports.userprofile = asyncHandler(async (req, res) => {
-  const use = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id);
   const posts = await feed.find({ author: req.user._id }).populate("author");
+  console.log(posts);
   const sold = await SoldDetails.find({ userid: req.user._id }).populate(
     "productarr"
   );
@@ -83,9 +84,14 @@ module.exports.userprofile = asyncHandler(async (req, res) => {
     "doctorid"
   );
   console.log(slotter);
-  res.render("userprofile", {
-    navactive: navactive,
-    use: use,
+  console.log({
+    user: user,
+    posts: posts,
+    sold: sold,
+    slotter: slotter,
+  })
+  res.status(200).json({
+    user: user,
     posts: posts,
     sold: sold,
     slotter: slotter,

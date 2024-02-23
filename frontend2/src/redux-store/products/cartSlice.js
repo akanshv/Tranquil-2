@@ -1,7 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Axios from 'axios';
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
+
+
+
+
+
+
+
+// const user = useSelector((state) => state.auth.user);
 const initialState = {
   cart: [],
   items: [],
@@ -21,10 +30,12 @@ export const fetchProductData = () => async (dispatch) => {
     }
 };
 
-export const fetchCartData = () => async (dispatch) => {
+export const fetchCartData = (userid) => async (dispatch) => {
+  // const user = useSelector((state) => state.auth.user);
   try { 
-    const response = await axios.post("http://localhost:3000/products/getcart",{userId:"643411ee1cf578087f24df0e"})
-    console.log(response.data.products)
+    console.log(userid);
+    const response = await axios.post("http://localhost:3000/products/getcart",{userId:userid})
+    console.log(response.data)
     dispatch(setCartDataAction(response.data.products))
   } catch(e){
     console.log(e);

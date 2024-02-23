@@ -15,11 +15,11 @@ import axios from "axios";
 
 const Cart = () => {
   const { items, cart, totalQuantity, totalPrice } = useSelector((state) => state.allCart);
-
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   useEffect(() => {
     async function getCartData1() {
-      await dispatch(fetchCartData());
+      await dispatch(fetchCartData(user._id));
     }
 
     getCartData1();
@@ -27,14 +27,14 @@ const Cart = () => {
 
   async function removeFromCartHandler(id){
     try {
-      const response = await axios.post('http://localhost:3000/products/deletefromcart',{userId: '643411ee1cf578087f24df0e', productId: id})
+      const response = await axios.post('http://localhost:3000/products/deletefromcart',{userId:user._id, productId: id})
       if(response.status == 200){
         console.log(response.data)
         toast.success("Removed from cart!", {
           autoClose: 2000 
         });
         // dispatch(removeFromCart(id));
-        await dispatch(fetchCartData());
+        await dispatch(fetchCartData(user._id));
       }
     } catch (e){
       console.log(e);
@@ -44,13 +44,13 @@ const Cart = () => {
 
   async function increaseQuantityHandler(id){
     try {
-      const response = await axios.post('http://localhost:3000/products/increasequantity',{userId: '643411ee1cf578087f24df0e', productId: id})
+      const response = await axios.post('http://localhost:3000/products/increasequantity',{userId: user._id, productId: id})
       if(response.status == 200){
         console.log(response.data) 
         toast.success("Quantity increased!", {
           autoClose: 2000 
         });
-        await dispatch(fetchCartData());
+        await dispatch(fetchCartData(user._id));
       }
     } catch (e){
       console.log(e);
@@ -59,13 +59,13 @@ const Cart = () => {
 
   async function decreaseQuantityHandler(id){
     try {
-      const response = await axios.post('http://localhost:3000/products/decreasequantity',{userId: '643411ee1cf578087f24df0e', productId: id})
+      const response = await axios.post('http://localhost:3000/products/decreasequantity',{userId: user._id, productId: id})
       if(response.status == 200){
         console.log(response.data)
         toast.success("Quantity decreased!", {
           autoClose: 2000 
         });
-        await dispatch(fetchCartData());
+        await dispatch(fetchCartData(user._id));
       }
     } catch (e){
       console.log(e);

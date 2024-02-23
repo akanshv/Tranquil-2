@@ -5,7 +5,8 @@ import "./feedindex.css";
 import "./gradient.css";
 import "./home.css";
 import { Icon } from '@iconify/react';
-
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 const PostForm = () => {
     const Navigate=useNavigate();
   const [formData, setFormData] = useState({
@@ -15,6 +16,17 @@ const PostForm = () => {
     caption: "",
     description: "",
   });
+
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+      if(!user){
+        toast.error('First Login or Signup to access',{
+          duration: 4000,
+          position: 'top-right',
+        });
+        Navigate('/user/login')
+      }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;

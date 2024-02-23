@@ -16,6 +16,7 @@ const generateToken = require('../Middlewares/generateToken');
 
 
 const control = require('../Controllers/admincontroller');
+const { adminprotect } = require('../Middlewares/authMiddleware');
 
 
 
@@ -62,5 +63,7 @@ router.get('/adminfeedok/:fid', catchAsync(control.feedaccept));
 router.get('/adminfeeddelete/:fid', catchAsync(control.feeddelete));
 
 router.post('/adminproductadd', catchAsync(control.productadd));
+
+router.use(adminprotect);
 
 module.exports = router;

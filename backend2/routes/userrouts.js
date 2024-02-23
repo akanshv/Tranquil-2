@@ -164,6 +164,7 @@ router.post('/login', catchAsync(
     const { email, password } = req.body;
     console.log('anmol: ',req.body);
     const user = await User.findOne({ email:email });
+    console.log(user);
   
     if (user && (await bcrypt.compare(password, user.hash))) {
       res.json({

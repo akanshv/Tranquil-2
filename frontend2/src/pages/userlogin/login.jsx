@@ -31,10 +31,15 @@ const Login = () => {
         position: 'top-right',
       });
       Navigate('/');
-      setLoginloading(false);
+      
     } catch (error) {
       console.log(error);
+      toast.error("Authentication failed . Try again",{
+        duration: 4000,
+        position: 'top-right',
+      });
     }
+    setLoginloading(false);
   };
   return (
     

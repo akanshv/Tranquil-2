@@ -176,7 +176,7 @@ const Navbar = () => {
                     <div className="flex justify-between items-start">
                       <Link
                         className="text-white focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center dark:hover:bg-blue-700"
-                        to="user/profile"
+                        to="/user/profile"
                       >
                         <img
                           className="w-8 h-8  rounded-full mr-2"
@@ -192,7 +192,7 @@ const Navbar = () => {
                       </Link>
                       <span
                         onClick={handlelogout}
-                        className="text-[1rem]  text-white px-4 py-1 hover:text-blue-500"
+                        className="text-[1rem] cursor-pointer text-white px-4 py-1 hover:text-blue-500"
                       >
                         Logout
                       </span>
@@ -215,16 +215,16 @@ const Navbar = () => {
                         alt="Jese Leos"
                         
                       />
-                      <span className="text-1xl md:dark:hover:text-blue-500">
+                      <span className="text-[1rem] md:dark:hover:text-blue-500">
                           Doctor Profile
                       </span>
                     </Link>
-                    <button
-                      onClick={handlelogout}
-                      className="block px-4 py-2 hover:text-blue-500"
-                    >
-                      Logout
-                    </button>
+                    <span
+                        onClick={handlelogout}
+                        className="text-[1rem] cursor-pointer  text-white px-4 py-1 hover:text-blue-500"
+                      >
+                        Logout
+                      </span>
                   </div>
                 )}
 
@@ -242,17 +242,17 @@ const Navbar = () => {
                         }
                         alt="Jese Leos"
                       />
-                      <span className="text-1xl md:dark:hover:text-blue-500">
+                      <span className="text-[1rem] md:dark:hover:text-blue-500">
                           Admin Profile
                       </span>
                     </Link>
 
-                    <button
-                      onClick={handlelogout}
-                      className="block px-4 py-2 hover:text-blue-500"
-                    >
-                      Logout
-                    </button>
+                    <span
+                        onClick={handlelogout}
+                        className="text-[1rem] cursor-pointer  text-white px-4 py-1 hover:text-blue-500"
+                      >
+                        Logout
+                      </span>
                   </div>
                 )}
 

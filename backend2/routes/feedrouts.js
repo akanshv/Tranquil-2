@@ -118,7 +118,7 @@ router.post('/newfeedreact',catchAsync(async(req,res)=>{
           const newpost = new feed(post);
            
           //  newpost.author=req.user._id;///putting anmol id
-          const auth=await User.findOne({_id:'643411d41cf578087f24def5'});
+          const auth=await User.findOne({_id:req.user._id});
           console.log(auth);
           newpost.author=auth._id;
           console.log(newpost);

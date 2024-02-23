@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 router = express.Router();
 
+
 // error class
 const ExpressError = require('../utils/ExpressError')
 // wrapper err function
@@ -14,7 +15,7 @@ const uploads = multer({ dest: 'routes/uploads' });
 //imagur
 const imgurUploader = require('imgur-uploader');
 
-
+const { protect ,expertprotect} = require("../Middlewares/authMiddleware")
 
 
 
@@ -56,15 +57,16 @@ router.get('/slotaccept/:id',catchAsync( async (req,res)=>{
     
 }))
 
-router.post('/updateprofile',catchAsync(control.updateprofile));
+router.post('/updateprofile',expertprotect,catchAsync(control.updateprofile));
 
 
 
-router.get('/expertprofile',catchAsync(control.getexpertprofile));
+router.get('/expertprofile',expertprotect,catchAsync(control.getexpertprofile));
 
-router.get('/acceptslot/:sid', catchAsync(control.acceptslot));
+router.get('/acceptslot/:sid',expertprotect, catchAsync(control.acceptslot));
 
-router.get('/rejectslot/:sid', catchAsync(control.rejectslot));
+router.get('/rejectslot/:sid',expertprotect, catchAsync(control.rejectslot));
+
 
 
 

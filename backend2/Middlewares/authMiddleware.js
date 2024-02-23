@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../Models/user");
 const asyncHandler = require("express-async-handler");
+const Admin=require('../Models/admin')
+const Expert=require('../Models/doctors')
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -24,7 +26,54 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { protect };
+
+const expertprotect = asyncHandler(async (req, res, next) => {
+  let token;
+
+    try {
+      token = req.headers.authorization;
+     //decodes token id
+      console.log(token);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await Expert.findById(decoded.id).select("-hash");
+      console.log(req.user)
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error("Not authorized, token failed");
+    }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+});
+
+
+
+const adminprotect = asyncHandler(async (req, res, next) => {
+  let token;
+
+    try {
+      token = req.headers.authorization;
+     //decodes token id
+      console.log(token);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await Admin.findById(decoded.id).select("-hash");
+      console.log(req.user)
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error("Not authorized, token failed");
+    }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+});
+
+module.exports = { protect,expertprotect,adminprotect };
 
 
 

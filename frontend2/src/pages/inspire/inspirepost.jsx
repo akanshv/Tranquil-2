@@ -8,16 +8,18 @@ import { Icon } from '@iconify/react';
 import { useSelector,useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-const Blog = () => {};
+
 const Inspirepost = (props) => {
   const [post, setPost] = useState({});
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
+ 
   const [loading, setLoading] = useState(true);
   const Navigate=useNavigate();
   const [currentuser, setCurrentUser] = useState({
     /* Add your user data structure here */
   });
+  const [isLiked, setIsLiked] = useState(false);
+  const [isReport, setIsReport] = useState(false);
   const routeParams = useParams();
   useEffect(() => {
     // Function to fetch post details based on the post ID in the URL params
@@ -38,6 +40,9 @@ const Inspirepost = (props) => {
 
         // const postData = await response.json();
         setPost(response.data);
+        setIsReport(response.data.reportarr.includes(user._id));
+        console.log(isReport);
+        setIsLiked(response.data.reallikes.includes(user._id));
         setLoading(false);
 
         }
@@ -59,12 +64,80 @@ const Inspirepost = (props) => {
     fetchPostDetails();
   }, []);
 
-  const handleLike = () => {
-    // Implement your like logic here
+  const handleLike =async () => {
+    try {
+      //console.log(user);
+      if(user){
+
+      // Assuming you are using React Router for routing
+      const response = await axios.get(
+        `http://localhost:3000/feed/like/${routeParams.id}`
+        ,{
+          headers: {
+              Authorization: user.token
+          }
+      }
+      );
+
+      // const postData = await response.json();
+      setPost(response.data);
+      setIsLiked(response.data.reallikes.includes(user._id));
+      toast.success('You got inspired',{
+        duration: 4000,
+        position: 'top-right',
+      });
+      }
+      else{
+        toast.error('First Login or Signup to access',{
+          duration: 4000,
+          position: 'top-right',
+        });
+        Navigate('/user/login')
+      }
+      // Assuming you are using React Router for routing
+    } catch (error) {
+      console.error("Error fetching post details:", error);
+      // Handle error, show error message, or redirect to an error page
+      setLoading(false);
+    } 
   };
 
-  const handleReport = () => {
-    // Implement your report logic here
+  const handleReport = async() => {
+    try {
+      //console.log(user);
+      if(user){
+
+      // Assuming you are using React Router for routing
+      const response = await axios.get(
+        `http://localhost:3000/feed/report/${routeParams.id}`
+        ,{
+          headers: {
+              Authorization: user.token
+          }
+      }
+      );
+
+      // const postData = await response.json();
+      setPost(response.data);
+      setIsReport(response.data.reportarr.includes(user._id));
+      toast.success('Thanks for reporting',{
+        duration: 4000,
+        position: 'top-right',
+      });
+      }
+      else{
+        toast.error('First Login or Signup to access',{
+          duration: 4000,
+          position: 'top-right',
+        });
+        Navigate('/user/login')
+      }
+      // Assuming you are using React Router for routing
+    } catch (error) {
+      console.error("Error fetching post details:", error);
+      // Handle error, show error message, or redirect to an error page
+      setLoading(false);
+    }
   };
 
   const handleUnlike = () => {
@@ -93,8 +166,16 @@ const Inspirepost = (props) => {
               <div className="m-8 p-4 w-[100%] border-solid border-2 rounded-3xl bg-gradient-to-r from-slate-200 to-slate-300">
                 {/* Rest of your card JSX code */}
                 <div className="card-footer">
-                  {/* Add your profile JSX code */}
+                    <div className="profile">
+                <div className="flex items-center" id="authorusername">
+                    <span className="round">
+                        <img src={post.author.pfp} id="authorpfp" alt="user" width="40" />
+                    </span>
+                    &nbsp;
+                    {post.author.username}
                 </div>
+            </div>
+        </div>
                 {post.image && (
                   <img
                     className="card-img-top mt-2"
@@ -102,6 +183,7 @@ const Inspirepost = (props) => {
                     alt="Card image cap"
                   />
                 )}
+                
                 <div className="card-body">
                   <h5 className="card-title">{post.title}</h5>
                   <p className="card-text">{post.caption}</p>
@@ -115,7 +197,9 @@ const Inspirepost = (props) => {
                 <div className="card-footer">
                   <div className="like" id="likeder">
                     <div className="inline-block space-x-2">
-                      <button  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md">
+                      {(!isLiked && !isReport)&&(
+                        <>
+                        <button onClick={handleLike} className="m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md">
                         <Icon
                           className="text-4xl "
                           icon="mdi-light:like"
@@ -123,15 +207,23 @@ const Inspirepost = (props) => {
                     
                         Got Inspired
                       </button>
-                      <button  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
+                      <button onClick={handleReport} className=" m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
                       >
                         <iconify-icon
                           className="text-2xl"
                           icon="mdi:alert"
                         ></iconify-icon>
                         Report
-                      </button>
-                  </div>
+                      </button></>
+                      )}
+                      {(isLiked)&&(
+                        <>
+                        <p className="card-text text-blue-700 font-semibold m-2"> You got inspired from this post.</p>
+                        </>
+                      )}
+                      {(isReport)&&(<>
+                      <p className="card-text text-blue-700 font-semibold m-2"> Thanks for reporting this post. We will look after it </p></>)}
+                      </div>
                   </div>
                   {/* Add your like, report, unlike buttons JSX code */}
                   <small className="text-muted">{post.uploaddate}</small>

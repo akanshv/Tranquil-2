@@ -96,6 +96,17 @@ const Inspire = () => {
                   id="feedid"
                   to={`/feed/${feed._id}`}
                 >
+                  <div className="card-footer">
+                  <div className="profile">
+                      <div className="flex items-center" id="authorusername">
+                       <span className="round">
+                        <img src={feed.author.pfp} id="authorpfp" alt="user" width="40" />
+                       </span>
+                      &nbsp;
+                      {feed.author.username}
+                 </div>
+            </div>
+        </div>
                   {feed.image && (
                     <img
                       className="card-img-top p-3"

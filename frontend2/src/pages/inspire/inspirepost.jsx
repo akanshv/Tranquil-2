@@ -125,7 +125,6 @@ const Inspirepost = (props) => {
                       </button>
                       <button  className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md"
                       >
-
                         <iconify-icon
                           className="text-2xl"
                           icon="mdi:alert"

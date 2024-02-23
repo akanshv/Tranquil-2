@@ -1,31 +1,78 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 import './AdminLogin.css';
 import './AdminProfile.css';
+import { useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 
 const AdminProductsManage = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const admin = useSelector((state) => state.auth.admin);
+  const Navigate=useNavigate();
+  console.log(admin);
 
   useEffect(() => {
     console.log('Entering useEffect');
     const fetchData = async () => {
       try {
-        console.log('Fetching data');
-        const response = await axios.get('http://localhost:3000/admin/adminproductsmanage/644528c526df9c16c244b1fd');
-        setData(response.data.prod);
-        setLoading(false);
-        console.log('Data received:', response.data.prod);
+        if (admin) {
+
+          const response = await axios.get(
+            `http://localhost:3000/admin/adminproductsmanage/`
+            , {
+              headers: {
+                Authorization: admin.token
+              }
+            }
+          );
+
+          setData(response.data);
+          console.log("data :", data);
+          setLoading(false);
+
+        }
+        else {
+          toast.error('First Login or Signup to access', {
+            duration: 4000,
+            position: 'top-right',
+          });
+          Navigate('/admin/login')
+        }
+        // Assuming you are using React Router for routing
       } catch (error) {
-        console.error(error);
+        console.log("Error fetching post details:", error);
+        // Handle error, show error message, or redirect to an error page
         setLoading(false);
       }
     };
 
     fetchData();
     console.log('Exiting useEffect');
-  }, []); // Empty dependency array to fetch data only once on component mount
+  }, []);
+
+  const updateProduct = async (id) =>{
+    console.log("Entered Update PRoduct")
+    console.log(id)
+    const data = await axios.put(`http://localhost:3000/admin/adminproductupdate/${id}`);
+    console.log(data);
+  }
+
+  const deleteProduct = async (id) =>{
+    console.log("Entered Update PRoduct")
+    console.log(id)
+    const data = await axios.post(`http://localhost:3000/admin/adminproductdelete/${id}`);
+    console.log(data);
+  }
+
+  const addProduct = async () =>{
+    console.log("Entered Update PRoduct")
+    console.log(id)
+    const data = await axios.post(`http://localhost:3000/admin/adminproductadd`);
+    console.log(data);
+  }
 
   const ProductCategorySection = ({ category, prod }) => {
     return (
@@ -36,7 +83,7 @@ const AdminProductsManage = () => {
           </h1>
         </div>
         <div className="flex flex-wrap justify-around mb-12">
-          {prod.map((product) => (
+          {data.prod.map((product) => (
             product.Type === category ? (
 
 
@@ -57,8 +104,8 @@ const AdminProductsManage = () => {
                     <p>{product.author}</p>
                   </a>
                   <h6 className="mb-3">MRP: ₹{product.Price}</h6>
-                  <form action={`/admin/adminproductdelete/${product._id}?_method=DELETE`} method="post" id={`${product._id}_deleter`}></form>
-                  <form action={`/admin/adminproductupdate/${product._id}?_method=PUT`} method="post" id={`${product._id}_updater`}></form>
+                  {/* <form action={`/admin/adminproductdelete/${product._id}?_method=DELETE`} method="post" id={`${product._id}_deleter`}></form>
+                  <form action={`/admin/adminproductupdate/${product._id}?_method=PUT`} method="post" id={`${product._id}_updater`}></form> */}
                   <label htmlFor="price">Discounted Price</label><br />
                   <input
                     type="Number"
@@ -78,10 +125,10 @@ const AdminProductsManage = () => {
                     form={`${product._id}_updater`}
                     placeholder={` ${product.Stock}`}
                   /><br />
-                  <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" type="submit" form={`${product._id}_updater`}>
+                  <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" type="submit" form={`${product._id}_updater`}   onClick={() => updateProduct(product._id)}>
                     Submit
                   </button>
-                  <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" type="submit" form={`${product._id}_deleter`}>
+                  <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" type="submit" form={`${product._id}_deleter`} onClick={() => deleteProduct(product._id)}>
                     Delete
                   </button>
                 </div>
@@ -117,7 +164,7 @@ const AdminProductsManage = () => {
               <button type="button" className="btn btn-secondary" data-mdb-dismiss="modal">
                 Close
               </button>
-              <button type="submit" form="create" className="btn btn-primary ms-6">
+              <button type="submit" form="create" className="btn btn-primary ms-6" onClick={() => addProduct()}>
                 Create Product
               </button>
             </div>

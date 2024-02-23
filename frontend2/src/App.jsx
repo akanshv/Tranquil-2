@@ -44,7 +44,7 @@ const App = () => {
         {/* <Route path='/therapistside' element={<Products />} /> */}
         <Route path='/products' element={<Products />} />
         <Route path='/adminside' element={<AdminProfile />} />
-        <Route path='/adminside/login' element={<AdminLogin />} />
+        <Route path='/admin/login' element={<AdminLogin />} />
         <Route path='/adminside/products' element={<AdminProductsManage />} />
         <Route path='/expertlogin' element={<ExpertLogin/>} />
         <Route path='/expertprofile' element={<DoctorDetail/>}/>

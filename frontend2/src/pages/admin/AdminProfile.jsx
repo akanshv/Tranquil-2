@@ -1,31 +1,87 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import './AdminLogin.css'
 import './AdminProfile.css'
 import './feedindex.css'
-
+import { useSelector } from 'react-redux';
+import { toast } from "react-toastify";
+import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminProfile = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
+    const admin = useSelector((state) => state.auth.admin);
+    console.log(admin);
     useEffect(() => {
         console.log('Entering useEffect');
         const fetchData = async () => {
             try {
-                console.log('Fetching data');
-                const response = await axios.get('http://localhost:3000/admin/adminprofile/644528c526df9c16c244b1fd');
+                //console.log(user);
+                if(admin){
+        
+                // Assuming you are using React Router for routing
+                const response = await axios.get(
+                  `http://localhost:3000/admin/adminprofile/${admin._id}`
+                  ,{
+                    headers: {
+                        Authorization: admin.token
+                    }
+                }
+                );
+ 
                 setData(response.data);
+                console.log("data :", data);
                 setLoading(false);
-                console.log('Data received:', response.data);
-            } catch (error) {
-                console.error(error);
+        
+                }
+                else{
+                  toast.error('First Login or Signup to access',{
+                    duration: 4000,
+                    position: 'top-right',
+                  });
+                  Navigate('/admin/login')
+                }
+                // Assuming you are using React Router for routing
+              } catch (error) {
+                console.log("Error fetching post details:", error);
+                // Handle error, show error message, or redirect to an error page
                 setLoading(false);
-            }
+              }
         };
 
         fetchData();
         console.log('Exiting useEffect');
     }, []);
+
+    const acceptExpert = async (id) =>{
+        console.log("Entered accept Expet")
+        console.log(id)
+        const data = await axios.get(`http://localhost:3000/admin/adminexpertaccept/${id}`);
+        console.log("accepted : ",data);
+    }
+
+      const deleteExpert = async (id) =>{
+        console.log("Entered delete Expert")
+        console.log(id)
+        const data = await axios.get(`http://localhost:3000/admin/adminexpertdelete/${id}`);
+        console.log("deleted: ",data);
+    }
+
+    const okPost = async (id) =>{
+        console.log("Entered OK Post")
+        console.log(id)
+        const data = await axios.get(`http://localhost:3000/admin/adminfeedok/${id}`);
+        console.log("accepted : ",data);
+    }
+
+    const deletePost = async (id) =>{
+        console.log("Entered OK Post")
+        console.log(id)
+        const data = await axios.get(`http://localhost:3000/admin/adminfeeddelete/${id}`);
+        console.log("deleted : ",data);
+    }
 
 
     return (
@@ -80,13 +136,13 @@ const AdminProfile = () => {
                                                             <h3 className="text-right text-3xl font-bold">Manage Products</h3>
                                                         </div>
                                                         <div className="flex justify-left items-center px-5 mt-2">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => (window.location.href = '/adminside/products')}
+                                                            <Link
+                                                                
+                                                                to="/adminside/products"
                                                                 className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                                                             >
                                                                 Manage
-                                                            </button>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,8 +184,8 @@ const AdminProfile = () => {
                                                                         <h6 className="text-primary">₹ {doctor.Charge}/Sessions</h6>
                                                                         <div className="d-flex flex-column mt-4">
                                                                             <h5 className="text">Choose Action</h5>
-                                                                            <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" onClick={() => window.location.href = `/admin/adminexpertaccept/${doctor._id}`} type="button">Accept</button>
-                                                                            <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" onClick={() => window.location.href = `/admin/adminexpertdelete/${doctor._id}`} type="button">Reject</button>
+                                                                            <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" onClick={() => acceptExpert(doctor._id)} type="button">Accept</button>
+                                                                            <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" onClick={() => deleteExpert(doctor._id)} type="button">Reject</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -173,8 +229,8 @@ const AdminProfile = () => {
                                                                         <hr />
                                                                         <div>
                                                                             <div className="d-flex m-4">
-                                                                                <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" type="button" onClick={() => window.location.href = `/admin/adminfeedok/${feed._id}`}>No Problem</button>
-                                                                                <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" type="button" onClick={() => window.location.href = `/admin/adminfeeddelete/${feed._id}`}>Delete Post</button>
+                                                                                <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" type="button" onClick={() => okPost(feed._id)}>No Problem</button>
+                                                                                <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" type="button" onClick={() => deletePost(feed._id)}>Delete Post</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>                                                        </div>

@@ -15,12 +15,12 @@ const authSlice = createSlice({
       state.user = action.payload;
       
     },
-    setLogoutUser: (state) => {
-      state.doctor = action.payload;
+    setLoginAdmin: (state,action) => {
+      state.admin = action.payload;
       
     },
     setLoginDoctor: (state, action) => {
-      state.admin = action.payload;
+      state.doctor = action.payload;
           },
     setLogout: (state) => {
       state.user=null,

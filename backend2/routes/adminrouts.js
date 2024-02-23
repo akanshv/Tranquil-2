@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
-router=express.Router();
+router = express.Router();
 const administer = require('../Models/admin');
 // error class
-const ExpressError=require('../utils/ExpressError')
+const ExpressError = require('../utils/ExpressError')
 // wrapper err function
 const catchAsync = require('../utils/catchAsync');
-const bcrypt=require('bcrypt');
+const bcrypt = require('bcrypt');
+const generateToken = require('../Middlewares/generateToken');
 
 //middleware
 // const {isLoggedIn}=require('../Middlewares/authomiddleware')
@@ -14,30 +15,52 @@ const bcrypt=require('bcrypt');
 //model
 
 
-const control=require('../Controllers/admincontroller');
+const control = require('../Controllers/admincontroller');
 
 
 
 // router.get('/adminlogin',control.getlogin);
 
-router.post('/adminlogin',catchAsync(control.postlogin));
+// router.post('/adminlogin',catchAsync(control.postlogin));
 
-router.get('/adminprofile/:id',catchAsync(control.getadminprofile));
+router.post('/adminlogin', catchAsync(
+    async (req, res) => {
+        const { email, password } = req.body;
+        console.log('admin : ', req.body);
+        const admin = await administer.findOne({ email: email });
+        console.log(admin);
 
-router.get('/adminproductsmanage/:id',catchAsync(control.getadminproductmanage));
+        if (admin && (await bcrypt.compare(password, admin.hash))) {
+            console.log("Log In Successfull");
+            res.json({
+                _id: admin._id,
+                name: admin.username,
+                email: admin.email,
+                token: generateToken(admin._id),
+            }).status(201);
+        } else {
+            res.status(401);
+            throw new Error("Invalid Email or Password");
+        }
+    }
+));
 
-router.put('/adminproductupdate/:id/:pid',catchAsync(control.productupdate));
+router.get('/adminprofile/:id', catchAsync(control.getadminprofile));
 
-router.get('/adminexpertaccept/:id/:tid' ,catchAsync(control.expertaccept));
+router.get('/adminproductsmanage/', catchAsync(control.getadminproductmanage));
 
-router.get('/adminexpertdelete/:id/:tid' ,catchAsync(control.expertdelete));
+router.put('/adminproductupdate/:pid', catchAsync(control.productupdate));
 
-router.delete('/adminproductdelete/:id/:pid',catchAsync(control.productdelete));
+router.get('/adminexpertaccept/:tid', catchAsync(control.expertaccept));
 
-router.get('/adminfeedok/:id/:fid',catchAsync(control.feedaccept));
+router.get('/adminexpertdelete/:tid', catchAsync(control.expertdelete));
 
-router.get('/adminfeeddelete/:id/:fid',catchAsync(control.feeddelete));
+router.delete('/adminproductdelete/:pid', catchAsync(control.productdelete));
 
-router.post('/adminproductadd/:id',catchAsync(control.productadd));
+router.get('/adminfeedok/:fid', catchAsync(control.feedaccept));
 
-module.exports=router;
+router.get('/adminfeeddelete/:fid', catchAsync(control.feeddelete));
+
+router.post('/adminproductadd', catchAsync(control.productadd));
+
+module.exports = router;

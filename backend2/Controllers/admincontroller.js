@@ -34,10 +34,10 @@ module.exports.postlogin = async (req, res) => {
 module.exports.getadminprofile = async (req, res) => {
   try {
     if (req.params.id) {
-      console.log('anmol');
+      console.log('admin');
       const admini = await administer.findById(req.params.id);
       const docs = await doc.find({ pendingstatus: true });
-      const feeds = await feed.find({}).populate("author");
+      const feeds = await feed.find({checked: false}).populate("author");
       console.log(admini)
       res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
       return;
@@ -57,6 +57,7 @@ module.exports.getadminproductmanage = async (req, res) => {
       const prod = await Product.find({});
       console.log(prod);
       res.status(200).json({ prod: prod });
+      
       // res.render('adminproductsmanage',{navactive:navactive, prod:prod})
     } else {
       res.status(400).json({ message: "You need to admin" });
@@ -70,7 +71,7 @@ module.exports.getadminproductmanage = async (req, res) => {
 
 module.exports.productupdate = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       pid = req.params.pid;
       cutprice = req.body.productcutprice;
       stock = req.body.productstock;
@@ -93,9 +94,9 @@ module.exports.productupdate = async (req, res) => {
 
 module.exports.expertaccept = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       tid = req.params.tid;
-      //console.log('delete');
+      console.log('accepted');
       await doc.updateOne({ _id: tid }, { pendingstatus: false });
       res.status(200);
     } else {
@@ -110,9 +111,9 @@ module.exports.expertaccept = async (req, res) => {
 
 module.exports.expertdelete = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       tid = req.params.tid;
-      //console.log('delete');
+      console.log('delete');
       await doc.deleteOne({ _id: tid });
       res.status(200);
     } else {
@@ -127,7 +128,7 @@ module.exports.expertdelete = async (req, res) => {
 
 module.exports.productdelete = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       pid = req.params.pid;
       console.log("delete");
       await Product.deleteOne({ _id: pid });
@@ -144,7 +145,7 @@ module.exports.productdelete = async (req, res) => {
 
 module.exports.feedaccept = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       fid = req.params.fid;
       //console.log('delete');
       await feed.findByIdAndUpdate({ _id: fid }, { checked: true });
@@ -161,7 +162,7 @@ module.exports.feedaccept = async (req, res) => {
 
 module.exports.feeddelete = async (req, res) => {
   try {
-    if (req.params.id) {
+    if (true) {
       fid = req.params.fid;
       // console.log('delete');
       post = await feed.findById(fid);
@@ -184,7 +185,7 @@ module.exports.feeddelete = async (req, res) => {
 module.exports.productadd = async (req, res) => {
 
   try {
-    if (req.params.id) {
+    if (true) {
         console.log(req.body);
         Name = req.body.name;
         Cutprice = req.body.cutprice;

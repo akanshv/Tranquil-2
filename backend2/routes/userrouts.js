@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 router = express.Router();
-
+// process.binding('http_parser').HTTPParser = require('http-parser-js').HTTPParser;
 session = require('express-session')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')

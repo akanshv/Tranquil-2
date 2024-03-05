@@ -21,6 +21,7 @@ import Login from './pages/userlogin/login';
 import DoctorRegister from './pages/therapy/DoctorRegister';
 import DoctorDetail from './pages/therapy/doctorDetail';
 import UserProfile from './pages/userlogin/Userprofile';
+import Buy from './pages/products/Buy';
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
         <Route path='/expertlogin' element={<ExpertLogin/>} />
         <Route path='doctor/profile' element={<DoctorDetail/>}/>
         <Route path='/user/profile' element={<UserProfile/>}/>
+        <Route path='/buyproducts' element={<Buy />} />
       </Routes>
       <Footer />
     </div>

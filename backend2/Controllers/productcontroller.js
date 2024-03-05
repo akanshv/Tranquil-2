@@ -7,6 +7,7 @@ const Product = require('../Models/products');
 const cart = require('../Models/cart');
 const user = require('../Models/user');
 const sold = require('../Models/solddetails');
+const products = require('../Models/products');
 
 
 // Functions :
@@ -106,24 +107,76 @@ module.exports.changecount = async (req, res) => {
     // res.redirect('/products');
 }
 
+// module.exports.buyproduct = async (req, res) => {
+//     try {
+//         buycart = await cart.find({ userid: req.user._id });
+//         if (!(buycart.length)) {
+//             res.redirect('/products');
+//         }
+//         console.log(buycart);
+//         amount = 0;
+//         countarr = [];
+//         productarr = [];
+//         for (let index = 0; index < buycart.length; index++) {
+//             var producti = await Product.findById(buycart[index].productid);
+//             stock = producti.Stock - buycart[index].count;
+//             await Product.findOneAndUpdate({ _id: buycart[index].productid }, { Stock: stock })
+//             var product = await Product.findById(buycart[index].productid);
+//             productarr.push(product);
+//             countarr.push(buycart[index].count);
+//             amount = amount + buycart[index].count * product.Cutprice;
+//         }
+
+//         bought = new sold({
+//             productarr: productarr,
+//             countarr: countarr,
+//             userid: req.user._id,
+//             amount: amount
+//         })
+
+//         const use = await user.findById(bought.userid)
+//         await bought.save();
+//         await cart.deleteMany({ userid: req.user.id });
+//         res.render('products/buy', { navactive: navactive, bought: bought, use: use });
+//         console.log(bought);
+//         console.log(use);
+//         res.status(200);
+//     } catch (error) {
+//         res.status(500).json({ message: "Error", error: error });
+//     }
+
+// }
+
 module.exports.buyproduct = async (req, res) => {
     try {
-        buycart = await cart.find({ userid: req.user._id });
-        if (!(buycart.length)) {
-            res.redirect('/products');
-        }
+        buycart = await cart.findOne({ userid: req.user._id }).populate('products.productId');
         console.log(buycart);
+        console.log("I was here")
+
+        if (!buycart || buycart.products.length == 0) {
+           return res.send({message:"No Items in Cart", success: false})
+        }
+
         amount = 0;
         countarr = [];
         productarr = [];
-        for (let index = 0; index < buycart.length; index++) {
-            var producti = await Product.findById(buycart[index].productid);
-            stock = producti.Stock - buycart[index].count;
-            await Product.findOneAndUpdate({ _id: buycart[index].productid }, { Stock: stock })
-            var product = await Product.findById(buycart[index].productid);
+            
+        // for (let index = 0; index < buycart.products.length; index++) {
+        //     var producti = await Product.findById(buycart[index].productid);
+        //     await Product.findOneAndUpdate({ _id: buycart[index].productid }, { Stock: stock })
+        //     var product = await Product.findById(buycart[index].productid);
+        //     productarr.push(product);
+        //     countarr.push(buycart[index].count);
+        //     amount = amount + buycart[index].count * product.Cutprice;
+        // }
+
+        for (let index = 0; index < buycart.products.length; index++) {
+            let productItem = buycart.products[index];
+            let product = productItem.productId;
             productarr.push(product);
-            countarr.push(buycart[index].count);
-            amount = amount + buycart[index].count * product.Cutprice;
+            countarr.push(productItem.count);
+            amount = amount + productItem.count * product.Cutprice;
+            await Product.findOneAndUpdate({ _id: product._id }, { Stock: product.Stock - productItem.count });
         }
 
         bought = new sold({
@@ -136,14 +189,14 @@ module.exports.buyproduct = async (req, res) => {
         const use = await user.findById(bought.userid)
         await bought.save();
         await cart.deleteMany({ userid: req.user.id });
-        res.render('products/buy', { navactive: navactive, bought: bought, use: use });
+        res.json({ bought, use }); // Send JSON response instead of rendering
         console.log(bought);
         console.log(use);
         res.status(200);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error", error: error });
     }
-
 }
 
 module.exports.deletefromcart = async (req, res, next) => {

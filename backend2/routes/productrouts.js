@@ -32,7 +32,7 @@ router.post('/changecount/:pid',catchAsync(control.changecount));
 
 // router.update('/')
 
-router.get('/buyproduct',catchAsync(control.buyproduct));
+router.post('/buyproduct',protect,catchAsync(control.buyproduct));
 
 router.post('/getcart',catchAsync(control.getCart))
 router.post('/addtocart',catchAsync(control.addtocart));

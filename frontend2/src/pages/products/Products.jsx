@@ -43,12 +43,12 @@ const Products = () => {
         { userId:user._id , productId: id }
       );
       if (response.status == 200) {
-        console.log(response.data);
+        // console.log(response.data);
         toast.success("Added to cart!",{
           autoClose: 2000 
         });
-        dispatch(addToCart(id));
-        await dispatch(fetchCartData());
+        await dispatch(addToCart(id));
+        await dispatch(fetchCartData(user._id));
       }
     } catch (e) {
       console.log(e);

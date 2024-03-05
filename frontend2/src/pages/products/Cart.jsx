@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   getCartTotal,
@@ -14,7 +15,11 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Cart = () => {
-  const { items, cart, totalQuantity, totalPrice } = useSelector((state) => state.allCart);
+  const { items, cart, totalQuantity, totalPrice } = useSelector(
+    (state) => state.allCart
+  );
+  
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   console.log(cart);
   const dispatch = useDispatch();
@@ -26,54 +31,83 @@ const Cart = () => {
     getCartData1();
   }, []);
 
-  async function removeFromCartHandler(id){
+  async function removeFromCartHandler(id) {
     try {
-      const response = await axios.post('http://localhost:3000/products/deletefromcart',{userId:user._id, productId: id})
-      if(response.status == 200){
-        console.log(response.data)
+      const response = await axios.post(
+        "http://localhost:3000/products/deletefromcart",
+        { userId: user._id, productId: id }
+      );
+      if (response.status == 200) {
+        console.log(response.data);
         toast.success("Removed from cart!", {
-          autoClose: 2000 
+          autoClose: 2000,
         });
         // dispatch(removeFromCart(id));
         await dispatch(fetchCartData(user._id));
       }
-    } catch (e){
+    } catch (e) {
       console.log(e);
-
     }
   }
 
-  async function increaseQuantityHandler(id){
+  async function increaseQuantityHandler(id) {
     try {
-      const response = await axios.post('http://localhost:3000/products/increasequantity',{userId: user._id, productId: id})
-      if(response.status == 200){
-        console.log(response.data) 
+      const response = await axios.post(
+        "http://localhost:3000/products/increasequantity",
+        { userId: user._id, productId: id }
+      );
+      if (response.status == 200) {
+        console.log(response.data);
         toast.success("Quantity increased!", {
-          autoClose: 2000 
+          autoClose: 2000,
         });
         await dispatch(fetchCartData(user._id));
       }
-    } catch (e){
+    } catch (e) {
       console.log(e);
     }
   }
 
-  async function decreaseQuantityHandler(id){
+  async function decreaseQuantityHandler(id) {
     try {
-      const response = await axios.post('http://localhost:3000/products/decreasequantity',{userId: user._id, productId: id})
-      if(response.status == 200){
-        console.log(response.data)
+      const response = await axios.post(
+        "http://localhost:3000/products/decreasequantity",
+        { userId: user._id, productId: id }
+      );
+      if (response.status == 200) {
+        console.log(response.data);
         toast.success("Quantity decreased!", {
-          autoClose: 2000 
+          autoClose: 2000,
         });
         await dispatch(fetchCartData(user._id));
       }
-    } catch (e){
+    } catch (e) {
       console.log(e);
-
     }
   }
 
+  async function checkoutHandler() {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/products/buyproduct",
+        { user: user },
+        {
+          headers: {
+            Authorization: user.token,
+          },
+        }
+      );
+      if (response.status == 200) {
+        // console.log(response.data);
+        toast.success("Order placed successfully!",{
+          autoClose: 2000 
+        });
+        navigate("/buyproducts",{state:{bought:response.data.bought,use:response.data.use}});
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div className="h-screen bg-gray-100 pt-20 mt-20">
@@ -96,7 +130,10 @@ const Cart = () => {
                     <h2 className="text-lg font-bold text-gray-900">
                       {product.productId.Name}
                     </h2>
-                    <p className="mt-1 text-lg text-gray-700">{product.productId.author}{product.productId.Company}</p>
+                    <p className="mt-1 text-lg text-gray-700">
+                      {product.productId.author}
+                      {product.productId.Company}
+                    </p>
                     <p className="text-md mt-2">
                       Price - ₹{product.productId.Cutprice}
                     </p>
@@ -105,17 +142,18 @@ const Cart = () => {
 
                   <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                     <div className="flex items-center">
-                      {(product.count > 1) && ( 
-                      <button
-                        // onClick={() => dispatch(decreaseItemQuantity(product.id))}
-                         
-                        onClick={() => {decreaseQuantityHandler(product.productId._id)}}
-                        className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
-                      >
-                        -
-                      </button>
-                      )
-                      }
+                      {product.count > 1 && (
+                        <button
+                          // onClick={() => dispatch(decreaseItemQuantity(product.id))}
+
+                          onClick={() => {
+                            decreaseQuantityHandler(product.productId._id);
+                          }}
+                          className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
+                        >
+                          -
+                        </button>
+                      )}
                       <input
                         min="0"
                         name="quantity"
@@ -125,7 +163,9 @@ const Cart = () => {
                       />
                       <button
                         // onClick={() => dispatch(increaseItemQuantity(product.id))}
-                        onClick={() => {increaseQuantityHandler(product.productId._id)}}
+                        onClick={() => {
+                          increaseQuantityHandler(product.productId._id);
+                        }}
                         className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
                       >
                         +
@@ -137,7 +177,9 @@ const Cart = () => {
                         type="button"
                         className="mt-3 cursor-pointer duration-150 hover:text-red-500"
                         // onClick={() => dispatch(removeItem(product.id))}
-                        onClick={() => {removeFromCartHandler(product.productId._id)}}
+                        onClick={() => {
+                          removeFromCartHandler(product.productId._id);
+                        }}
                       >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
@@ -173,7 +215,7 @@ const Cart = () => {
               type="button"
               className="bg-blue-500 text-white px-4 py-2 w-full rounded-full hover:bg-blue-600"
             >
-              PROCEED TO CHECKOUT
+              <div onClick={checkoutHandler}>PROCEED TO CHECKOUT</div>
             </button>
           </div>
         </div>

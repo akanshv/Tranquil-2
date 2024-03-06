@@ -51,7 +51,7 @@ router.post('/login', catchAsync(
         console.log("Login Successful");
         res.json({
           _id: expert._id,
-          name: expert.username,
+          name: expert.Name,
           email: expert.email,
           pic: expert.pfp,
           doc: expert.document,
@@ -74,7 +74,7 @@ router.post('/login', catchAsync(
 router.post('/newtherapists', catchAsync(control.postnewtherapist));
 
 
-router.post('/slotmaker',catchAsync( ));
+router.post('/slotmaker/:id',protect,catchAsync(control.slotmaker));
 
 router.get('/slotaccept/:id',catchAsync( async (req,res)=>{
     

@@ -10,8 +10,68 @@ const Therapy = () => {
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth.user);
+  const [formData,setFormData]=useState();
   const Navigate=useNavigate();
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(e.target);
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async(id) => {
+    
+    // Here you can submit the formData to your backend or perform any other action
+    console.log(id,formData);
+    try {
+      //console.log(user);
+      if (user) {
+        // Assuming you are using React Router for routing
+        const response = await axios.post(
+          `http://localhost:3000/expert/slotmaker/${id}`,
+          formData,{
+            headers: {
+              authorization: user.token,
+            },
+          }
+        );
+        
+        toast.success(`${response.data.message}`, {
+          duration: 4000,
+          position: "top-right",
+        });
+        //console.log(response);
+        //fetchPostDetails();
+        setLoading(false);
+      } else {
+        toast.error("First Login or Signup to access", {
+          duration: 4000,
+          position: "top-right",
+        });
+        Navigate("/user/login");
+      }
+      // Assuming you are using React Router for routing
+    } catch (error) {
+      console.error("Error in Slot Booking:", error);
+      toast.error("Error in Slot Booking", {
+        duration: 4000,
+        position: "top-right",
+      });
+      // Handle error, show error message, or redirect to an error page
+      setLoading(false);
+    }
+    // Send comment data to backend
+    // Reset comment input
+  
+
+    
+  };
+
+
+  
   useEffect(() => {
+
+
     const fetchExperts = async () => {
       try {
         if(user){
@@ -49,7 +109,7 @@ const Therapy = () => {
           <div className="upper-text">
             <p className="flex justify-center items-center heading2 text-gray-800 text-2xl">
               Start your own journey as therapist in Tranquil
-              <button type="submit" className="btn m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md">
+              <button type="submit" className="m-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-md">
   Join here
 </button>
 
@@ -96,16 +156,14 @@ const Therapy = () => {
                         <h6 className="text-success text-2xl">₹ {experty.Charge}/Sessions</h6>
                         <div className="flex flex-col mt-4">
                           <div className="body">
-                            <form action={`/therapy/askslot/${experty._id}`} id="formdate" noValidate className="validated-form" method="post">
                               <label htmlFor="date" className="font-semibold"><strong>Appointment Date :</strong></label>
-                              <input type="date" id="date" min="2023-04-26" name="date" className="datePickerId border border-gray-300 rounded p-1 mt-2 w-full" required />
+                              <input type="date" id="date" min="2023-04-26" name="date" className="datePickerId border border-gray-300 rounded p-1 mt-2 w-full" required  onChange={handleChange} />
                               <label htmlFor="time" className="font-semibold mt-2"><strong>Appointment Time :</strong></label>
-                              <input type="time" id="time" name="time" className="mt-1 mb-3 timePickerId border border-gray-300 rounded p-1 w-full" required />
+                              <input type="time" id="time" name="time" className="mt-1 mb-3 timePickerId border border-gray-300 rounded p-1 w-full" required onChange={handleChange} />
                               <h6 className="teller"></h6>
-                            </form>
                           </div>
                           <div className="mt-3">
-                            <button type="submit" form="formdate"  className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue ms-6 timebutton">Request Slot</button>
+                            <button  onClick={()=>handleSubmit(experty._id)}  className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue ms-6 timebutton" >Request Slot</button>
                           </div>
                         </div>
                       </div>

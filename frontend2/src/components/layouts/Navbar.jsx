@@ -187,7 +187,7 @@ const Navbar = () => {
                           alt="Jese Leos"
                         />
                       <span className="text-[1rem]  md:dark:hover:text-blue-500">
-                          User Profile
+                          {user.name}
                       </span>
                       </Link>
                       <span
@@ -216,7 +216,7 @@ const Navbar = () => {
                         
                       />
                       <span className="text-[1rem] md:dark:hover:text-blue-500">
-                          Doctor Profile
+                          {doctor.name}
                       </span>
                     </Link>
                     <span
@@ -243,7 +243,7 @@ const Navbar = () => {
                         alt="Jese Leos"
                       />
                       <span className="text-[1rem] md:dark:hover:text-blue-500">
-                          Admin Profile
+                          {admin.name}
                       </span>
                     </Link>
 

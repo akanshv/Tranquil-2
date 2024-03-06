@@ -35,7 +35,7 @@ router.post('/adminlogin', catchAsync(
             console.log("Log In Successfull");
             res.json({
                 _id: admin._id,
-                name: admin.username,
+                name: admin.name,
                 email: admin.email,
                 token: generateToken(admin._id),
             }).status(201);

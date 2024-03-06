@@ -33,10 +33,10 @@ const expertprotect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization;
      //decodes token id
-      console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await Expert.findById(decoded.id).select("-hash");
       console.log(req.user)
+      console.log("Expert protect")
       next();
     } catch (error) {
       res.status(401);

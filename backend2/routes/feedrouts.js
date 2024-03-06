@@ -102,7 +102,7 @@ router.post('/newfeed',uploads.single('image'),catchAsync(async(req,res)=>{
 }))
 
 
-router.post('/newfeedreact',catchAsync(async(req,res)=>{
+router.post('/newfeedreact',protect,catchAsync(async(req,res)=>{
     try {
         console.log(req.body);
         console.log(req.file);
@@ -120,7 +120,7 @@ router.post('/newfeedreact',catchAsync(async(req,res)=>{
           //  newpost.author=req.user._id;///putting anmol id
           const auth=await User.findOne({_id:req.user._id});
           console.log(auth);
-          newpost.author=auth._id;
+          newpost.author=auth;
           console.log(newpost);
           await newpost.save();
           res.status(200).json(newpost._id);
@@ -170,21 +170,27 @@ res.status(200).json(post);
 router.post('/comment/:id',protect,catchAsync(async(req,res)=>{
 
     try {
+        console.log("anmol0000");
         const post =await feed.findById(req.params.id);
-        console.log(req.body.comment.body);
-        const comment=new Comment(req.body.comment);
+        console.log(req.body);
+    
+        const comment=new Comment({
+            body:req.body.comment,
+            author:req.user,
+            authorname:req.user.username,
+            authorpfp:req.user.pfp
+        });
        // console.log('ANMOLLLLLLL')
-        console.log(req.user);
-        comment.author=req.user._id;
-        comment.authorname=req.user.username;
-        comment.authorpfp=req.user.pfp;
+        //console.log(req.user);
         console.log(comment);
         post.comments.push(comment);
         await comment.save();
-         await post.save();
+        await post.save();
+        const posthere= await feed.findById(req.params.id).populate('author').populate('comments').populate('comments.author');
+        //console.log(post);
         // req.flash('Success','Thanks for Review');
         // res.redirect(`/feed/${post._id}`);
-        res.status(200);
+        res.status(200).json(posthere);
     } catch (error) {
         res.status(500).json({message:"Error",error:error})
     }

@@ -1,134 +1,294 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 // import './Doctordetails.css'
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams, Link } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const doctorDetail = () => {
-  const doc = {
-    pfp: 'https://images.squarespace-cdn.com/content/v1/57c31cee197aeab7de5ab58c/0d220251-996b-45e0-a441-4e8950464b4a/mansi_05.jpg?format=2500w',
-    Name: 'Mansi Gupta',
-    email: 'mastersama72@gmail.com',
-    ExpertsIn: 'Relationship, Work Stress,Loneliness, Anxiety',
-    Experience: '5',
-    Sessionno: '10',
-    Charge: '500'
+  const [data, setData] = useState();
+  const [slotter,setSlotter]=useState();
+  const [loading, setLoading] = useState(true);
+  const doctor = useSelector((state) => state.auth.doctor);
+  const Navigate=useNavigate();
+
+  //console.log(doctor);
+  useEffect(() => {
+
+    if(!doctor){
+      toast.error('First Login or Signup to access',{
+        duration: 4000,
+        position: 'top-right',
+      });
+      Navigate('/expertlogin')
+    }
+    const  fetchProfile=async ()=> {
+      const response = await axios.get(
+        "http://localhost:3000/expert/expertprofile",
+        {
+          headers: {
+            authorization:doctor.token,
+          },
+        }
+      );
+      // const resData = await response.json();
+      console.log(response.data);
+      setData(response.data.doc);
+      setSlotter(response.data.slotter);
+      setLoading(false);
+    }
+    fetchProfile();
+  }, []);
+
+  const acceptSlot = async (id) => {
+    
+    console.log("Slot Accepted");
+    console.log(id);
+    const data = await axios.get(
+     `http://localhost:3000/expert/acceptslot/${id}`,
+     {
+      headers: {
+        authorization:doctor.token,
+      },
+    }
+    );
+    console.log(data);
+    if(data.status==200){
+      setSlotter(data.data.slotter);
+      toast.success('Slot Accepted',{
+        duration: 4000,
+        position: 'top-right',
+      });
+    }
+    else{
+      toast.error('Problem in accepting slot',{
+        duration: 4000,
+        position: 'top-right',
+      });
+    }
+    
   };
 
-  const slotter = [
-    { Userid: { username: 'User1' }, Date: '2024-02-23', Time: '10:00 AM', status: 'accept' },
-    { Userid: { username: 'User2' }, Date: '2024-02-24', Time: '11:00 AM', status: 'pending' },
-    { Userid: { username: 'User3' }, Date: '2024-02-25', Time: '12:00 PM', status: 'accept' }
-  ];
-
-  const pendingstatus = false;
+  const rejectSlot = async (id) => {
+    console.log("Slot Rejected");
+    console.log(id);
+    const data = await axios.get(
+     `http://localhost:3000/expert/rejectslot/${id}`,
+     {
+      headers: {
+        authorization:doctor.token,
+      },
+    }
+    );
+    console.log(data);
+    if(data.status==200){
+      setSlotter(data.data.slotter);
+      toast.success('Slot Rejected',{
+        duration: 4000,
+        position: 'top-right',
+      });
+    }
+    else{
+      toast.error('Problem in rejecting slot',{
+        duration: 4000,
+        position: 'top-right',
+      });
+    }
+  };
 
   return (
     <>
-    <div className="row">
+      <div className="row">
         <div className="mt-[7rem] mb-[1rem] ml-[0.5rem] mr-[0.5rem] headimg flex justify-center">
-          <img className='rounded-full' src="https://i.imgur.com/ujX2KRl.png " alt="" />
+          <img
+            className="rounded-full"
+            src="https://i.imgur.com/ujX2KRl.png "
+            alt=""
+          />
         </div>
       </div>
-
-    <div className=" min-h-screen py-8">
+      
+    {loading?(<>
+      <div className="flex justify-center items-center h-32">
+              <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+      </div>
+    </>):(
+      <div className=" min-h-screen py-8 " >
       <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto bg-gray-200 rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-6xl mx-auto bg-gray-200 rounded-lg shadow-lg overflow-hidden">
           <div className="p-4 sm:p-6">
             <div className="flex items-center justify-center">
-              <img src={doc.pfp} className="rounded-full h-36 w-36 md:h-48 md:w-48 mx-auto" alt="expert" />
+              <img
+                src={data?.pfp}
+                className="rounded-full h-36 w-36 md:h-48 md:w-48 mx-auto"
+                alt="expert"
+              />
             </div>
             <div className="text-center mt-4">
-              <h2 className="text-xl font-bold">{doc.Name}</h2>
-              <p className="text-sm text-gray-600">{doc.email}</p>
+              <h2 className="text-xl font-bold">{data?.Name}</h2>
+              <p className="text-sm text-gray-600">{data?.email}</p>
             </div>
           </div>
-          <div className="border-t border-gray-200">
-            <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-4 sm:p-6">
-              {Object.entries(doc).map(([key, value]) => (
-                (key=='pfp')?(<></>):(<> 
-                  <div key={key}>
-                  <dt className="text-sm font-medium text-gray-500">{key}</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{value}</dd>
-                  </div>
-                  </>
-                  
-                )                
-                
-              ))}
-            </dl>
-          </div>
-        </div>
+            </div>
+            <div className="max-w-6xl my-3 rounded-lg bg-gray-200 p-5 m-auto">
+              <div>
+                <p className="m-2 text-1xl font-semibold ">
+                  Name :{" "}
+                  <span className="m-2 text-1xl text-gray-800 ">{data.Name}</span>
+                </p>
+                <p className="m-2 text-1xl font-semibold ">
+                  Email: <span className="m-2 text-1xl text-gray-800">{data.email}</span>
+                </p>
+                <p className="m-2 text-1xl font-semibold ">
+                  Joined On :{" "}
+                  <span className="m-2 text-1xl text-gray-800">{data.Joindate.toString()}</span>
+                </p>
+                <p className="m-2 text-1xl font-semibold ">
+                  Charge: <span className="m-2 text-1xl text-gray-800">{data.Charge}</span>
+                </p>
+                <p className="m-2 text-1xl font-semibold ">
+                  Happiness No.:{" "}
+                  <span className="m-2 text-1xl text-gray-800">{data.Happyno}</span>
+                </p>
+                <p className="m-2 text-1xl font-semibold">
+                  Experts In: <span className="m-2 text-1xl text-gray-800">{data.ExpertsIn}</span>
+                </p>              
+              </div>
+            </div>
 
-        {!pendingstatus ? (
-          <div className="max-w-4xl mx-auto mt-8 bg-gray-200 rounded-lg shadow-lg overflow-hidden">
+        {!loading ? (
+          <div className="max-w-6xl mx-auto mt-8 bg-gray-200 rounded-lg shadow-lg overflow-hidden">
             <div className="p-4 sm:p-6">
-              <h2 className="text-xl font-bold text-center">Slot Management</h2>
+              <h2 className="text-xl font-bold text-center">
+                Slot Management
+              </h2>
               <div className="mt-4">
-                <h3 className="text-lg font-semibold">Booked Slots</h3>
-                <table className="w-full mt-2">
-                  <thead>
-                    <tr>
-                      <th className="py-2">User Name</th>
-                      <th className="py-2">Date</th>
-                      <th className="py-2">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {slotter.map((slot, index) => (
-                      slot.status === 'accept' && (
-                        <tr key={index}>
-                          <td className="py-2">{slot.Userid.username}</td>
-                          <td className="py-2">{slot.Date}</td>
-                          <td className="py-2">{slot.Time}</td>
-                        </tr>
-                      )
-                    ))}
-                  </tbody>
-                </table>
+                <h3 className="text-2xl font-semibold">Booked Slots</h3>
+                <div>
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">User</TableCell>
+                        <TableCell align="center">Date</TableCell>
+                        <TableCell align="center">Time</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {slotter?.map((row) => {
+                        if (row.status == "accept") {
+                          return (
+                            <TableRow
+                              key={row._id}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell  align="center" >
+                                {row.Userid.username}
+                              </TableCell>
+                              <TableCell align="center">
+                                {row.Date}
+                              </TableCell>
+                              <TableCell align="center">{row.Time}</TableCell>
+                            </TableRow>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
               </div>
               <div className="mt-8">
-                <h3 className="text-lg font-semibold">Pending Slots</h3>
-                <table className="w-full mt-2">
-                  <thead>
-                    <tr>
-                      <th className="py-2">Name</th>
-                      <th className="py-2">Date</th>
-                      <th className="py-2">Time</th>
-                      <th className="py-2">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {slotter.map((slot, index) => (
-                      slot.status === 'pending' && (
-                        <tr key={index}>
-                          <td className="py-2">{slot.Userid.username}</td>
-                          <td className="py-2">{slot.Date}</td>
-                          <td className="py-2">{slot.Time}</td>
-                          <td className="py-2">
-                            <button className="bg-green-500 text-white px-3 py-1 rounded mr-2">Accept</button>
-                            <button className="bg-red-500 text-white px-3 py-1 rounded">Reject</button>
-                          </td>
-                        </tr>
-                      )
-                    ))}
-                  </tbody>
-                </table>
+                <h3 className="text-2xl font-semibold">Pending Slots</h3>
+                <div>
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">User</TableCell>
+                        <TableCell align="center">Date</TableCell>
+                        <TableCell align="center">Time</TableCell>
+                        <TableCell align="center">Action</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {slotter?.map((row) => {
+                        if (row.status == "pending") {
+                          return (
+                            <TableRow
+                              key={row._id}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell  align="center" >
+                                {row.Userid.username}
+                              </TableCell>
+                              <TableCell align="center">
+                                {row.Date}
+                              </TableCell>
+                              <TableCell align="center">{row.Time}</TableCell>
+                              <TableCell align="center">
+                                <button onClick={()=>acceptSlot(row._id)} className="bg-green-500 text-white px-3 py-1 rounded mr-2">
+                                Accept
+                                 </button>
+                                <button  onClick={()=>rejectSlot(row._id)} className="bg-red-500 text-white px-3 py-1 rounded">
+                                Reject
+                                </button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
               </div>
             </div>
           </div>
         ) : (
           <div className="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="p-4 sm:p-6">
-              <h2 className="text-xl font-bold text-center">Your Expert Request is pending to be authorised by admin...</h2>
+              <h2 className="text-xl font-bold text-center">
+                Your Expert Request is pending to be authorised by admin...
+              </h2>
             </div>
           </div>
         )}
       </div>
-    </div>
+    
+    </div>)}
     </>
   );
 };
 
 export default doctorDetail;
+
+
+
+{/* <td className="py-2">
+                              <button className="bg-green-500 text-white px-3 py-1 rounded mr-2">
+                                Accept
+                              </button>
+                              <button className="bg-red-500 text-white px-3 py-1 rounded">
+                                Reject
+                              </button>
+                            </td> */}

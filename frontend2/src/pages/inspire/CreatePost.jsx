@@ -7,6 +7,7 @@ import "./home.css";
 import { Icon } from '@iconify/react';
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+
 const PostForm = () => {
     const Navigate=useNavigate();
   const [formData, setFormData] = useState({
@@ -49,12 +50,21 @@ const PostForm = () => {
 
     try {
       console.log(formData);
-      const response = await axios.post("http://localhost:3000/feed/newfeedreact", formData);
+
+      const response = await axios.post("http://localhost:3000/feed/newfeedreact", formData,{
+            headers: {
+                authorization: user.token
+            }
+        });
 
       console.log("Response from the backend:", response.data);
       Navigate(`/feed/${response.data}`);
     } catch (error) {
       console.error("Error submitting the form:", error);
+      toast.error(error,{
+        duration: 4000,
+        position: 'top-right',
+      });
     }
   };
 

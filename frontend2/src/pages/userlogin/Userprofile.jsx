@@ -3,6 +3,8 @@ import axios from "axios";
 // import './AdminLogin.css'
 // import './AdminProfile.css'
 // import './feedindex.css'
+import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import Feeddata from "../admin/Feeddata";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -98,7 +100,19 @@ const UserProfile = () => {
                 Your Posts
               </p>
             </div>
+
+            
             <div className="max-w-6xl my-3 rounded-lg bg-gray-200 p-5 m-auto">
+            <div className="max-w-7xl m-auto">
+                      <Box
+                        gridColumn="span 8"
+                        gridRow="span 6"
+                        backgroundColor={"#f2f0f0"}
+                      >  
+                         
+                        <Feeddata dashboarddata={[data.posts]} />
+                      </Box>
+           </div>
               <ul id="cardlist">
                 {loading ? (
                   <div className="flex justify-center items-center h-32">

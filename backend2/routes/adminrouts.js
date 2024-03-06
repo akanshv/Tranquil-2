@@ -46,6 +46,8 @@ router.post('/adminlogin', catchAsync(
     }
 ));
 
+
+
 router.get('/adminprofile/:id', catchAsync(control.getadminprofile));
 
 router.get('/adminproductsmanage/', catchAsync(control.getadminproductmanage));

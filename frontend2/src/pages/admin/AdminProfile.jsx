@@ -6,14 +6,20 @@ import "./AdminProfile.css";
 import "./feedindex.css";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import Feeddata from "./Feeddata";
+import Soldinfo from "../../components/layouts/Prodinfo";
+import Salesinfo from "../../components/layouts/Expertinfo";
+
+
 
 const AdminProfile = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const admin = useSelector((state) => state.auth.admin);
   console.log(admin);
+  const Navigate=useNavigate();``
   useEffect(() => {
     console.log("Entering useEffect");
     const fetchData = async () => {
@@ -31,7 +37,8 @@ const AdminProfile = () => {
           );
 
           setData(response.data);
-          console.log("data :", data);
+          console.log("data :", response.data);
+
           setLoading(false);
         } else {
           toast.error("First Login or Signup to access", {
@@ -102,8 +109,8 @@ const AdminProfile = () => {
           <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
         </div>
       ) : (
-        <section id="first" className="flex justify-center items-center">
-          <div className="container py-5">
+        <section id="first" className="flex m-auto max-w-8xl  items-center">
+          <div className="container py-5  ">
             <div className="row flex justify-center items-center">
               <div className="col-lg-11 py-6 px-4">
                 <div className="card mb-1 ">
@@ -142,6 +149,18 @@ const AdminProfile = () => {
                             Manage Products
                           </h3>
                         </div>
+                        <div>
+                        <Box
+                        gridColumn="span 8"
+                        gridRow="span 6"
+                        backgroundColor={"#f2f0f0"}
+                        >  
+                         
+                        <Soldinfo/>
+                      </Box>
+                    </div>
+
+                    
                         <div className="flex justify-left items-center px-5 mt-2">
                           <Link
                             to="/adminside/products"
@@ -234,6 +253,16 @@ const AdminProfile = () => {
                         </div>
                       ))}
                     </div>
+                    <div>
+                      <Box
+                        gridColumn="span 8"
+                        gridRow="span 6"
+                        backgroundColor={"#f2f0f0"}
+                      >  
+                         
+                        <Feeddata dashboarddata={[data.feeds]} />
+                      </Box>
+                    </div>
 
                     {/* Manage Feed */}
                     <div className="ps-5">
@@ -241,7 +270,7 @@ const AdminProfile = () => {
                         <h3 className="text-right">Manage Reported Posts</h3>
                       </div>
                       <ul>
-                        {data.feeds.map((feed) => (
+                        {data.feeds.filter(feed => feed.checked === false).map(feed => (
                           <div key={feed._id} className="carddiv container p-3">
                             <div className="card mb-2">
                               <div className="carddiv container p-3 bg-gray-100">

@@ -1,3 +1,5 @@
+#Tranquil
+
 Section - 2
 Tranquil - Team 13
 Tranquil provides individuals with a comprehensive platform for improving their mental well-being. 

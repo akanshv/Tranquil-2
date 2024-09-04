@@ -73,7 +73,7 @@ const  Feeddata = ({dashboarddata}) => {
       setLoading(true);
       try {
         if(dashboarddata.length===0){
-            const {data}=await axios.get('http://localhost:3000/feed');
+            const {data}=await axios.get(`${import.meta.env.VITE_BASE_URL}/feed`);
             console.log("anmol",data);
             setData(data.data);
         }
@@ -88,9 +88,10 @@ const  Feeddata = ({dashboarddata}) => {
                author:dashboarddata[0][index].author.username,
                topic:dashboarddata[0][index].topic,
                title:dashboarddata[0][index].title,
+               isreported:dashboarddata[0][index].reportarr.length>0 ?("True"):("False"),
                checked:dashboarddata[0][index].checked,
                likes:dashboarddata[0][index].likes,
-               uploaddate:dashboarddata[0][index].uploaddate,
+               uploaddate:dashboarddata[0][index].uploaddate.toString(),
                
           }
           container.push(obj);
@@ -117,6 +118,7 @@ useEffect(()=>{
   const columns=[
     { field: "id", headerName: "S.No", flex: 0.3,type:"number", },
     { field: "author", headerName: "Author Name", flex: 1 },
+    { field: "isreported", headerName: "Reported", flex: 1 },
     { field: "checked", headerName: "Report Check", flex: 1 },
     { field: "topic", headerName: "Topic", flex: 1 },
     { field: "title", headerName: "Title", flex: 1 },

@@ -9,6 +9,7 @@ const User = require('../Models/user');
 module.exports.gettherapy=async (req, res, next) => {
   try {
         // navactive=[0,0,0,1,0,0];
+        console.log("gettherapy");
         expertarray= await experts.find({pendingstatus:false});
         //   console.log(expertarray);
         res.status(200).json({expertarray:expertarray})

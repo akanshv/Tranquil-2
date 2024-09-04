@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 const multer = require('multer');
 const uploads = multer({ dest: 'routes/uploads' });

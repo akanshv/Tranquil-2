@@ -6,7 +6,7 @@ const administer = require('../Models/admin');
 const ExpressError = require('../utils/ExpressError')
 // wrapper err function
 const catchAsync = require('../utils/catchAsync');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const generateToken = require('../Middlewares/generateToken');
 
 //middleware
@@ -30,6 +30,11 @@ router.post('/adminlogin', catchAsync(
         console.log('admin : ', req.body);
         const admin = await administer.findOne({ email: email });
         console.log(admin);
+        if(!admin){
+            console.log("check")
+            res.status(401);
+            
+        }
 
         if (admin && (await bcrypt.compare(password, admin.hash))) {
             console.log("Log In Successfull");
@@ -37,15 +42,16 @@ router.post('/adminlogin', catchAsync(
                 _id: admin._id,
                 name: admin.name,
                 email: admin.email,
-                token: generateToken(admin._id),
+                token: generateToken(admin._id,res),
             }).status(201);
         } else {
             res.status(401);
-            throw new Error("Invalid Email or Password");
+            throw new Error('Invalid Email or Password');
         }
     }
 ));
 
+router.get('/expertinfo', catchAsync(control.expertinfo));
 
 
 router.get('/adminprofile/:id', catchAsync(control.getadminprofile));

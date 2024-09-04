@@ -9,7 +9,8 @@ const protect = asyncHandler(async (req, res, next) => {
 
     try {
       token = req.headers.authorization;
-     //decodes token id
+      //decodes token id
+      console.log("This is token of Anmol");
       console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.id).select("-hash");

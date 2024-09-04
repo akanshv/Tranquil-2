@@ -8,7 +8,7 @@ const cart = require('../Models/cart');
 const user = require('../Models/user');
 const sold = require('../Models/solddetails');
 const products = require('../Models/products');
-
+const {redisClient} =  require('../cache/redisio.js')
 
 // Functions :
 
@@ -57,15 +57,40 @@ module.exports.isloggedin = async (req, res, next) => {
 
 }
 
-module.exports.getproducts = async (req, res, next) => {
+
+// Redis COntroller :
+module.exports.getproducts = async (req, res) => {
     try {
-        const products = await Product.find({});
-        return res.send({ success: true, products: products })
+        // const products = await Product.find({});
+        // console.log(products);
+        // return res.send({ success: true, products: products })
+        
+        redisClient.get("getproducts", async (err, cachedData) => {
+            if (err) throw err;
+        
+        if (cachedData) {
+          return res.json(JSON.parse(cachedData));
+        } else {
+                const products = await Product.find({});
+                redisClient.setex("getproducts", 3600, JSON.stringify({success: true, products: products}));
+                return res.status(200).send({success: true, products: products});
+        
+            }
+        
+        })
+
     } catch (e) {
         console.log(e)
         res.send({ success: false, message: "Something went wrong" })
     }
 }
+
+
+
+
+
+
+
 
 module.exports.deleteproductsingle = async (req, res) => {
     try {
@@ -185,6 +210,9 @@ module.exports.buyproduct = async (req, res) => {
             userid: req.user._id,
             amount: amount
         })
+
+
+        console.log(bought);
 
         const use = await user.findById(bought.userid)
         await bought.save();

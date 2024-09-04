@@ -4,24 +4,28 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=production nodemon app.js",
+    "test": "cross-env NODE_ENV=test jest --coverage --forceExit",
+    "swagger": "node ./swagger.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.0-alpha3",
     "cloudinary": "^2.0.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
     "imgur-uploader": "^4.2.1",
+    "ioredis": "^5.4.1",
     "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
     "method-override": "^3.0.0",
@@ -29,6 +33,17 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2",
-    "rotating-file-stream": "^3.2.1"
+    "razorpay": "^2.9.3",
+    "redis": "^4.6.13",
+    "redis-commander": "^0.8.0",
+    "rotating-file-stream": "^3.2.1",
+    "supertest": "^7.0.0",
+    "swagger": "^0.7.5",
+    "swagger-ui": "^5.17.3",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "swagger-autogen": "^2.23.7"
   }
 }

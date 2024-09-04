@@ -21,7 +21,7 @@ const Products = () => {
   useEffect(() => {
     if(user){
       async function getProductData() {
-        await dispatch(fetchProductData());
+        await dispatch(fetchProductData(user.token));
         setLoading(false);
       }
       getProductData();
@@ -39,8 +39,14 @@ const Products = () => {
   async function addToCartHandler(id) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/products/addtocart",
-        { userId:user._id , productId: id }
+        `${import.meta.env.VITE_BASE_URL}/products/addtocart`,
+
+        { userId:user._id , productId: id },
+        {
+          headers: {
+              authorization: user.token
+          }
+      }
       );
       if (response.status == 200) {
         // console.log(response.data);
@@ -48,7 +54,7 @@ const Products = () => {
           autoClose: 2000 
         });
         await dispatch(addToCart(id));
-        await dispatch(fetchCartData(user._id));
+        await dispatch(fetchCartData(user._id,user.token));
       }
     } catch (e) {
       console.log(e);

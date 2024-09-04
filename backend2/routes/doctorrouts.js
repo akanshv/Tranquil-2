@@ -7,7 +7,7 @@ const generateToken=require('../Middlewares/generateToken')
 const ExpressError = require('../utils/ExpressError')
 // wrapper err function
 const catchAsync = require('../utils/catchAsync');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const multer = require('multer');
 const uploads = multer({ dest: 'routes/uploads' });
@@ -55,7 +55,7 @@ router.post('/login', catchAsync(
           email: expert.email,
           pic: expert.pfp,
           doc: expert.document,
-          token: generateToken(expert._id),
+          token: generateToken(expert._id,res),
         }).status(201);
       } else {
         res.status(401);
@@ -76,17 +76,13 @@ router.post('/newtherapists', catchAsync(control.postnewtherapist));
 
 router.post('/slotmaker/:id',protect,catchAsync(control.slotmaker));
 
-router.get('/slotaccept/:id',catchAsync( async (req,res)=>{
-    
-}))
+// router.post('/updateprofile',expertprotect,catchAsync(control.updateprofile));
 
-router.post('/updateprofile',expertprotect,catchAsync(control.updateprofile));
-
-
+router.post('/update',expertprotect,catchAsync(control.update));
 
 router.get('/expertprofile',expertprotect,catchAsync(control.getexpertprofile));
 
-router.get('/acceptslot/:sid',expertprotect, catchAsync(control.acceptslot));
+router.post('/acceptslot/:sid',expertprotect,catchAsync(control.acceptslot));
 
 router.get('/rejectslot/:sid',expertprotect, catchAsync(control.rejectslot));
 

@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 router=express.Router();
+const redisClient =  require('../cache/redisio.js')
+
 
 // error class
 const ExpressError=require('../utils/ExpressError')
@@ -16,28 +18,30 @@ const user=require('../Models/user');
 const sold=require('../Models/solddetails');
 
 const control = require('../Controllers/productcontroller');
+const control2 = require('../Controllers/paymentController.js');
 
 
 const { protect } = require("../Middlewares/authMiddleware");
 
 router.get('/',catchAsync(control.isloggedin));
 
-router.get('/getproducts', catchAsync(control.getproducts))
+router.get('/getproducts',protect, catchAsync(control.getproducts))
 
-router.delete('/cart/:pid',catchAsync(control.deleteproductsingle));
+router.delete('/cart/:pid',protect,catchAsync(control.deleteproductsingle));
 
-router.get('/clearcart',catchAsync(control.deletemanyproduct));
+router.get('/clearcart',protect,catchAsync(control.deletemanyproduct));
 
-router.post('/changecount/:pid',catchAsync(control.changecount));
+router.post('/changecount/:pid',protect,catchAsync(control.changecount));
 
 // router.update('/')
 
 router.post('/buyproduct',protect,catchAsync(control.buyproduct));
 
-router.post('/getcart',catchAsync(control.getCart))
-router.post('/addtocart',catchAsync(control.addtocart));
-router.post('/deletefromcart',catchAsync(control.deletefromcart));
-router.post('/increasequantity',catchAsync(control.increasequantity));
-router.post('/decreasequantity',catchAsync(control.decreasequantity));
+router.post('/getcart',protect,catchAsync(control.getCart))
+router.post('/addtocart',protect,catchAsync(control.addtocart));
+router.post('/deletefromcart',protect,catchAsync(control.deletefromcart));
+router.post('/increasequantity',protect,catchAsync(control.increasequantity));
+router.post('/decreasequantity',protect,catchAsync(control.decreasequantity));                     
+router.post('/create-order',catchAsync(control2.payment));                     
 
 module.exports=router;

@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/AnmolkPandey06/Tranquil#readme",
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.0-alpha3",
     "connect-flash": "^0.1.1",

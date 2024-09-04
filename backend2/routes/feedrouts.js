@@ -10,8 +10,6 @@ const ExpressError=require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync');
 
 
-
-
 //model
 const feed=require('../Models/feed');
 const User=require('../Models/user');
@@ -37,19 +35,23 @@ const imgurUploader = require('imgur-uploader');
 // var navactive=require('../navactive');
 
 
-router.get('/', catchAsync(async (req, res, next) => {
-    navactive=[0,1,0,0,0,0]
+// router.get('/', catchAsync(async (req, res, next) => {
+//     navactive=[0,1,0,0,0,0]
 
-    //  const user=await User.find({});
-    //  console.log(user);
-    console.log('anmol')
-     const feeds = await feed.find({}).populate('author');
-     res.status(200).json(feeds);
-    // console.log(feeds);
+//     //  const user=await User.find({});
+//     //  console.log(user);
+//     console.log('anmol')
+//      const feeds = await feed.find({}).populate('author');
+//      res.status(200).json(feeds);
+//     // console.log(feeds);
 
-    //  res.render('feed/index', {feeds:feeds,navactive:navactive});
+//     //  res.render('feed/index', {feeds:feeds,navactive:navactive});
 
-}))
+// }))
+
+const control = require('../Controllers/feedcontroller');
+router.get('/',catchAsync(control.getfeed));
+
 
 // router.get('/newfeed',isLoggedIn,(req, res, next) => {
 //     navactive=[0,1,0,0,0,0]
@@ -58,7 +60,7 @@ router.get('/', catchAsync(async (req, res, next) => {
 //     res.render('feed/newblog',{navactive:navactive});
 // })
 
-router.post('/newfeed',uploads.single('image'),catchAsync(async(req,res)=>{
+router.post('/newfeed',protect,uploads.single('image'),catchAsync(async(req,res)=>{
     try {
         console.log(req.body);
         console.log(req.file);

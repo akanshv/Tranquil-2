@@ -1,0 +1,31 @@
+version: "3"
+services:
+  frontend:
+    image: anmolkp0612/tranquilfrontend
+    stdin_open: true
+    ports:
+      - "5173:5173"
+    networks:
+      - tranquil
+  api-server:
+    image: anmolkp0612/tranquilbackend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis-server
+    networks:
+      - tranquil
+  redis-server:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - tranquil
+networks:
+  tranquil:
+    driver: bridge  
+
+
+
+
+

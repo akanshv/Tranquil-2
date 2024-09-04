@@ -220,32 +220,68 @@ import {
 import { MdLockOutline } from "react-icons/md";
 
 const DoctorRegister = () => {
-  const [password, setPassword] = useState("");
+  const [] =  useState("");
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    doctor: {
+      rel: false,
+      Wor: false,
+      Teen: false,
+      Sub: false,
+      Sex: false,
+      Harr: false,
+      Lon: false,
+      Anxiety: false,
+      yoe: '',
+      charge: '',
+      image: '',
+      document: ''
+    }
+  });
+
+  const { name, email, password, doctor, yoe, charge, image, document } = formData;
+
   const [display, setDisplay] = useState("");
   const [check, setCheck] = useState(0);
 
-  const handleSubmit = (event) => {
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setFormData({
+      ...formData,
+      doctor: {
+        ...doctor,
+        [name]: checked
+      }
+    });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const paswd = /^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{5,15}$/;
 
-    if (!password.match(paswd)) {
-      setDisplay(
-        "Password must be greater than 4 letters containing uppercase, lowercase, and special characters"
-      );
-      return;
-    }
+    console.log(formData);
 
-    if (check === 0) {
-      axios
-        .post("/expert/newtherapist", { password })
-        .then((response) => {})
-        .catch((error) => {});
+    try {
+      const response = await axios.post('/expert/newtherapists', formData);
+      console.log('Response from backend:', response.data);
+    } catch (error) {
+      console.error('Error submitting form:', error);
     }
   };
 
-  useEffect(() => {}, [password, check]);
 
-  return (
+  // useEffect(() => {}, [password, check]);
+
+  return (  
     <div>
       <div className="row">
         <div className="mt-[8rem] headimg flex justify-center">
@@ -345,7 +381,7 @@ const DoctorRegister = () => {
         id="features"
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       ></section>
-
+      <form onSubmit={handleSubmit}>
       <section>
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-108 mt-20 mb-20">
           <head>
@@ -371,7 +407,7 @@ const DoctorRegister = () => {
                 </div>
                 <div className="border-2 w-10 border-red-500 inline-block mb-2"></div>
                 <div className="flex flex-col items-center">
-                  <div className="flex justify-center my-2">
+                  {/* <div className="flex justify-center my-2">
                     <a
                       href="#"
                       className="border-2 border-gray-200 rounded-full p-3 mx-1"
@@ -390,13 +426,15 @@ const DoctorRegister = () => {
                     >
                       <FaGoogle className="text-sm" />
                     </a>
-                  </div>
+                  </div> */}
                   <div className="bg-gray-100 w-64 p-2 flex items-center mb-4">
                     <FaRegEnvelope className="text-gray-400 m-2" />
                     <input
                       type="text"
                       name="name"
                       placeholder="Name"
+                      value={name}
+                      onChange={handleChange}
                       className="bg-gray-100 outline-none text-sm flex-1 border-none"
                     />
                   </div>
@@ -406,6 +444,8 @@ const DoctorRegister = () => {
                       type="email"
                       name="email"
                       placeholder="Email"
+                      value={email}
+                      onChange={handleChange}
                       className="bg-gray-100 outline-none text-sm flex-1 border-none"
                     />
                   </div>
@@ -415,58 +455,12 @@ const DoctorRegister = () => {
                       type="password"
                       name="password"
                       placeholder="Password"
+                      value={password}
+                      onChange={handleChange}
                       className="bg-gray-100 outline-none text-sm flex-1 border-none"
                     />
                   </div>
 
-                  {/* <div className="ml-4 grid grid-cols-2 gap-4">
-    <div className="w-full md:w-1/2">
-        <div className="w-full md:w-1/2">
-            <input type="checkbox" id="vehicle1" name="doctor[rel]" value="1" />
-            <label htmlFor="vehicle1"> Relationship</label><br />
-            <input type="checkbox" id="vehicle2" name="doctor[Wor]" value="1" />
-            <label htmlFor="vehicle2"> Work Stress</label><br />
-            <input type="checkbox" id="vehicle3" name="doctor[Teen]" value="1" />
-            <label htmlFor="vehicle3"> Teen Problems</label><br />
-            <input type="checkbox" id="vehicle4" name="doctor[Sub]" value="1" />
-            <label htmlFor="vehicle4"> Substance Abuse</label><br/>
-        </div>
-    </div>
-    <div className="w-full md:w-1/2">
-        <div className="w-full md:w-1/2">
-            <input type="checkbox" id="vehicle5" name="doctor[Sex]" value="1"/>
-            <label htmlFor="vehicle5"> Sexual Abuse</label><br/>
-            <input type="checkbox" id="vehicle6" name="doctor[Harr]" value="1"/>
-            <label htmlFor="vehicle6"> Harassment</label><br/>
-            <input type="checkbox" id="vehicle7" name="doctor[Lon]" value="1"/>
-            <label htmlFor="vehicle7"> Loneliness</label><br/>
-            <input type="checkbox" id="vehicle8" name="doctor[Anxiety]" value="1"/>
-            <label htmlFor="vehicle8"> Anxiety</label><br/>
-        </div>
-    </div>
-</div>
-
-
-
-
-                                                                    <div className="ml-4 flex flex-wrap">
-                                                                        <div className="w-full md:w-1/2">
-                                                                            <input type="number" id="form2Example22" className="form-control" placeholder="Experience Years" required name='doctor[yoe]' />
-                                                                        </div>
-                                                                        <div className="w-full md:w-1/2">
-                                                                            <input type="number" id="form2Example33" className="form-control" placeholder="Charges/hour" required name='doctor[charge]' />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className="form-group mb-2">
-                                                                        <label className="form-label" for="image">Profile Pic</label>
-                                                                        <input type="text" className="form-control" id="image" placeholder="Paste the URL here" required name="doctor[image]" />
-                                                                    </div>
-
-                                                                    <div className="form-group mb-2">
-                                                                        <label className="form-label" for="Document">Document to prove Expertise</label>
-                                                                        <input type="text" className="form-control" id="Document" aria-describedby="emailHelp" placeholder="Paste the URL here" required name="doctor[document]" />
-                                                                    </div> */}
                   <div class="ml-4 grid grid-cols-2 gap-4">
                     <div class="w-full md:w-1/2">
                       <div class="w-full md:w-1/2">
@@ -474,7 +468,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle1"
                           name="doctor[rel]"
-                          value="1"
+                          value="{rel}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle1" class="ml-2 text-gray-700">
@@ -486,7 +481,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle2"
                           name="doctor[Wor]"
-                          value="1"
+                          value="{Wor}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle2" class="ml-2 text-gray-700">
@@ -498,7 +494,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle3"
                           name="doctor[Teen]"
-                          value="1"
+                          value="{Teen}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle3" class="ml-2 text-gray-700">
@@ -510,7 +507,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle4"
                           name="doctor[Sub]"
-                          value="1"
+                          value="{Sub}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle4" class="ml-2 text-gray-700">
@@ -526,7 +524,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle5"
                           name="doctor[Sex]"
-                          value="1"
+                          value="{Sex}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle5" class="ml-2 text-gray-700">
@@ -538,7 +537,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle6"
                           name="doctor[Harr]"
-                          value="1"
+                          value="{Harr}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle6" class="ml-2 text-gray-700">
@@ -550,7 +550,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle7"
                           name="doctor[Lon]"
-                          value="1"
+                          value="{Lon}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle7" class="ml-2 text-gray-700">
@@ -562,7 +563,8 @@ const DoctorRegister = () => {
                           type="checkbox"
                           id="vehicle8"
                           name="doctor[Anxiety]"
-                          value="1"
+                          value="{Anxiety}"
+                          onChange={handleCheckboxChange}
                           class="form-checkbox h-5 w-5 text-indigo-600"
                         />
                         <label for="vehicle8" class="ml-2 text-gray-700">
@@ -582,6 +584,8 @@ const DoctorRegister = () => {
                         class="form-control w-full md:w-1/2 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
                         placeholder="Experience Years"
                         required
+                        value={yoe}
+                        onChange={handleChange}
                         name="doctor[yoe]"
                       />
                     </div>
@@ -592,6 +596,8 @@ const DoctorRegister = () => {
                         class="form-control w-full md:w-1/2 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
                         placeholder="Charges/hour"
                         required
+                        value={charge}
+                        onChange={handleChange}
                         name="doctor[charge]"
                       />
                     </div>
@@ -607,6 +613,8 @@ const DoctorRegister = () => {
                       id="image"
                       placeholder="Paste the URL here"
                       required
+                      value={image}
+                      onChange={handleChange}
                       name="doctor[image]"
                     />
                   </div>
@@ -621,17 +629,20 @@ const DoctorRegister = () => {
                       id="Document"
                       placeholder="Paste the URL here"
                       required
+                      value={document}
+                      onChange={handleChange}
                       name="doctor[document]"
                     />
                   </div>
 
                   <div className="flex w-64 mb-5 justify-center">
-                    <a
-                      href="/expertprofile"
+                    <button                  
+                      type="submit"
+                      href="#"
                       className="border-2 border-green rounded-full px-12 py-2 inline-block font-semibold hover:bg-red-500 hover:text-white mt-4"
                     >
                       Sign In
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -646,18 +657,20 @@ const DoctorRegister = () => {
                   Online Private Consultation for Personalized care Answer Open
                   Questions by clients and build your online reputation
                 </p>
-                <a
+                <button 
                   href="#"
                   className="border-2 border-green rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-red-500 mt-4"
                 >
                   Sigh Up
-                </a>
+                </button>
               </div>
               {/* Sign up section */}
             </div>
           </main>
         </div>
       </section>
+      </form>
+      
     </div>
   );
 };

@@ -11,8 +11,20 @@ const AdminProductsManage = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const admin = useSelector((state) => state.auth.admin);
-  const Navigate=useNavigate();
-  console.log(admin);
+  const Navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+  const handleChange = (e) => {
+    try {
+      console.log("heyyy")
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+  };
+
 
   useEffect(() => {
     console.log('Entering useEffect');
@@ -21,7 +33,7 @@ const AdminProductsManage = () => {
         if (admin) {
 
           const response = await axios.get(
-            `http://localhost:3000/admin/adminproductsmanage/`
+            `${import.meta.env.VITE_BASE_URL}/admin/adminproductsmanage/`
             , {
               headers: {
                 Authorization: admin.token
@@ -53,24 +65,24 @@ const AdminProductsManage = () => {
     console.log('Exiting useEffect');
   }, []);
 
-  const updateProduct = async (id) =>{
+  const updateProduct = async (id) => {
+    console.log(formData);
+    console.log(id)
+    //const data = await axios.put(`${import.meta.env.VITE_BASE_URL}/admin/adminproductupdate/${id}`);
+    //console.log(data);
+  }
+
+  const deleteProduct = async (id) => {
     console.log("Entered Update PRoduct")
     console.log(id)
-    const data = await axios.put(`http://localhost:3000/admin/adminproductupdate/${id}`);
+    const data = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/adminproductdelete/${id}`);
     console.log(data);
   }
 
-  const deleteProduct = async (id) =>{
+  const addProduct = async () => {
     console.log("Entered Update PRoduct")
     console.log(id)
-    const data = await axios.post(`http://localhost:3000/admin/adminproductdelete/${id}`);
-    console.log(data);
-  }
-
-  const addProduct = async () =>{
-    console.log("Entered Update PRoduct")
-    console.log(id)
-    const data = await axios.post(`http://localhost:3000/admin/adminproductadd`);
+    const data = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/adminproductadd`);
     console.log(data);
   }
 
@@ -78,7 +90,7 @@ const AdminProductsManage = () => {
     return (
       <section className={`${category.toLowerCase()} section-p1`}>
         <div className="text-center container py-5">
-          <h1 className="mb-5 green2 product-type">
+          <h1 className="mb-5 text-4xl green2 product-type">
             <strong style={{ fontFamily: 'Roboto, sans-serif' }}>{category}</strong>
           </h1>
         </div>
@@ -87,48 +99,48 @@ const AdminProductsManage = () => {
             product.Type === category ? (
 
 
-              <div className="card">
+              <div className="card m-4" key={product._id}>
                 <div className="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
                   <img src={product.image} className="w-100" alt={`Product: ${product.Name}`} />
-                  <a href="#!">
-                    <div className="hover-overlay">
-                      <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                    </div>
-                  </a>
+
+                  <div className="hover-overlay">
+                    <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
+                  </div>
                 </div>
                 <div className="card-body">
-                  <a href="#" className="text-reset">
-                    <h5 className="card-title mb-3">{product.Name}</h5>
-                  </a>
-                  <a href="#" className="text-reset">
-                    <p>{product.author}</p>
-                  </a>
+                  <h5 className="card-title mb-3">{product.Name}</h5>
+
+
+                  <p>{product.author}</p>
+
                   <h6 className="mb-3">MRP: ₹{product.Price}</h6>
                   {/* <form action={`/admin/adminproductdelete/${product._id}?_method=DELETE`} method="post" id={`${product._id}_deleter`}></form>
                   <form action={`/admin/adminproductupdate/${product._id}?_method=PUT`} method="post" id={`${product._id}_updater`}></form> */}
                   <label htmlFor="price">Discounted Price</label><br />
                   <input
+                   value={formData.price} 
                     type="Number"
                     id="price"
                     min="1"
                     max={product.Price}
-                    form={`${product._id}_updater`}
-                    name="productcutprice"
+                    onChange={handleChange}
+                    name="price"
                     placeholder={` ${product.Cutprice}`}
                   /><br />
                   <label htmlFor="price">Stock</label><br />
                   <input
+                    value={formData.stock} 
                     type="Number"
                     id="price"
                     min="0"
                     name="productstock"
-                    form={`${product._id}_updater`}
+                    onChange={handleChange}
                     placeholder={` ${product.Stock}`}
                   /><br />
-                  <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" type="submit" form={`${product._id}_updater`}   onClick={() => updateProduct(product._id)}>
+                  <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800" onClick={() => updateProduct(product._id)}>
                     Submit
                   </button>
-                  <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" type="submit" form={`${product._id}_deleter`} onClick={() => deleteProduct(product._id)}>
+                  <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 ml-2" onClick={() => deleteProduct(product._id)}>
                     Delete
                   </button>
                 </div>

@@ -23,9 +23,15 @@ const Login = () => {
         //  formData.append("email", email);
         //  formData.append("password", password);
               
-      const data = await axios.post("http://localhost:3000/login",{email:email,password:password});
+        const data = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/login`,
+          { email: email, password: password },
+          { withCredentials: true } // Pass the withCredentials option here
+        );
+        
       console.log(data); 
       dispatch(setLoginUser(data.data));
+     
       toast.success('User Login. Welcome to tranquil',{
         duration: 4000,
         position: 'top-right',

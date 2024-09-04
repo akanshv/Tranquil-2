@@ -12,17 +12,22 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setLoginUser: (state, action) => {
+       //setting 
+      localStorage.setItem("UserToken",action.payload);
       state.user = action.payload;
       
     },
     setLoginAdmin: (state,action) => {
+      localStorage.setItem("DoctorToken",action.payload);
       state.admin = action.payload;
       
     },
     setLoginDoctor: (state, action) => {
+      localStorage.setItem("AdminToken",action.payload);
       state.doctor = action.payload;
           },
     setLogout: (state) => {
+      localStorage.clear();
       state.user=null,
       state.doctor=null,
       state.admin=null

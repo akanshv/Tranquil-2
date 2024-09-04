@@ -17,7 +17,14 @@ const doctorDetail = () => {
   const [slotter,setSlotter]=useState();
   const [loading, setLoading] = useState(true);
   const doctor = useSelector((state) => state.auth.doctor);
+  const [Name,setName]=useState();
+  const [Charge,setCharge]=useState();
   const Navigate=useNavigate();
+  const [formData,setFormData]=useState();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   //console.log(doctor);
   useEffect(() => {
@@ -31,7 +38,7 @@ const doctorDetail = () => {
     }
     const  fetchProfile=async ()=> {
       const response = await axios.get(
-        "http://localhost:3000/expert/expertprofile",
+        `${import.meta.env.VITE_BASE_URL}/expert/expertprofile`,
         {
           headers: {
             authorization:doctor.token,
@@ -48,11 +55,8 @@ const doctorDetail = () => {
   }, []);
 
   const acceptSlot = async (id) => {
-    
-    console.log("Slot Accepted");
-    console.log(id);
-    const data = await axios.get(
-     `http://localhost:3000/expert/acceptslot/${id}`,
+    const data = await axios.post(
+     `${import.meta.env.VITE_BASE_URL}/expert/acceptslot/${id}`,formData,
      {
       headers: {
         authorization:doctor.token,
@@ -76,11 +80,51 @@ const doctorDetail = () => {
     
   };
 
+
+  const handleUpdate=async()=>{
+    if(Charge<100){
+      toast.error('Charge minimum should be 100 Rs ',{
+        duration: 4000,
+        position: 'top-right',
+      });
+      return;
+    }
+    setLoading(true);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/expert/update/`,
+      {Name:Name,Charge:Charge},
+      {
+       headers: {
+         authorization:doctor.token,
+       },
+     }
+     );
+     console.log(response);
+     if(response.status==200){
+      setData(response.data.doc);
+      setSlotter(response.data.slotter);
+      setCharge("");
+      setName("");
+      toast.success('Information Updated',{
+        duration: 4000,
+        position: 'top-right',
+      });
+    }
+    else{
+      toast.error('Problem in Updating ',{
+        duration: 4000,
+        position: 'top-right',
+        
+      });
+      
+    }
+    setLoading(false);
+  }
   const rejectSlot = async (id) => {
     console.log("Slot Rejected");
     console.log(id);
     const data = await axios.get(
-     `http://localhost:3000/expert/rejectslot/${id}`,
+     `${import.meta.env.VITE_BASE_URL}/expert/rejectslot/${id}`,
      {
       headers: {
         authorization:doctor.token,
@@ -141,7 +185,7 @@ const doctorDetail = () => {
               <div>
                 <p className="m-2 text-1xl font-semibold ">
                   Name :{" "}
-                  <span className="m-2 text-1xl text-gray-800 ">{data.Name}</span>
+                  <span className="m-2 text-1xl text-gray-800 "><input type="text" placeholder={data.Name} onChange={(e)=>setName(e.target.value)}/></span>
                 </p>
                 <p className="m-2 text-1xl font-semibold ">
                   Email: <span className="m-2 text-1xl text-gray-800">{data.email}</span>
@@ -150,8 +194,8 @@ const doctorDetail = () => {
                   Joined On :{" "}
                   <span className="m-2 text-1xl text-gray-800">{data.Joindate.toString()}</span>
                 </p>
-                <p className="m-2 text-1xl font-semibold ">
-                  Charge: <span className="m-2 text-1xl text-gray-800">{data.Charge}</span>
+                <p className="m-2  text-1xl font-semibold ">
+                  Charge: <span className="m-2 text-1xl text-gray-800"><input min="100" type="Number"onChange={(e)=>{setCharge(e.target.value)} } placeholder={data.Charge}/></span>
                 </p>
                 <p className="m-2 text-1xl font-semibold ">
                   Happiness No.:{" "}
@@ -160,6 +204,7 @@ const doctorDetail = () => {
                 <p className="m-2 text-1xl font-semibold">
                   Experts In: <span className="m-2 text-1xl text-gray-800">{data.ExpertsIn}</span>
                 </p>              
+                <button className="m-2 bg-blue-500 p-2 rounded-md text-white font-semibold" onClick={handleUpdate}>Update</button> 
               </div>
             </div>
 
@@ -179,6 +224,7 @@ const doctorDetail = () => {
                         <TableCell align="center">User</TableCell>
                         <TableCell align="center">Date</TableCell>
                         <TableCell align="center">Time</TableCell>
+                        <TableCell align="center">G Meet Link</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -194,12 +240,14 @@ const doctorDetail = () => {
                               }}
                             >
                               <TableCell  align="center" >
-                                {row.Userid.username}
+                                {row.UserName}
                               </TableCell>
                               <TableCell align="center">
                                 {row.Date}
                               </TableCell>
                               <TableCell align="center">{row.Time}</TableCell>
+                              <TableCell align="center"><a className="font-semibold text-blue-700" href={row.Link} target="_blank">Click Here</a>
+</TableCell>
                             </TableRow>
                           );
                         } else {
@@ -221,6 +269,7 @@ const doctorDetail = () => {
                         <TableCell align="center">User</TableCell>
                         <TableCell align="center">Date</TableCell>
                         <TableCell align="center">Time</TableCell>
+                        <TableCell align="center">GMeet Link </TableCell>
                         <TableCell align="center">Action</TableCell>
                       </TableRow>
                     </TableHead>
@@ -243,6 +292,9 @@ const doctorDetail = () => {
                                 {row.Date}
                               </TableCell>
                               <TableCell align="center">{row.Time}</TableCell>
+                              <TableCell align="center">
+                              <input name="link" onChange={handleChange} type="text"/>  
+                              </TableCell>
                               <TableCell align="center">
                                 <button onClick={()=>acceptSlot(row._id)} className="bg-green-500 text-white px-3 py-1 rounded mr-2">
                                 Accept

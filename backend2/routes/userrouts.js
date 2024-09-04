@@ -3,7 +3,7 @@ const app = express();
 router = express.Router();
 // process.binding('http_parser').HTTPParser = require('http-parser-js').HTTPParser;
 session = require('express-session')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const fs=require('fs');
 
@@ -93,13 +93,13 @@ router.post('/register',upload.single('image'), catchAsync(asyncHandler(async (r
 
         console.log(user);
         if (user) {
-            console.log(generateToken);;
+            //console.log(generateToken);;
             res.status(201).json({
               _id: user._id,
               name: user.username,
               email: user.email,
               pic: user.pfp,
-              usertoken: generateToken(user._id),
+              usertoken: generateToken(user._id,res),
             });
           } else {
             res.status(400);
@@ -161,29 +161,44 @@ router.post('/register',upload.single('image'), catchAsync(asyncHandler(async (r
 
 router.post('/login', catchAsync(
   async (req, res) => {
-    const { email, password } = req.body;
-    console.log('anmol: ',req.body);
-    const user = await User.findOne({ email:email });
-    console.log(user);
-  
-    if (user && (await bcrypt.compare(password, user.hash))) {
-      res.json({
-        _id: user._id,
-        name: user.username,
-        email: user.email,
-        pic: user.pfp,
-        token: generateToken(user._id),
-      }).status(201);
-    } else {
-      res.status(401);
-      throw new Error("Invalid Email or Password");
+    try{
+      const {email,password}=req.body;
+      console.log("anmol is here");
+      const user = await User.findOne({ email:email });
+      console.log(password,user.hash);
+      console.log(user);
+      await bcrypt.compare(password, user.hash)
+      console.log("anmol is here");
+      console.log("inside 201")
+      console.log( "here")
+      if (user && (await bcrypt.compare(password, user.hash))) {
+        console.log("inside 201")
+        res.json({
+          _id: user._id,
+          name: user.username,
+          email: user.email,
+          pic: user.pfp,
+          token: generateToken(user._id,res),
+        }).status(201);
+      } else {
+        console.log("inside 401")
+        res.status(401);
+        // throw new Error("Invalid Email or Password");
+      }
     }
+    catch(error){
+        console.log("inside error")
+        console.log(error);
+    }
+    
 }
       
 
 ));
 
 router.get('/userprofile',protect,catchAsync(control.userprofile));
+
+router.post('/userprofile/doctorfilter', protect, catchAsync(control.doctorfilter));
 
 router.get("/logout",protect, catchAsync(control.logut));
 

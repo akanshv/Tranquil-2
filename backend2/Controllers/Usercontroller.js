@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
@@ -8,6 +7,7 @@ const User = require("../Models/user");
 const SoldDetails = require("../Models/solddetails");
 const Slot = require("../Models/expertschedule");
 const Doctor = require("../Models/doctors");
+const {redisClient} =  require('../cache/redisio.js')
 
 //database calling
 
@@ -73,30 +73,120 @@ module.exports.postlogin = asyncHandler(async (req, res) => {
     }
 });
 
+
+// Redis Controller :
 module.exports.userprofile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const posts = await feed.find({ author: req.user._id }).populate("author");
-  console.log(posts);
-  const sold = await SoldDetails.find({ userid: req.user._id }).populate(
-    "productarr"
-  );
-  const slotter = await Slot.find({ Userid: req.user._id }).populate(
-    "doctorid"
-  );
-  console.log(slotter);
-  console.log({
-    user: user,
-    posts: posts,
-    sold: sold,
-    slotter: slotter,
-  })
-  res.status(200).json({
-    user: user,
-    posts: posts,
-    sold: sold,
-    slotter: slotter,
-  });
+  // const user = await User.findById(req.user._id);
+  // const posts = await feed.find({ author: req.user._id }).populate("author");
+  // console.log(posts);
+  // const sold = await SoldDetails.find({ userid: req.user._id }).populate(
+  //   "productarr"
+  // );
+  // const slotter = await Slot.find({ Userid: req.user._id }).populate(
+  //   "doctorid"
+  // );
+  // console.log(slotter);
+  // console.log({
+  //   user: user,
+  //   posts: posts,
+  //   sold: sold,
+  //   slotter: slotter,
+  // })
+  // res.status(200).json({
+  //   user: user,
+  //   posts: posts,
+  //   sold: sold,
+  //   slotter: slotter,
+  // });
+
+  redisClient.get("userprofile", async (err, cachedData) => {
+    if (err) throw err;
+
+  if (cachedData) {
+    return res.json(JSON.parse(cachedData));
+  } else {
+
+    const user = await User.findById(req.user._id);
+    const posts = await feed.find({ author: req.user._id }).populate("author");
+    console.log(posts);
+    const sold = await SoldDetails.find({ userid: req.user._id }).populate(
+      "productarr"
+    );
+    const slotter = await Slot.find({ Userid: req.user._id }).populate(
+      "doctorid"
+    );
+    console.log(slotter);
+    console.log({
+      user: user,
+      posts: posts,
+      sold: sold,
+      slotter: slotter,
+    })
+
+    redisClient.setex("userprofile", 3600, JSON.stringify({user: user, posts: posts, sold: sold, slotter: slotter,}));
+    return res.status(200).send({user: user, posts: posts, sold: sold, slotter: slotter,});
+
+}})
+
+
 });
+
+
+
+
+
+
+
+
+module.exports.doctorfilter = asyncHandler(async (req, res) => {
+  
+  try {
+    // let pattern = new RegExp(searchTerm, "i");
+    let doctorname=""
+    const { doctorName, date, time, charges } = req.body;
+    if(doctorName){doctorname=doctorName}
+    let filteredSlots = await Slot.find({
+      Userid: req.user._id, // Condition for userid=req.user._id
+      $or: [
+        { DoctorName: { $regex:doctorname, $options: "i" } },
+        
+        // Other conditions...
+      ],
+       Charge: charges 
+    }).populate('doctorid');
+    // console.log(query);
+    //const filteredSlots = await Slot.find(query).populate('doctorid');
+    console.log(filteredSlots);
+    res.status(200).json(filteredSlots);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+
+
+
+
+
+
+  // const slotter = await Slot.find({ Userid: req.user._id }).populate(
+  //   "doctorid"
+  // );
+  // console.log(slotter);
+  // console.log({
+  //   user: user,
+  //   posts: posts,
+  //   sold: sold,
+  //   slotter: slotter,
+  // })
+  // res.status(200).json({
+  //   user: user,
+  //   posts: posts,
+  //   sold: sold,
+  //   slotter: slotter,
+  // });
+});
+
 
 module.exports.logut = asyncHandler(async (req, res, next) => {
   req.logout(function (err) {

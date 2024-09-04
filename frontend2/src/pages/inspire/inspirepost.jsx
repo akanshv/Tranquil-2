@@ -27,34 +27,43 @@ const Inspirepost = (props) => {
     console.log(comment);
     try {
       //console.log(user);
-      if (user) {
-        // Assuming you are using React Router for routing
-        const response = await axios.post(
-          `http://localhost:3000/feed/comment/${routeParams.id}`,
-          {comment:comment},{
-            headers: {
-              authorization: user.token,
-            },
-          }
-        );
-        setPost(response.data);
-        setIsReport(response.data.reportarr.includes(user._id));
-        console.log(isReport);
-        setIsLiked(response.data.reallikes.includes(user._id));
-        toast.success("Thanks for commenting ", {
-          duration: 4000,
-          position: "top-right",
-        });
-        //console.log(response);
-        //fetchPostDetails();
-        setLoading(false);
-      } else {
-        toast.error("First Login or Signup to access", {
-          duration: 4000,
-          position: "top-right",
-        });
-        Navigate("/user/login");
+      if(!comment){
+         toast.error("Write something to comment.", {
+           duration: 4000,
+           position: "top-right",
+         });  
       }
+      else{
+        if (user) {
+          // Assuming you are using React Router for routing
+          const response = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/feed/comment/${routeParams.id}`,
+            {comment:comment},{
+              headers: {
+                authorization: user.token,
+              },
+            }
+          );
+          setPost(response.data);
+          setIsReport(response.data.reportarr.includes(user._id));
+          console.log(isReport);
+          setIsLiked(response.data.reallikes.includes(user._id));
+          toast.success("Thanks for commenting ", {
+            duration: 4000,
+            position: "top-right",
+          });
+          //console.log(response);
+          //fetchPostDetails();
+          setLoading(false);
+        } else {
+          toast.error("First Login or Signup to access", {
+            duration: 4000,
+            position: "top-right",
+          });
+          Navigate("/user/login");
+        }
+      }
+      
       // Assuming you are using React Router for routing
     } catch (error) {
       console.error("Error in commenting:", error);
@@ -76,7 +85,7 @@ const Inspirepost = (props) => {
       if (user) {
         // Assuming you are using React Router for routing
         const response = await axios.get(
-          `http://localhost:3000/feed/${routeParams.id}`,
+          `${import.meta.env.VITE_BASE_URL}/feed/${routeParams.id}`,
           {
             headers: {
               authorization: user.token,
@@ -119,7 +128,7 @@ const Inspirepost = (props) => {
       if (user) {
         // Assuming you are using React Router for routing
         const response = await axios.get(
-          `http://localhost:3000/feed/like/${routeParams.id}`,
+          `${import.meta.env.VITE_BASE_URL}/feed/like/${routeParams.id}`,
           {
             headers: {
               Authorization: user.token,
@@ -155,7 +164,7 @@ const Inspirepost = (props) => {
       if (user) {
         // Assuming you are using React Router for routing
         const response = await axios.get(
-          `http://localhost:3000/feed/report/${routeParams.id}`,
+          `${import.meta.env.VITE_BASE_URL}/feed/report/${routeParams.id}`,
           {
             headers: {
               Authorization: user.token,

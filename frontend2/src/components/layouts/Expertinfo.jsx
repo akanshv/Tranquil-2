@@ -75,7 +75,7 @@ const  Expertinfo = () => {
   const fetchData=async ()=>{
       setLoading(true);
       try {
-            const {data}=await axios.get('http://localhost:3000/admin/adminproductsmanage',
+            const {data}=await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/expertinfo`,
             {
               headers: {
                 Authorization: admin.token,
@@ -83,18 +83,20 @@ const  Expertinfo = () => {
             }
             );
             console.log("anmol",data);
-            setData(data.prod);
+            setData(data);
         
         const container=[];
 
-        for (let index = 0; index < data.prod.length; index++) {
+        for (let index = 0; index < data.length; index++) {
+  
           const obj={
                id:index+1,
-               Name:data.prod[index].Name,
-               Company:data.prod[index].Company,
-               author:data.prod[index].author,
-               Price:data.prod[index].Price,
-               Type:data.prod[index].Type,
+               Name:data[index].Name,
+               ExpertsIn:data[index].ExpertsIn,
+               Charge:data[index].Charge,
+               Sessionno:data[index].Sessionno,
+               Experience:data[index].Experience,
+               pendingstatus:data[index].pendingstatus?("pending"):("accepted")
                
                
           }
@@ -121,12 +123,13 @@ useEffect(()=>{
 
   const columns=[
     { field: "id", headerName: "S.No", flex: 0.3,type:"number", },
-    { field: "Name", headerName: "ProductName", flex: 1 },
-    { field: "Price", headerName: "Cost", flex: 1 },
-    { field: "author", headerName: "Author", flex: 1 },
-    { field: "Company", headerName: "Company", flex: 1 },
+    { field: "Name", headerName: "Name", flex: 1 },
+    { field: "ExpertsIn", headerName: "ExpertsIn", flex: 2 },
+    { field: "Charge", headerName: "Charge", flex: 1 ,type:"number"},
+    { field: "Sessionno", headerName: "No. of Sess.", flex: 1 ,type:"number"},
+    { field: "Experience", headerName: "Experience", flex: 1 ,type:"number"},
     // { field: "Stock", headerName: "Stock", flex: 0.5 },
-    { field: "Type", headerName: "Type", flex: 2 },
+    { field: "pendingstatus", headerName: " Status", flex: 1 },
   ]
 
  
@@ -134,7 +137,7 @@ useEffect(()=>{
   return (
     <Box m="20px">
       <div>
-        <p className="text-2xl p-4 text-gray-700 font-semibold">Products Stats</p>
+        <p className="text-2xl p-4 text-gray-700 font-semibold">Experts Stats</p>
       </div>
       <Box
         m="10px 0 0 0"

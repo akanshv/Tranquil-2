@@ -2,14 +2,15 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const morgan = require('morgan');
-
+// const swaggerFile = require('.swagger-output.json');
+const swaggerUi = require('swagger-ui-express');
 
 //method overide for patch and put into post
 const methodOveride = require('method-override');
 
 const cors=require('cors');
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 //env
 const {config}=require('dotenv');
 config();
@@ -32,8 +33,12 @@ const flash=require("connect-flash");
 const cookie=require('cookie-parser');
 const User = require('./Models/user');
 
+app.use(cookie());
 
 
+
+
+const swaggerFile = require('./swagger-output.json')
 // const session=require("express-session");
 // sessionconfig={
 //     secret:'thisismysecret',
@@ -92,7 +97,7 @@ app.use(express.json())  //to parse the info in json type...both are the middlew
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-mongoose.connect(process.env.url,{
+mongoose.connect((process.env.NODE_ENV==='test' ? process.env.testurl : process.env.url),{
     useNewUrlParser: true,//you have to specify the portno...mongoose changed this so by making false user can go to previous version where port no. is not required
     //useCreateIndex:true,//avoid depracation warnings(warnings that notify us that a specific feature (e.g. a method) will be removed soon (usually in the next minor or major version) and should be replaced with something else.)
     useUnifiedTopology: true// to use new connnection manager of mongoose
@@ -105,7 +110,71 @@ db.once("open", () => {
 });
 
 
+// REDIS : //
 
+const redis = require("redis");
+// const client = createClient({
+//   url: process.env.REDIS_URL,
+// });
+// socket: {
+//       host: 'redis-server',
+//       port: 6379,
+//     },
+
+// const redis = require('redis');
+
+
+// const redisClient = redis.createClient({
+//   socket: {
+//     host: 'redis-server',
+//     port: 6379,
+//   },
+// });
+
+// client.on("connect", () =>
+  // console.log(`Redis is connected on port ${process.env.REDIS_PORT}`)
+// );
+// client.on("error", (err) => {+
+//   console.error("Error Connecting to Redis Client:", err);
+// });
+
+// if (process.env.NODE_ENV !== "test") {
+//     (async () => {
+//       // await client.connect();
+//     })();
+  
+//     client.set("visits", 0);
+  
+//     app.get("/visits", async (req, res) => {
+//       try {
+//         const currentVisits = await client.get("visits");
+//         let visits = parseInt(currentVisits) || 0;
+//         visits++;
+//         await client.set("visits", visits);
+//         res.send("Number of visits is: " + visits);
+//       } catch (error) {
+//         console.error("Error getting or setting visit count:", error);
+//         res.status(500).send("Internal Server Error");
+//       }
+//     });
+  
+    // Attach redisClient middleware
+    // app.use(async (req, res, next) => {
+    //   try {
+    //     if (!client) {
+    //       await client.connect();
+    //     }
+    //     req.redisClient = client;
+    //     next();
+    //   } catch (err) {
+    //     console.error("Error connecting to Redis:", err);
+    //     next(err);
+    //   }
+    // });
+
+  // }
+
+/////////////
 
 // // app.use(express.static(__dirname + '/Resources'));
 // app.use(express.static("Resources"));
@@ -135,8 +204,8 @@ const { notFound, errorHandler } = require('./Middlewares/errorMiddleware')
 
 
 
-
-
+// Swagger :
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 
 
@@ -175,7 +244,12 @@ app.use('/therapy',therapyroutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT=process.env.PORT|| 3000
-app.listen(PORT, () => {
-    console.log('Listening the port 3000 from Tranquil...');
-});
+let PORT = process.env.PORT || 3000;
+if(process.env.NODE_ENV == "test"){
+    PORT = 0;
+}
+app.listen(PORT, (req, res) => {
+    console.log(`Listening the port ${PORT} from Tranquil...`);
+})
+
+module.exports=app;

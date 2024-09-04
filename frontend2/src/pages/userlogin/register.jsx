@@ -24,7 +24,7 @@ const Register = () => {
         formData.append("username", Username);
         console.log(formData);
       
-      const data = await fetch("http://localhost:3000/register", {
+      const data = await fetch(`${import.meta.env.VITE_BASE_URL}/register`, {
         method: "POST",
         body: formData,
       });

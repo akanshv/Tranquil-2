@@ -175,25 +175,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="banner2 mx-auto" data-aos="fade-up" data-aos-duration="3000">
-        <div className="content3">
-          <p className="line1">Meet people who understand</p>
-          <p className="line3 mt-4">
-            <strong>
-              You can find support and friendship in chat rooms and forums for many issues, like depression, anxiety,
-              relationships, LGBTQ+ and more.
-            </strong>
-          </p>
-          <p className="line2 mt-4 mb-8">
-            Ask for help, join a scheduled group support session, or share your own wisdom and life experience to help
-            others along the way. We're all in this together.
-          </p>
-          <Link to="/chat" className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" id="therapy-button">
-            Chat Anonymously
-          </Link>
-        </div>
-      </div>
-
+     
       <div className="banner3 mx-auto" data-aos="fade-up" data-aos-duration="3000">
         <div className="content1">
           <p className="line1">Our Online Therapy</p>

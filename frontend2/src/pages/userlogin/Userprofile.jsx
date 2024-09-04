@@ -17,8 +17,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 const UserProfile = () => {
   const [data, setData] = useState({});
+  const [slotdata,setslotdata]=useState({});
   const [loading, setLoading] = useState(true);
   const Navigate = useNavigate();
+  const [formData,setFormData]=useState();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
@@ -26,7 +32,7 @@ const UserProfile = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:3000/userprofile",
+            `${import.meta.env.VITE_BASE_URL}/userprofile`,
             {
               headers: {
                 Authorization: user.token,
@@ -35,8 +41,8 @@ const UserProfile = () => {
           );
 
           setData(response.data);
+          setslotdata(response.data.slotter);
           setLoading(false);
-          console.log("Data received:", response.data);
         } catch (error) {
           console.error(error);
           setLoading(false);
@@ -51,6 +57,52 @@ const UserProfile = () => {
       Navigate("/user/login");
     }
   }, []);
+
+
+  const handleFilter=async ()=>{
+      setLoading(true);
+      try{
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/userprofile/doctorfilter`,
+          
+          formData,{
+            headers: {
+              Authorization: user.token,
+            },
+          }
+        );
+
+        if(response.status==200){
+          setslotdata(response.data);
+          toast.success("Successfully filtered", {
+            duration: 4000,
+            position: "top-right",
+          });
+          
+          
+
+        }
+        else{
+         toast.error("Problem in filter", {
+            duration: 4000,
+            position: "top-right",
+          });
+          setslotdata(response.data);
+        }
+
+
+
+      }
+      catch(error){
+        console.log(error);
+        toast.error("First Login or Signup to access", {
+          duration: 4000,
+          position: "top-right",
+        });
+        Navigate("/user/login");
+      }
+      setLoading(false);
+  }
 
   return (
     <div className="sabkuch mt-[7rem]">
@@ -197,8 +249,13 @@ const UserProfile = () => {
               <div className="m-2 ">
                 <p className="font-semibold text-3xl text-gray-800 text-center">
                   {" "}
-                  Accepted Sessions
+                   Filter
                 </p>
+                <div className="flex justify-evenly">
+                    <input type="text" name="doctorName" placeholder="Doctor Name" onChange={handleChange}/>
+                    <input type="Number" name="charges" placeholder="Charge" onChange={handleChange}/>
+                    <button className=" bg-blue-500 p-2 rounded-md text-white font-semibold" onClick={handleFilter}>Filter</button> 
+                </div>
               </div>
               <div>
                 <TableContainer component={Paper}>
@@ -208,11 +265,14 @@ const UserProfile = () => {
                         <TableCell align="center">Expert</TableCell>
                         <TableCell align="center">Date</TableCell>
                         <TableCell align="center">Time</TableCell>
+                        <TableCell align="center">Cost</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Meet Link</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data?.slotter?.map((row) => {
-                        if (row.status == "accept") {
+                      {slotdata?.map((row) => {
+                        if (true ) {
                           return (
                             <TableRow
                               key={row._id}
@@ -220,6 +280,7 @@ const UserProfile = () => {
                                 "&:last-child td, &:last-child th": {
                                   border: 0,
                                 },
+                                
                               }}
                             >
                               <TableCell  align="center" >
@@ -229,6 +290,12 @@ const UserProfile = () => {
                                 {row.Date}
                               </TableCell>
                               <TableCell align="center">{row.Time}</TableCell>
+                              <TableCell align="center">{row.doctorid.Charge} Rs </TableCell>
+                              <TableCell align="center">{row.status}</TableCell>
+                              {
+                                 row.status==="pending"?(<TableCell align="center"></TableCell>):(<TableCell align="center"><a className="font-semibold text-blue-700" href="google.com">Click Here</a> </TableCell>)
+                              }
+                              
                             </TableRow>
                           );
                         } else {
@@ -239,51 +306,7 @@ const UserProfile = () => {
                   </Table>
                 </TableContainer>
               </div>
-              <div className="m-2 ">
-                <p className="font-semibold text-3xl text-gray-800 text-center">
-                  {" "}
-                  Pending Requests</p>
-
-              </div>
-              <div>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">Expert</TableCell>
-                        <TableCell align="center">Date</TableCell>
-                        <TableCell align="center">Time</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data?.slotter?.map((row) => {
-                        if (row.status == "pending") {
-                          return (
-                            <TableRow
-                              key={row._id}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell  align="center" >
-                                {row.doctorid.Name}
-                              </TableCell>
-                              <TableCell align="center">
-                                {row.Date}
-                              </TableCell>
-                              <TableCell align="center">{row.Time}</TableCell>
-                            </TableRow>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </div>
+              
               
             </div>
             

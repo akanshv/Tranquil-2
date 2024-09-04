@@ -16,8 +16,7 @@ const User = require('../Models/user');
 
 
 const control = require('../Controllers/therapycontroller');
-
-
+const { protect } = require("../Middlewares/authMiddleware");
 
 
 

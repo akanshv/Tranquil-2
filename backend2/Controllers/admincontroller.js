@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 //model
 const Product = require("../Models/products");
 const doc = require("../Models/doctors");
@@ -6,6 +6,7 @@ const feed = require("../Models/feed");
 const comment = require("../Models/comments");
 const administer = require("../Models/admin");
 const solddetails = require("../Models/solddetails");
+const {redisClient} =  require('../cache/redisio.js')
 
 module.exports.postlogin = async (req, res) => {
   try {
@@ -32,24 +33,42 @@ module.exports.postlogin = async (req, res) => {
   }
 };
 
+
+// Redis COntroller :
 module.exports.getadminprofile = async (req, res) => {
   try {
-    if (req.params.id) {
+    // console.log('admin');
+    // const admini = await administer.findById(req.params.id);
+    // const docs = await doc.find({ pendingstatus: true });
+    // const feeds = await feed.find({}).populate("author");
+    // console.log(feeds);
+    // res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
+    // return;
+
+    redisClient.get("getadminprofile", async (err, cachedData) => {
+      if (err) throw err;
+  
+    if (cachedData) {
+      return res.json(JSON.parse(cachedData));
+    } else {
       console.log('admin');
       const admini = await administer.findById(req.params.id);
       const docs = await doc.find({ pendingstatus: true });
       const feeds = await feed.find({}).populate("author");
-      console.log(admini)
-      res.status(200).json({ admini: admini, docs: docs, feeds: feeds });
-      return;
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
-    }
-  } catch (error) {
+      console.log(feeds);
+    
+      redisClient.setex("getadminprofile", 3600, JSON.stringify({success: true, admini: admini, docs: docs, feeds: feeds}));
+      return res.status(200).send({success: true, admini: admini, docs: docs, feeds: feeds});
+      }
+    })
+    } 
+     catch (error) {
     res.status(500).json({ message: "Error hii", error:error });
   }
 };
+
+
+
 
 module.exports.getadminproductmanage = async (req, res) => {
   try {
@@ -72,7 +91,6 @@ module.exports.getadminproductmanage = async (req, res) => {
 
 module.exports.productupdate = async (req, res) => {
   try {
-    if (true) {
       pid = req.params.pid;
       cutprice = req.body.productcutprice;
       stock = req.body.productstock;
@@ -83,11 +101,8 @@ module.exports.productupdate = async (req, res) => {
       );
       console.log(product);
       res.status(200).json({ product: product });
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
-    }
-  } catch (error) {
+    } 
+   catch (error) {
     res.status(500).json({ message: "Error", error: error });
     return;
   }
@@ -99,11 +114,24 @@ module.exports.expertaccept = async (req, res) => {
       tid = req.params.tid;
       console.log('accepted');
       await doc.updateOne({ _id: tid }, { pendingstatus: false });
-      res.status(200);
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
-    }
+      const docs = await doc.find({ pendingstatus: true });
+      res.status(200).json(docs);
+    } 
+  } catch (error) {
+    res.status(500).json({ message: "Error", error: error });
+    return;
+  }
+};
+
+
+module.exports.expertinfo = async (req, res) => {
+  try {
+    if (true) {
+      
+      
+      const docs = await await doc.find({});
+      res.status(200).json(docs);
+    } 
   } catch (error) {
     res.status(500).json({ message: "Error", error: error });
     return;
@@ -116,11 +144,9 @@ module.exports.expertdelete = async (req, res) => {
       tid = req.params.tid;
       console.log('delete');
       await doc.deleteOne({ _id: tid });
-      res.status(200);
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
-    }
+      const docs = await doc.find({ pendingstatus: true });
+      res.status(200).json(docs);
+  }
   } catch (error) {
     res.status(500).json({ message: "Error", error: error });
     return;
@@ -146,16 +172,14 @@ module.exports.productdelete = async (req, res) => {
 
 module.exports.feedaccept = async (req, res) => {
   try {
-    if (true) {
+ 
       fid = req.params.fid;
       //console.log('delete');
       await feed.findByIdAndUpdate({ _id: fid }, { checked: true });
-      res.status(200);
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
-    }
-  } catch (error) {
+      const feeds=await feed.find({}).populate('author');
+      res.status(200).json(feeds);
+    } 
+   catch (error) {
     res.status(500).json({ message: "Error", error: error });
     return;
   }
@@ -163,24 +187,25 @@ module.exports.feedaccept = async (req, res) => {
 
 module.exports.feeddelete = async (req, res) => {
   try {
-    if (true) {
-      fid = req.params.fid;
-      // console.log('delete');
-      post = await feed.findById(fid);
-      for (let index = 0; index < post.comments.length; index++) {
-        await comment.deleteOne({ _id: post.comments[index] });
-      }
-
-      await feed.deleteOne({ _id: fid });
-      res.status(200);
-    } else {
-      res.status(400).json({ message: "You need to admin" });
-      return;
+ 
+    fid = req.params.fid;
+    console.log('delete');
+    post = await feed.findById(fid);
+    for (let index = 0; index < post.comments.length; index++) {
+      await comment.deleteOne({ _id: post.comments[index] });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Error", error: error });
-    return;
-  }
+
+    await feed.deleteOne({ _id: fid });
+    
+  
+    const feeds=await feed.find({}).populate('author');
+    res.status(200).json(feeds);
+  } 
+ catch (error) {
+  res.status(500).json({ message: "Error", error: error });
+  return;
+}
+     
 };
 
 module.exports.productadd = async (req, res) => {

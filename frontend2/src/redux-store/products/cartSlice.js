@@ -18,10 +18,14 @@ const initialState = {
   totalPrice: 0,
 };
 
-export const fetchProductData = () => async (dispatch) => {
+export const fetchProductData = (token) => async (dispatch) => {
     try {
       const response = await Axios.get(
-        "http://localhost:3000/products/getproducts"
+        `${import.meta.env.VITE_BASE_URL}/products/getproducts`
+        ,
+        {headers: { 
+            Authorization: token
+         }},
       );
       console.log(response.data);
       dispatch(setProductData(response.data.products));
@@ -30,11 +34,15 @@ export const fetchProductData = () => async (dispatch) => {
     }
 };
 
-export const fetchCartData = (userid) => async (dispatch) => {
+export const fetchCartData = (userid,token) => async (dispatch) => {
   // const user = useSelector((state) => state.auth.user);
   try { 
-    console.log(userid);
-    const response = await axios.post("http://localhost:3000/products/getcart",{userId:userid})
+    console.log(userid,token);
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/products/getcart`,{userId:userid},{
+      headers: {
+          authorization: token
+      }
+  })
     console.log(response.data)
     dispatch(setCartDataAction(response.data.products))
   } catch(e){
